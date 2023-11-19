@@ -3,7 +3,9 @@ library(censobr)
 library(geobr)
 library(sf)
 library(readxl)
-
+library(rmapshaper)
+library(ggbeeswarm)
+library(colorspace)
 
 #https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html?=&t=resultados
 #https://www.ibge.gov.br/estatisticas/economicas/financas-publicas/19879-suplementos-munic2.html?=&t=resultados
@@ -18,6 +20,7 @@ atlas_raw <- read_excel('./data-prep/atlas-2013-censo.xlsx', sheet = 'MUN 91-00-
 areas_raw <- read_excel('./data-prep/areas-mun.xls', sheet = 'AR_BR_MUN_2022')
 mun <- geobr::read_municipality()
 uf <- geobr::read_state()
+mun_seats <- geobr::read_municipal_seat()
 
 atlas <- atlas_raw %>% filter(ANO == 2010) %>% rename(codmun = Codmun7)
 
@@ -133,14 +136,85 @@ areas <- areas_raw %>%
   select(codmun = CD_MUN, area = AR_MUN_2022) %>%
   mutate(codmun = as.numeric(codmun))
 
+centers <- data.frame(
+  codmun = mun_seats$code_muni
+)
+
+for (i in 1:nrow(mun_seats)) {
+  
+  xc <- round(mun_seats$geom[[i]][1],6)
+  yc <- round(mun_seats$geom[[i]][2],6)
+  
+  centers[i, 'xc'] <- xc
+  centers[i, 'yc'] <- yc
+  
+}
+
+# final base --------------------------------------------------------------
+
 base <- mun %>%
   rename(codmun = code_muni) %>%
   left_join(fin) %>%
   left_join(pib) %>%
   left_join(atlas) %>% 
-  left_join(areas)
+  left_join(areas) %>%
+  left_join(centers)
 
 saveRDS(base, file = './data-prep/base.rds')
 
-ggplot(base) +
-  geom_sf()
+
+# plots -------------------------------------------------------------------
+
+base_plot <- base %>%
+  select(codmun, pop_pip, xc, yc)
+
+base_plot_simp <- rmapshaper::ms_simplify(base_plot, keep = 0.02,
+                                          keep_shapes = TRUE) %>%
+  filter(!is.na(pop_pip)) %>%
+  mutate(pop_cat =  cut(pop_pip, c(0, 55000, 430000, Inf), c('Pequeno', 'Médio', 'Grande')))
+
+br <- geobr::read_country()
+br_simple <- rmapshaper::ms_simplify(br, keep = 0.02,
+                                     keep_shapes = TRUE)
+
+pop_bubble <- mun_seats %>%
+  select(codmun = code_muni) %>%
+  left_join(pib) %>%
+  select(pop_pip) %>% 
+  mutate(pop_cat =  cut(pop_pip, c(0, 55000, 430000, Inf), c('Pequeno', 'Médio', 'Grande')))
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(fill = 'purple', color = NA) + 
+  facet_wrap(~pop_cat)
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(color = '#FFFFFF', fill = 'purple', size = .1)
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(color = '#FFFFFF', aes(fill = pop_cat), size = .1) +
+  scale_fill_discrete_sequential(palette = "Magenta") + 
+  theme_bw()
+
+  group_by(pop_cat) %>%
+base_plot_simp %>%
+  summarise(pop = sum(pop_pip))
+
+ggplot(pop_bubble) +
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(data = pop_bubble, aes(size = pop_pip, color = pop_cat), alpha = .8) +
+  scale_size(range = c(0.1, 10)) +
+  scale_color_discrete_sequential(palette = "Magenta") +
+  theme_bw()
+
+ggplot(pop_bubble) +
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(aes(size = pop_pip), fill = NA, color = 'purple', alpha = .66) +
+  scale_size(range = c(0.1, 10))
+
+
+#pops <- base_plot$pop_pip[which(!is.na(base_plot$pop_pip))]
+#quantile(pops, c(.33))
+#sum(is.na(base_plot$pop_pip))
