@@ -6,10 +6,13 @@ library(readxl)
 library(rmapshaper)
 library(ggbeeswarm)
 library(colorspace)
+library(Rtsne)
 
 #https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html?=&t=resultados
 #https://www.ibge.gov.br/estatisticas/economicas/financas-publicas/19879-suplementos-munic2.html?=&t=resultados
 #http://www.atlasbrasil.org.br/acervo/biblioteca
+
+#P_FORMAL, TDES18M, no atlas, estão vindo como TRUE?!
 
 pib_raw <- read_excel('./data-prep/pib-mun.xls') %>% filter(Ano == '2015')
 desp_raw <- read.csv2('./data-prep/desp-orc-mun.csv', skip = 3, encoding = 'latin1')
@@ -162,11 +165,14 @@ base <- mun %>%
 
 saveRDS(base, file = './data-prep/base.rds')
 
+regions <- data.frame(code_region = mun_seats$code_region, name_region = mun_seats$name_region) %>% distinct()
 
 # plots -------------------------------------------------------------------
 
 base_plot <- base %>%
-  select(codmun, pop_pip, xc, yc)
+  select(codmun, pop_pip, MORT1) %>%
+  mutate(code_region = str_sub(codmun, 1, 1)) %>%
+  left_join(regions)
 
 base_plot_simp <- rmapshaper::ms_simplify(base_plot, keep = 0.02,
                                           keep_shapes = TRUE) %>%
@@ -176,6 +182,10 @@ base_plot_simp <- rmapshaper::ms_simplify(base_plot, keep = 0.02,
 br <- geobr::read_country()
 br_simple <- rmapshaper::ms_simplify(br, keep = 0.02,
                                      keep_shapes = TRUE)
+
+states <- geobr::read_state()
+states_simple <- rmapshaper::ms_simplify(states, keep = 0.02,
+                                         keep_shapes = TRUE)
 
 pop_bubble <- mun_seats %>%
   select(codmun = code_muni) %>%
@@ -191,6 +201,25 @@ ggplot(base_plot_simp) +
 ggplot(base_plot_simp) + 
   geom_sf(data = br_simple, fill = NA, color = 'black') + 
   geom_sf(color = '#FFFFFF', fill = 'purple', size = .1)
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(color = '#FFFFFF', aes(fill = name_region), size = .1) +
+  geom_sf(data = states_simple, fill = NA, color = 'black') +
+  theme_bw()
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(color = '#FFFFFF', aes(fill = name_region), size = .1) +
+  geom_sf(data = states_simple, fill = NA, color = 'black') +
+  scale_fill_manual(values = c(
+    'Centro Oeste' = '#FFB14E',
+    'Sudeste' = '#FFB14E',
+    'Sul' = '#FFB14E',
+    'Nordeste' = '#0000FF',
+    'Norte' = '#0000FF'
+  )) +
+  theme_bw()
 
 ggplot(base_plot_simp) + 
   geom_sf(data = br_simple, fill = NA, color = 'black') + 
@@ -218,3 +247,123 @@ ggplot(pop_bubble) +
 #pops <- base_plot$pop_pip[which(!is.na(base_plot$pop_pip))]
 #quantile(pops, c(.33))
 #sum(is.na(base_plot$pop_pip))
+
+
+
+# t-sne -------------------------------------------------------------------
+
+base_sel <- base %>%
+  filter(!(codmun %in% c(4300001, 4300002))) %>% # verificar depois
+  mutate(
+    agro = agro / vab,
+    indu = industria / vab,
+    serv = servicos / vab,
+    adm = adm / vab,
+    pctRURAL = pesoRUR / pesotot,
+    pctURB = pesourb / pesotot,
+    pctAte18 = (pesotot - PESO18) / pesotot,
+    pct18a65 = (PESO18 - PESO65) / pesotot,
+    pct65mais = PESO65 / pesotot,
+    
+    pop_cat =  cut(pesotot, c(0, 55000, 430000, Inf), c('Pequeno', 'Médio', 'Grande'))
+  ) %>%
+  select(
+    codmun,
+    name_muni,
+    pop_cat,
+    assist = `08 - Assistência Social`,
+    saude = `10 - Saúde`,
+    educ = `12 - Educação`,
+    agro,
+    indu,
+    serv,
+    pibpercapita,
+    pesotot,
+    pctRURAL,
+    pctURB,
+    pctAte18,
+    pct18a65,
+    pct65mais,
+    ESPVIDA,
+    FECTOT,
+    MORT1,
+    T_ANALF18M,
+    GINI,
+    PIND,
+    PMPOB,
+    #P_FORMAL,
+    #T_DES18M,
+    T_AGUA,
+    T_LIXO,
+    T_LUZ
+  ) %>%
+  st_drop_geometry() %>%
+  mutate_all(~replace(., is.na(.), 0)) %>%
+  distinct()
+
+base_sel2 <- base_sel %>% select(-codmun, -name_muni, -pop_cat) %>% distinct()
+base_sel2_scaled <- scale(base_sel2)
+
+tsne_results <- Rtsne(base_sel2_scaled)
+
+plot(tsne_results$Y[,1], tsne_results$Y[,2], main="t-SNE plot", xlab="", ylab="", pch=19, col = base_sel$pop_cat)
+
+base_comp <- base_sel
+base_comp$x <- tsne_results$Y[,1]
+base_comp$y <- tsne_results$Y[,2]
+
+regions <- data.frame(code_region = mun_seats$code_region, name_region = mun_seats$name_region) %>% distinct()
+
+base_comp <- base_comp %>%
+  mutate(code_region = str_sub(codmun, 1, 1)) %>%
+  left_join(regions)
+
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
+  #scale_color_discrete_qualitative(palette = "Set 2") +
+  facet_wrap(~pop_cat) + 
+  theme_bw()
+
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
+  #scale_color_discrete_qualitative(palette = "Set 2") +
+  scale_color_manual(values = c(
+    'Centro Oeste' = '#FFB14E',
+    'Sudeste' = '#FFB14E',
+    'Sul' = '#FFB14E',
+    'Nordeste' = '#0000FF',
+    'Norte' = '#0000FF'
+  )) +
+  scale_x_continuous(limits = c(-45,45)) +
+  scale_y_continuous(limits = c(-45,45)) +
+  theme_bw()
+
+#indicadoress
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = MORT1)) +
+  scale_color_continuous_sequential(palette = 'Rocket') + 
+  scale_x_continuous(limits = c(-45,45)) +
+  scale_y_continuous(limits = c(-45,45)) +
+  theme_bw()
+
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = PMPOB)) +
+  scale_color_continuous_sequential(palette = 'Rocket') + 
+  scale_x_continuous(limits = c(-45,45)) +
+  scale_y_continuous(limits = c(-45,45)) +
+  labs(color = 'POVRTY') +
+  theme_bw()
+
+
+ggplot(base_plot_simp) + 
+  geom_sf(data = br_simple, fill = NA, color = 'black') + 
+  geom_sf(color = NA, aes(fill = MORT1), size = .1) +
+  geom_sf(data = states_simple, fill = NA, color = 'black') + 
+  scale_fill_continuous_sequential(palette = 'Rocket') + 
+  theme_bw()
+
+
+
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = pop_cat)) +
+  scale_color_discrete_sequential(palette = "Magenta") +
+  facet_wrap(~name_region) + 
+  theme_bw()
+
+
+
