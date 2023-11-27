@@ -200,7 +200,8 @@ ggplot(base_plot_simp) +
 
 ggplot(base_plot_simp) + 
   geom_sf(data = br_simple, fill = NA, color = 'black') + 
-  geom_sf(color = '#FFFFFF', fill = 'purple', size = .1)
+  geom_sf(color = '#FFFFFF', fill = 'purple', size = .1) +
+  theme_bw()
 
 ggplot(base_plot_simp) + 
   geom_sf(data = br_simple, fill = NA, color = 'black') + 
@@ -241,7 +242,8 @@ ggplot(pop_bubble) +
 ggplot(pop_bubble) +
   geom_sf(data = br_simple, fill = NA, color = 'black') + 
   geom_sf(aes(size = pop_pip), fill = NA, color = 'purple', alpha = .66) +
-  scale_size(range = c(0.1, 10))
+  scale_size(range = c(0.1, 10)) +
+  theme_bw()
 
 
 #pops <- base_plot$pop_pip[which(!is.na(base_plot$pop_pip))]
@@ -304,9 +306,9 @@ base_sel <- base %>%
 base_sel2 <- base_sel %>% select(-codmun, -name_muni, -pop_cat) %>% distinct()
 base_sel2_scaled <- scale(base_sel2)
 
-tsne_results <- Rtsne(base_sel2_scaled)
+tsne_results <- Rtsne(base_sel2_scaled, perplexity = 50)
 
-plot(tsne_results$Y[,1], tsne_results$Y[,2], main="t-SNE plot", xlab="", ylab="", pch=19, col = base_sel$pop_cat)
+#plot(tsne_results$Y[,1], tsne_results$Y[,2], main="t-SNE plot", xlab="", ylab="", pch=19, col = base_sel$pop_cat)
 
 base_comp <- base_sel
 base_comp$x <- tsne_results$Y[,1]
@@ -321,6 +323,12 @@ base_comp <- base_comp %>%
 ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
   #scale_color_discrete_qualitative(palette = "Set 2") +
   facet_wrap(~pop_cat) + 
+  theme_bw()
+
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
+  #scale_color_discrete_qualitative(palette = "Set 2") +
+  scale_x_continuous(limits = c(-45,45)) +
+  scale_y_continuous(limits = c(-45,45)) +
   theme_bw()
 
 ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
