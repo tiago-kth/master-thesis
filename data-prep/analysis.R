@@ -32,7 +32,7 @@ lista_uf <- data.frame(UF = uf$code_state, nomeUF = uf$abbrev_state)
 lista_mun <- atlas %>% left_join(lista_uf) %>% mutate(
   Município = str_to_upper(Município),
   Município = stringi::stri_trans_general(Município, "Latin-ASCII"),
-  ufmun = paste(nomeUF, Município)) %>% select(ufmun, codmun = Codmun7)
+  ufmun = paste(nomeUF, Município)) %>% select(ufmun, codmun = Codmun6)
 
 arrecad_rfb <- arrecad_rfb_raw %>% mutate(ufmun = paste(UF, Município)) %>% select(ufmun, Arrecadação) %>% left_join(lista_mun)
 arrecad_rfb %>% filter(is.na(codmun))
@@ -255,7 +255,7 @@ ggplot(pop_bubble) +
 # t-sne -------------------------------------------------------------------
 
 base_sel <- base %>%
-  filter(!(codmun %in% c(4300001, 4300002))) %>% # verificar depois
+  filter(!(codmun %in% c(4300001, 4300002))) %>% # verificar depois (as Lagoas do Rio Grande do Sul!)
   mutate(
     agro = agro / vab,
     indu = industria / vab,
@@ -306,13 +306,18 @@ base_sel <- base %>%
 base_sel2 <- base_sel %>% select(-codmun, -name_muni, -pop_cat) %>% distinct()
 base_sel2_scaled <- scale(base_sel2)
 
-tsne_results <- Rtsne(base_sel2_scaled, perplexity = 50)
+tsne_results <- Rtsne(base_sel2_scaled, perplexity = 40)
+
+library(pamr)
+
+base_pam <- pam(base_sel2, 10)
 
 #plot(tsne_results$Y[,1], tsne_results$Y[,2], main="t-SNE plot", xlab="", ylab="", pch=19, col = base_sel$pop_cat)
 
 base_comp <- base_sel
 base_comp$x <- tsne_results$Y[,1]
 base_comp$y <- tsne_results$Y[,2]
+base_comp$cluster <- base_pam$clustering
 
 regions <- data.frame(code_region = mun_seats$code_region, name_region = mun_seats$name_region) %>% distinct()
 
@@ -325,13 +330,13 @@ ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
   facet_wrap(~pop_cat) + 
   theme_bw()
 
-ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
+ggplot(base_comp) + geom_point(aes(x = x, y = y, color = as.character(cluster))) +
   #scale_color_discrete_qualitative(palette = "Set 2") +
   scale_x_continuous(limits = c(-45,45)) +
   scale_y_continuous(limits = c(-45,45)) +
   theme_bw()
 
-ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
+plot_tsne <- ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region), alpha = 0.5) +
   #scale_color_discrete_qualitative(palette = "Set 2") +
   scale_color_manual(values = c(
     'Centro Oeste' = '#FFB14E',
@@ -343,6 +348,20 @@ ggplot(base_comp) + geom_point(aes(x = x, y = y, color = name_region)) +
   scale_x_continuous(limits = c(-45,45)) +
   scale_y_continuous(limits = c(-45,45)) +
   theme_bw()
+
+base_centers <- base_comp %>% left_join(centers)
+plot_map <- ggplot(base_centers) + geom_point(aes(x = xc, y = yc, color = name_region), alpha = 0.5) +
+  #scale_color_discrete_qualitative(palette = "Set 2") +
+  scale_color_manual(values = c(
+    'Centro Oeste' = '#FFB14E',
+    'Sudeste' = '#FFB14E',
+    'Sul' = '#FFB14E',
+    'Nordeste' = '#0000FF',
+    'Norte' = '#0000FF'
+  )) +
+  theme_bw()
+
+plot_map
 
 #indicadoress
 ggplot(base_comp) + geom_point(aes(x = x, y = y, color = MORT1)) +
@@ -374,4 +393,9 @@ ggplot(base_comp) + geom_point(aes(x = x, y = y, color = pop_cat)) +
   theme_bw()
 
 
+# json --------------------------------------------------------------------
+
+base_json <- base_comp %>%
+  left_join(centers) %>%
+  jsonlite::write_json("base.json")
 

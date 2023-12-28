@@ -1,0 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+svg.map {
+    width: 600px;
+    height: 600px;
+}
