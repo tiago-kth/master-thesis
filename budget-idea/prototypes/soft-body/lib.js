@@ -65,7 +65,7 @@ class Particle {
         this.pos = pos;
         this.rad = rad;
         this.vel = new Vec( (Math.random() - 0.5), (Math.random() - 0.5) );
-        this.acc = new Vec( (Math.random() - 0.5) * 0.1, (Math.random() - 0.5) * 0.1 ); 
+        this.acc = new Vec( 0, .1); 
     }
 
     update() {
@@ -74,28 +74,28 @@ class Particle {
     }
 
     checkBounds() {
-        let opa = false;
+        //let opa = false;
         if ( (this.pos.x + this.rad) > W ) {
             this.pos.x = W - this.rad;
             this.vel.x *= -1;
-            opa = true;
+            //opa = true;
         } else if ( (this.pos.x - this.rad) < 0 ) {
             this.pos.x = this.rad;
             this.vel.x *= -1;
-            opa = true;
+            //opa = true;
         }
 
         if ( (this.pos.y + this.rad) > H ) {
             this.pos.y = H - this.rad;
             this.vel.y *= -1;
-            opa = true;
+            //opa = true;
         } else if ( (this.pos.y - this.rad) < 0 ) {
             this.pos.y = this.rad;
             this.vel.y *= -1;
-            opa = true;
+            //opa = true;
         }
 
-        if (opa) console.log("Opa!");
+        //if (opa) console.log("Opa!");
     }
 
     display(ctx) {
