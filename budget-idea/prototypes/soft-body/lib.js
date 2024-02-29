@@ -106,4 +106,18 @@ class Particle {
         ctx.closePath();
     }
 
+    displayVel(ctx) {
+
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = "tomato";
+        ctx.lineWidth = 3;
+        ctx.moveTo(this.pos.x, this.pos.y);
+        ctx.lineTo(this.pos.x + this.vel.x * 2, this.pos.y + this.vel.y * 2);
+        ctx.stroke();
+        ctx.restore();
+
+    }
+
 }
