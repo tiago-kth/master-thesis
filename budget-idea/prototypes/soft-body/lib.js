@@ -53,3 +53,30 @@ class Vec {
     }
 
 }
+
+class Particle {
+
+    pos;
+    vel;
+    acc;
+
+    constructor(pos) {
+        this.pos = pos;
+        this.vel = new Vec( (Math.random() - 0.5), (Math.random() - 0.5) );
+        this.acc = new Vec( (Math.random() - 0.5) * 0.1, (Math.random() - 0.5) * 0.1 ); 
+    }
+
+    update() {
+        this.vel.add(this.acc);
+        this.pos.add(this.vel);
+    }
+
+    display(ctx) {
+
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+    }
+
+}
