@@ -35,6 +35,30 @@ class Vec {
 
     }
 
+    sub(vec_b) {
+
+        this.x -= vec_b.x;
+        this.y -= vec_b.y;
+
+    }
+
+    getDifferenceVec(vec_b) {
+
+        const x = this.x - vec_b.x;
+        const y = this.y - vec_b.y;
+
+        return new Vec(x, y);
+
+    }
+
+    getUnitDirectionVector() {
+
+        const mod = this.mod();
+
+        return new Vec(this.x / mod, this.y / mod);
+
+    }
+
     mult(scalar) {
 
         this.x *= scalar;
@@ -68,6 +92,11 @@ class Particle {
         this.acc = new Vec( 0, .1); 
     }
 
+    applyAcc(array_of_accelerations) {
+        // to-do
+        // sum all acceleration vectors to get a resultant, and assign this vector to this.acc
+    }
+
     update() {
         this.vel.add(this.acc);
         this.pos.add(this.vel);
@@ -96,6 +125,25 @@ class Particle {
         }
 
         //if (opa) console.log("Opa!");
+    }
+
+    getDistanceFrom(particle) {
+
+        const difference_vector = this.pos.getDifferenceVec(particle.pos);
+        return difference_vector.mod();
+
+    }
+
+    checkCollisions(particles) {
+
+        particles.forEach(other_particle => {
+
+            if (this != other) {
+
+            }
+
+        })
+
     }
 
     display(ctx) {
