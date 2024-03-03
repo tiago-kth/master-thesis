@@ -66,6 +66,12 @@ class Vec {
 
     }
 
+    getDotProduct(vec_b) {
+
+        return this.x * vec_b.x + this.y * vec_b.y;
+
+    }
+
     /* this make it possible to use the utility function without instantiating an object */
     static fromAngle(ang) {
 
@@ -127,19 +133,45 @@ class Particle {
         //if (opa) console.log("Opa!");
     }
 
+    getDifferenceVecFrom(particle) {
+
+        // the basis for the direction and the distance
+        return this.pos.getDifferenceVec(particle.pos);
+
+    }
+
     getDistanceFrom(particle) {
 
-        const difference_vector = this.pos.getDifferenceVec(particle.pos);
+        const difference_vector = this.getDifferenceVecFrom(particle);
         return difference_vector.mod();
+
+    }
+
+    getDirectionFrom(particle) {
+
+        const difference_vector = this.getDifferenceVecFrom(particle);
+        return difference_vector.getUnitDirectionVector();
 
     }
 
     checkCollisions(particles) {
 
-        particles.forEach(other_particle => {
+        particles.forEach(that => {
 
-            if (this != other) {
+            if (this != that) {
 
+                const difference_vector = this.getDifferenceVecFrom(that);
+
+                const distance = difference_vector.mod();
+                const min_distance = this.rad + that.rad;
+
+                if (distance <= min_distance) {
+
+                    const normal = difference_vector.getUnitDirectionVector();
+
+                    const velocity_difference = this.vel.getDifferenceVec(that.vel);
+
+                }
             }
 
         })
