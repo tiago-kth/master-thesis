@@ -72,6 +72,28 @@ class Vec {
 
     }
 
+    getProjectionOn(vec_b) {
+
+        const unit_vec_b = vec_b.getUnitDirectionVector();
+        const dot_product = this.getDotProduct(vec_b);
+
+        return unit_vec_b.mult(dot_product);
+
+    }
+
+    draw(canvas) {
+
+        const ctx = canvas.getContext('2d');
+
+        const x0 = canvas.W / 2;
+        const y0 = canvas.H / 2;
+
+        
+
+
+
+    }
+
     /* this make it possible to use the utility function without instantiating an object */
     static fromAngle(ang) {
 
@@ -170,6 +192,17 @@ class Particle {
                     const normal = difference_vector.getUnitDirectionVector();
 
                     const velocity_difference = this.vel.getDifferenceVec(that.vel);
+
+                    const vel_difference_component_on_normal = velocity_difference.getDotProduct(normal);
+
+                    const impulse = new Vec(normal.x, normal.y);
+
+                    impulse.mult(1);//vel_difference_component_on_normal);
+
+                    //console.log(normal, velocity_difference, vel_difference_component_on_normal, this.vel, impulse);
+
+                    this.vel.add(impulse);
+                    that.vel.sub(impulse);
 
                 }
             }
