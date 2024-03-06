@@ -112,11 +112,15 @@ class Particle {
     vel;
     acc;
     rad;
+    mass;
+    hits;
 
     constructor(pos, rad) {
+        this.hits = 0;
         this.pos = pos;
         this.rad = rad;
-        this.vel = new Vec( (Math.random() - 0.5), (Math.random() - 0.5) );
+        this.mass = 1;//rad * rad;
+        this.vel = new Vec( 0.5 * (Math.random() - 0.5), 0.05 * (Math.random() - 0.5) );
         this.acc = new Vec( 0, .1); 
     }
 
@@ -178,6 +182,8 @@ class Particle {
 
     checkCollisions(particles) {
 
+        let count = 1;
+
         particles.forEach(that => {
 
             if (this != that) {
@@ -189,6 +195,11 @@ class Particle {
 
                 if (distance <= min_distance) {
 
+                    count++
+
+                    this.hits++
+                    that.hits++
+
                     const normal = difference_vector.getUnitDirectionVector();
 
                     const velocity_difference = this.vel.getDifferenceVec(that.vel);
@@ -196,13 +207,37 @@ class Particle {
                     const vel_difference_component_on_normal = velocity_difference.getDotProduct(normal);
 
                     const impulse = new Vec(normal.x, normal.y);
+                    //impulse.mult(vel_difference_component_on_normal);
+                   // if (count < 10) console.log(this.vel, that.vel, velocity_difference, normal, vel_difference_component_on_normal, impulse);
 
-                    impulse.mult(1);//vel_difference_component_on_normal);
+                    //impulse.mult( 2 * vel_difference_component_on_normal / (this.mass + that.mass) );//vel_difference_component_on_normal);
 
+                    //console.log(impulse.mod());
                     //console.log(normal, velocity_difference, vel_difference_component_on_normal, this.vel, impulse);
 
-                    this.vel.add(impulse);
-                    that.vel.sub(impulse);
+                    const impulse_this = new Vec(impulse.x, impulse.y);
+                    //impulse_this.mult( 1 / this.mass);
+                    this.vel.add(impulse_this);
+                    
+                    const impulse_that = new Vec(impulse.x, impulse.y);
+                    //impulse_that.mult( 1 / that.mass);
+                    that.vel.sub(impulse_that);
+
+                    // REPULSION, to avoi balls sticking together
+
+                    /*
+                    const repulsion = new Vec(normal.x, normal.y);
+                    repulsion.mult( min_distance - distance );
+
+                    const this_repulsion = new Vec( repulsion.x, repulsion.y );
+                    this_repulsion.mult( 1 / this.mass);
+
+                    const that_repulsion = new Vec( repulsion.x, repulsion.y );
+                    that_repulsion.mult( 1 / that.mass);
+
+                    this.pos.sub(this_repulsion);
+                    that.pos.add(that_repulsion);
+                    */
 
                 }
             }
@@ -215,7 +250,14 @@ class Particle {
 
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI * 2);
+        ctx.strokeStyle = "black";
+        let red;
+        if (this.hits > 255) red = 255;
+        else red = Math.floor(this.hits);
+        //console.log(red);
+        ctx.fillStyle = `rgb(${255} ${255-red} ${255-red})`;
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
     }
 

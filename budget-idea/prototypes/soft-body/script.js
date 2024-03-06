@@ -4,7 +4,7 @@ const ctx = cv.getContext('2d');
 
 const H = 500;
 const W = 500;
-const N_PARTICLES = 20;
+const N_PARTICLES = 10;
 
 const particles = [];
 
@@ -15,7 +15,7 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     const r = 10 + Math.random() * 10;
     const x = r + Math.random() * (W - 2 * r);
-    const y = r + Math.random() * (H - 2 * r);
+    const y = r + ( Math.random() ) * (H - 2 * r);
 
     particles.push(
         new Particle( new Vec(x, y), r)
@@ -32,6 +32,8 @@ function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
 }
 
+let anim;
+
 function loop() {
     clearCanvas();
 
@@ -43,7 +45,7 @@ function loop() {
         p.displayVel(ctx);
     })
     count++
-    /*if (count < 100)*/ window.requestAnimationFrame(loop);
+    /*if (count < 100)*/ anim = window.requestAnimationFrame(loop);
 }
 
-window.requestAnimationFrame(loop);
+anim = window.requestAnimationFrame(loop);
