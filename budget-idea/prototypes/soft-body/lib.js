@@ -119,7 +119,7 @@ class Particle {
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
-        this.mass = 1;//rad * rad;
+        this.mass = rad * rad / 200;
         this.vel = new Vec( 0.5 * (Math.random() - 0.5), 0.05 * (Math.random() - 0.5) );
         this.acc = new Vec( 0, .1); 
     }
@@ -216,11 +216,11 @@ class Particle {
                     //console.log(normal, velocity_difference, vel_difference_component_on_normal, this.vel, impulse);
 
                     const impulse_this = new Vec(impulse.x, impulse.y);
-                    //impulse_this.mult( 1 / this.mass);
+                    impulse_this.mult( .98 / this.mass);
                     this.vel.add(impulse_this);
                     
                     const impulse_that = new Vec(impulse.x, impulse.y);
-                    //impulse_that.mult( 1 / that.mass);
+                    impulse_that.mult( .98 / that.mass);
                     that.vel.sub(impulse_that);
 
                     // REPULSION, to avoi balls sticking together
