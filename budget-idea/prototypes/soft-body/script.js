@@ -49,3 +49,17 @@ function loop() {
 }
 
 anim = window.requestAnimationFrame(loop);
+
+// interac
+
+const stopBTN = document.querySelector('[data-btn="stop"]');
+stopBTN.addEventListener('click', e => {
+    if (e.target.innerText == 'stop') {
+        e.target.innerText = "resume";
+        window.cancelAnimationFrame(anim);
+    } else {
+        e.target.innerText = "stop";
+        anim = window.requestAnimationFrame(loop);
+    }
+    
+})
