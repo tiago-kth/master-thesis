@@ -121,7 +121,7 @@ class Particle {
         this.rad = rad;
         this.mass = rad * rad / 200;
         this.vel = new Vec( 0.5 * (Math.random() - 0.5), 0.05 * (Math.random() - 0.5) );
-        this.acc = new Vec( 0, .1); 
+        this.acc = new Vec( 0, .3); 
     }
 
     applyAcc(array_of_accelerations) {
@@ -131,7 +131,7 @@ class Particle {
 
     limitSpeed() {
         const speed = this.vel.mod();
-        if (speed > 10) this.vel.mult(10 / speed);
+        if (speed > 8) this.vel.mult(8 / speed);
     }
 
     update() {
@@ -232,20 +232,21 @@ class Particle {
 
                     // REPULSION, to avoid balls sticking together
 
-                    /*
+                    
                     const repulsion = new Vec(normal.x, normal.y);
+                    console.log(distance / min_distance);
                     repulsion.mult( min_distance - distance );
 
                     const this_repulsion = new Vec( repulsion.x, repulsion.y );
-                    //this_repulsion.mult( 1 / 2);
+                    this_repulsion.mult( 1 / this.rad);
 
                     const that_repulsion = new Vec( repulsion.x, repulsion.y );
-                    //that_repulsion.mult( 1 / 2);
+                    that_repulsion.mult( 1 / that.rad);
 
                     this.pos.sub(this_repulsion);
                     that.pos.add(that_repulsion);
 
-                    */
+                    
                     
 
                 }
