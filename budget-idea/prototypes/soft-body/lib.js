@@ -230,21 +230,23 @@ class Particle {
                     impulse_that.mult( .98 / that.mass);
                     that.vel.sub(impulse_that);
 
-                    // REPULSION, to avoi balls sticking together
+                    // REPULSION, to avoid balls sticking together
 
                     /*
                     const repulsion = new Vec(normal.x, normal.y);
                     repulsion.mult( min_distance - distance );
 
                     const this_repulsion = new Vec( repulsion.x, repulsion.y );
-                    this_repulsion.mult( 1 / this.mass);
+                    //this_repulsion.mult( 1 / 2);
 
                     const that_repulsion = new Vec( repulsion.x, repulsion.y );
-                    that_repulsion.mult( 1 / that.mass);
+                    //that_repulsion.mult( 1 / 2);
 
                     this.pos.sub(this_repulsion);
                     that.pos.add(that_repulsion);
+
                     */
+                    
 
                 }
             }
