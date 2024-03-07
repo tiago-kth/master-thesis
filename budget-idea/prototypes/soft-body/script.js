@@ -13,7 +13,7 @@ cv.height = H;
 
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
-    const r = 10 + Math.random() * 10;
+    const r = 5 + Math.random() * 10;
     const x = r + Math.random() * (W - 2 * r);
     const y = r + ( Math.random() ) * (H - 2 * r);
 

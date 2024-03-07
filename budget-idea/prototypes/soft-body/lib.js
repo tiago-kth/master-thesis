@@ -129,9 +129,16 @@ class Particle {
         // sum all acceleration vectors to get a resultant, and assign this vector to this.acc
     }
 
+    limitSpeed() {
+        const speed = this.vel.mod();
+        if (speed > 10) this.vel.mult(10 / speed);
+    }
+
     update() {
         this.vel.add(this.acc);
         this.pos.add(this.vel);
+        this.limitSpeed();
+
     }
 
     checkBounds() {
