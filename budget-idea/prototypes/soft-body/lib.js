@@ -106,6 +106,75 @@ class Vec {
 
 }
 
+class Grid {
+
+    w; h;
+    cell_size;
+    nCols;
+    nRows;
+
+    cells = [];
+
+    constructor(w, h, cell_size, ctx) {
+
+        this.ctx = ctx;
+
+        this.w = w;
+        this.h = h;
+
+        this.cell_size = cell_size;
+
+        this.nRows = Math.ceil(h / cell_size);
+        this.nCols = Math.ceil(w / cell_size);
+
+        for (let i = 0; i < this.nCols; i++) {
+            
+            this.cells[i] = [];
+            
+            for (let j = 0; j < this.nRows; j++) {
+
+                this.cells[i][j] = [];
+
+            }
+        }
+
+    }
+
+    display() {
+
+        this.ctx.save();
+        this.ctx.strokeStyle = "blue";
+
+        for (let i = 0; i < this.nCols; i++) {
+
+            const x = i * this.cell_size;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.h);
+            this.ctx.stroke();
+            
+        }
+
+        for (let j = 0; j < this.nRows; j++) {
+
+            const y = j * this.cell_size;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.w, y);
+            this.ctx.stroke();
+
+        }
+
+        this.ctx.restore();
+
+    }
+
+
+
+}
+
 class Particle {
 
     pos;
