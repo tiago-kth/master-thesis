@@ -33,13 +33,22 @@ function clearCanvas() {
 }
 
 let anim;
+let t_ant = 0;
 
-function loop() {
+function loop(t) {
+
+    if (!t_ant) t_ant = t;
+
+    //the highest precision available is the duration of a single frame, 16.67ms @60hz
+    const dT = t - t_ant;
+    t_ant = t;
+
+    //console.log(dT);
     clearCanvas();
 
     particles.forEach(p => {
         p.checkBounds();
-        p.update();
+        p.update(dT);
         p.checkCollisions(particles);
         p.display(ctx);
         p.displayVel(ctx);

@@ -134,8 +134,10 @@ class Particle {
         if (speed > 8) this.vel.mult(8 / speed);
     }
 
-    update() {
+    update(dT) {
+        //this.acc.mult(dT);
         this.vel.add(this.acc);
+        //this.vel.mult(dT/25);
         this.pos.add(this.vel);
         this.limitSpeed();
 
@@ -234,7 +236,7 @@ class Particle {
 
                     
                     const repulsion = new Vec(normal.x, normal.y);
-                    console.log(distance / min_distance);
+                    //console.log(distance / min_distance);
                     repulsion.mult( min_distance - distance );
 
                     const this_repulsion = new Vec( repulsion.x, repulsion.y );
