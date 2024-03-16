@@ -55,6 +55,7 @@ function loop(t) {
     particles.forEach( (p, i) => {
         p.checkBounds();
         p.update(dT);
+        
         p.checkCollisions(particles);
         if (i == 0) p.displayGridCell(ctx);
         p.display(ctx);

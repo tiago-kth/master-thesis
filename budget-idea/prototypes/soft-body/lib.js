@@ -160,6 +160,50 @@ class Grid {
         
     }
 
+    getNeighbours(particle) {
+
+        const [x, y, r] = [particle.pos.x, particle.pos.y, particle.rad];
+
+        const l = this.cell_size;
+
+        const top_left = [
+            Math.floor( (x-r) / l ),
+            Math.floor( (y-r) / l )
+        ];
+
+        const bottom_right = [
+            Math.floor( (x+r) / l ),
+            Math.floor( (y+r) / l )
+        ];
+
+        console.log(x, y, r, top_left, bottom_right);
+
+        let neighbours = [];
+
+        for (let i = top_left[0]; i <= bottom_right[0]; i++) {
+            for (let j = top_left[1]; j <= bottom_right[1]; j++) {
+
+                // out of bounds test
+                if (i < 0 || j < 0 || i >= this.nCols || j >= this.nRows) continue
+                
+                const cell = this.cells[i][j];
+                
+                cell.forEach(p => {
+
+                    // avoiding adding the particle itself
+
+                    if (p != particle) neighbours.push(p)
+
+                })
+
+            }
+        
+        }
+
+        return neighbours;
+
+    }
+
     /*
     displayParticleCell(particle) {
 
