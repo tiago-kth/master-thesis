@@ -154,9 +154,17 @@ class Grid {
         const [col, row] = particle.getGridPos();
         const cell = this.cells[col][row];
 
-        const particle_index_in_the_cell = cell.indexOf(particle);
+        console.log(col, row, cell, particle);
 
-        cell.splice(particle_index_in_the_cell, 1);
+        if (cell.length > 0) {
+
+            const particle_index_in_the_cell = cell.indexOf(particle);
+
+            cell.splice(particle_index_in_the_cell, 1);
+
+        } else {
+            console.log('empty cell');
+        }
         
     }
 
