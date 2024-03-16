@@ -191,10 +191,14 @@ class Grid {
         for (let i = top_left[0]; i <= bottom_right[0]; i++) {
             for (let j = top_left[1]; j <= bottom_right[1]; j++) {
 
+                console.log(i,j);
+
                 // out of bounds test
                 if (i < 0 || j < 0 || i >= this.nCols || j >= this.nRows) continue
                 
                 const cell = this.cells[i][j];
+
+                console.log(cell);
                 
                 cell.forEach(p => {
 
@@ -267,6 +271,8 @@ class Grid {
 
 class Particle {
 
+    index;
+
     pos;
     vel;
     acc;
@@ -279,7 +285,8 @@ class Particle {
     cell_row;
     changed_cell = false;
 
-    constructor(pos, rad, grid) {
+    constructor(pos, rad, grid, index) {
+        this.index = index;
         this.grid = grid;
         this.hits = 0;
         this.pos = pos;
@@ -476,6 +483,9 @@ class Particle {
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
+        ctx.font = "14px Serif";
+        ctx.fillStyle = "black";
+        ctx.fillText(this.index, this.pos.x, this.pos.y);
     }
 
     displayVel(ctx) {

@@ -19,7 +19,7 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
     const x = r + Math.random() * (W - 2 * r);
     const y = r + ( Math.random() ) * (H - 2 * r);
 
-    const p = new Particle( new Vec(x, y), r, grid );
+    const p = new Particle( new Vec(x, y), r, grid, i );
     p.updateGridPos(); // we could include the grid in the particle constructor...
     grid.addParticle(p);
 
