@@ -140,6 +140,16 @@ class Grid {
 
     }
 
+    addParticle(particle) {
+
+        let col = Math.floor( particle.pos.x / this.cell_size);
+        let row = Math.floor( particle.pos.y / this.cell_size);
+          
+        this.cells[col][row].push(particle)
+        particle.gridCell = { col: col_idx, row: row_idx }
+
+    }
+
     display() {
 
         this.ctx.save();
