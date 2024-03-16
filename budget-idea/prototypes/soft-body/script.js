@@ -11,15 +11,19 @@ const particles = [];
 cv.width = W;
 cv.height = H;
 
+const grid = new Grid(W, H, 100, ctx);
+
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     const r = 5 + Math.random() * 10;
     const x = r + Math.random() * (W - 2 * r);
     const y = r + ( Math.random() ) * (H - 2 * r);
 
-    particles.push(
-        new Particle( new Vec(x, y), r)
-    )
+    const p = new Particle( new Vec(x, y), r, grid );
+    p.updateGridPos(); // we could include the grid in the particle constructor...
+    grid.addParticle(p);
+
+    particles.push(p)
 
 }
 
@@ -46,10 +50,13 @@ function loop(t) {
     //console.log(dT);
     clearCanvas();
 
-    particles.forEach(p => {
+    grid.display();
+
+    particles.forEach( (p, i) => {
         p.checkBounds();
         p.update(dT);
         p.checkCollisions(particles);
+        if (i == 0) p.displayGridCell(ctx);
         p.display(ctx);
         p.displayVel(ctx);
     })

@@ -142,11 +142,10 @@ class Grid {
 
     addParticle(particle) {
 
-        let col = Math.floor( particle.pos.x / this.cell_size);
-        let row = Math.floor( particle.pos.y / this.cell_size);
+        const [col, row] = particle.getGridPos();
           
         this.cells[col][row].push(particle)
-        particle.updateGridPos(col, row);
+        //particle.updateGridPos(col, row);
 
     }
 
@@ -160,6 +159,24 @@ class Grid {
         cell.splice(particle_index_in_the_cell, 1);
         
     }
+
+    /*
+    displayParticleCell(particle) {
+
+        const [col, row] = particle.getGridPos();
+        const cell = this.cells[col][row];)
+
+        const l = this.cell_size;
+        const x = l * col;
+        const y = l * row;
+
+        this.ctx.save();
+        this.ctx.fillStyle = "lightgreen";
+        
+        this.ctx.fillRect(x, y, l, l);
+        this.ctx.restore();
+
+    }*/
 
     display() {
 
@@ -205,12 +222,13 @@ class Particle {
     mass;
     hits;
 
+    grid;
     cell_col;
     cell_row;
-
     changed_cell = false;
 
-    constructor(pos, rad) {
+    constructor(pos, rad, grid) {
+        this.grid = grid;
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
@@ -234,6 +252,7 @@ class Particle {
         this.vel.add(this.acc);
         //this.vel.mult(dT/25);
         this.pos.add(this.vel);
+        this.updateGridPos();
         this.limitSpeed();
 
     }
@@ -353,12 +372,24 @@ class Particle {
 
     }
 
-    updateGridPos(col, row) {
+    updateGridPos() {
 
-        this.changed_cell = !( (col == this.col) & (row == this.row) );
+        let col = Math.floor( this.pos.x / this.grid.cell_size);
+        let row = Math.floor( this.pos.y / this.grid.cell_size);
 
-        this.cell_col = col;
-        this.cell_row = row;
+        if ( (col == this.cell_col) & (row == this.cell_row) ) {
+
+            this.changed_cell = false;
+
+        } else {
+
+            this.cell_col = col;
+            this.cell_row = row;
+
+            this.changed_cell = true;
+
+        }
+
     }
 
     getGridPos() {
@@ -392,6 +423,22 @@ class Particle {
         ctx.stroke();
         ctx.restore();
 
+    }
+
+    displayGridCell(ctx) {
+
+        const l = this.grid.cell_size;
+        const x = l * this.cell_col;
+        const y = l * this.cell_row;
+
+        //console.log(this.cell_col, this.cell_row, this.changed_cell);
+
+        ctx.save();
+        ctx.fillStyle = "lightgreen";
+        
+        ctx.fillRect(x, y, l, l);
+        ctx.restore();
+    
     }
 
 }
