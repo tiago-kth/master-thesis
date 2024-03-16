@@ -146,8 +146,19 @@ class Grid {
         let row = Math.floor( particle.pos.y / this.cell_size);
           
         this.cells[col][row].push(particle)
-        particle.gridCell = { col: col_idx, row: row_idx }
+        particle.updateGridPos(col, row);
 
+    }
+
+    removeParticle(particle) {
+
+        const [col, row] = particle.getGridPos();
+        const cell = this.cells[col][row];
+
+        const particle_index_in_the_cell = cell.indexOf(particle);
+
+        cell.splice(particle_index_in_the_cell, 1);
+        
     }
 
     display() {
@@ -193,6 +204,11 @@ class Particle {
     rad;
     mass;
     hits;
+
+    cell_col;
+    cell_row;
+
+    changed_cell = false;
 
     constructor(pos, rad) {
         this.hits = 0;
@@ -335,6 +351,18 @@ class Particle {
 
         })
 
+    }
+
+    updateGridPos(col, row) {
+
+        this.changed_cell = !( (col == this.col) & (row == this.row) );
+
+        this.cell_col = col;
+        this.cell_row = row;
+    }
+
+    getGridPos() {
+        return [this.cell_col, this.cell_row];
     }
 
     display(ctx) {
