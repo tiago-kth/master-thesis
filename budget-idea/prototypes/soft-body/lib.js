@@ -154,7 +154,7 @@ class Grid {
         const [col, row] = particle.getGridPos();
         const cell = this.cells[col][row];
 
-        console.log(col, row, cell, particle);
+        //console.log(col, row, cell, particle);
 
         if (cell.length > 0) {
 
@@ -304,7 +304,7 @@ class Particle {
         this.vel.add(this.acc);
         //this.vel.mult(dT/25);
         this.pos.add(this.vel);
-        this.updateGridPos();
+        //this.updateGridPos();
         this.limitSpeed();
 
     }

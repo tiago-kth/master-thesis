@@ -53,8 +53,9 @@ function loop(t) {
     grid.display();
 
     particles.forEach( (p, i) => {
-        p.checkBounds();
         p.update(dT);
+        p.checkBounds();
+        p.updateGridPos();
 
         // update grid information, if the particle changed cell
         if ( p.getChangedCell() ) {
