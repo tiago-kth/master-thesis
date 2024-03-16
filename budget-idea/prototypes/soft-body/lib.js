@@ -452,18 +452,29 @@ class Particle {
         return this.changed_cell;
     }
 
-    display(ctx) {
+    display(ctx, highlight = false) {
 
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI * 2);
+
+        ctx.lineWidth = 1;
         ctx.strokeStyle = "black";
-        let red;
-        if (this.hits > 255) red = 255;
-        else red = Math.floor(this.hits);
+        ctx.fillStyle = "khaki";
+        //let red;
+        //if (this.hits > 255) red = 255;
+        //else red = Math.floor(this.hits);
         //console.log(red);
-        ctx.fillStyle = `rgb(${255} ${255-red} ${255-red})`;
         ctx.fill();
+        if (highlight) {
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = "hotpink";
+            ctx.fillStyle = "hotpink";
+        } else {
+
+            //ctx.fillStyle = `rgb(${255} ${255-red} ${255-red})`;
+        }
         ctx.stroke();
+        ctx.fill();
         ctx.closePath();
     }
 

@@ -65,7 +65,7 @@ function loop(t) {
 
         p.checkCollisions(particles);
         if (i == 0) p.displayGridCell(ctx);
-        p.display(ctx);
+        p.display(ctx, i == 0);
         p.displayVel(ctx);
     })
     count++
