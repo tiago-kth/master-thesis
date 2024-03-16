@@ -440,6 +440,10 @@ class Particle {
         return [this.cell_col, this.cell_row];
     }
 
+    getChangedCell() {
+        return this.changed_cell;
+    }
+
     display(ctx) {
 
         ctx.beginPath();
