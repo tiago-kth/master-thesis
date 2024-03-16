@@ -55,7 +55,13 @@ function loop(t) {
     particles.forEach( (p, i) => {
         p.checkBounds();
         p.update(dT);
-        
+
+        // update grid information, if the particle changed cell
+        if ( p.getChangedCell() ) {
+            grid.removeParticle(p);
+            grid.addParticle(p);
+        }
+
         p.checkCollisions(particles);
         if (i == 0) p.displayGridCell(ctx);
         p.display(ctx);
