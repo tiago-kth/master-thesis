@@ -144,11 +144,11 @@ class Grid {
 
         const [col, row] = particle.getGridPos();
 
-        console.log('Célula (', col, ',', row, ') ', this.cells[col][row]);
+        //console.log('Célula (', col, ',', row, ') ', this.cells[col][row]);
           
         this.cells[col][row].push(particle);
 
-        console.log('Adicionada a particula ', particle.index, ' à célula (', col, ',', row, ') ', this.cells[col][row]);
+        //console.log('Adicionada a particula ', particle.index, ' à célula (', col, ',', row, ') ', this.cells[col][row]);
 
         //particle.updateGridPos(col, row);
 
@@ -156,22 +156,22 @@ class Grid {
 
     removeParticle(particle) {
 
-        const [col, row] = particle.getGridPos();
+        const [col, row] = particle.getPreviousGridPos(); // getting the previous grid position because we're calling this method only if the particle changed cell, and the its currents grid position corresponds to the new cell, not the last one, from which it needs to be removed.
         const cell = this.cells[col][row];
 
-        console.log('Removendo particula ', particle.index, ' da célula (', col, ',', row, ')');
+        //console.log('Removendo particula ', particle.index, ' da célula (', col, ',', row, ')');
 
         if (cell.length > 0) {
 
             const particle_index_in_the_cell = cell.indexOf(particle);
 
-            console.log('antes splice', cell, this.cells[col][row], particle_index_in_the_cell);
+            //console.log('antes splice', cell, this.cells[col][row], particle_index_in_the_cell);
 
             cell.splice(particle_index_in_the_cell, 1);
-            console.log('depois splice', cell, this.cells[col][row]);
+            //console.log('depois splice', cell, this.cells[col][row]);
 
         } else {
-            console.log(particle.index, col, row, cell, this.cells[col][row], 'empty cell');
+            //console.log(particle.index, col, row, cell, this.cells[col][row], 'empty cell');
         }
         
     }
@@ -292,6 +292,8 @@ class Particle {
     cell_col;
     cell_row;
     changed_cell = false;
+    previous_cell_col;
+    previous_cell_row;
 
     constructor(pos, rad, grid, index) {
         this.index = index;
@@ -450,6 +452,10 @@ class Particle {
 
         } else {
 
+            // saving the last cell indices to remove the particle from the proper cell -- the previous one;
+            this.cell_previous_row = this.cell_row;
+            this.cell_previous_col = this.cell_col;
+
             this.cell_col = col;
             this.cell_row = row;
 
@@ -459,6 +465,11 @@ class Particle {
             //this.grid.addParticle(this);
 
         }
+
+    }
+
+    getPreviousGridPos() {
+        return [this.cell_previous_col, this.cell_previous_row];
 
     }
 
