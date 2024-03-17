@@ -541,3 +541,32 @@ class Particle {
     }
 
 }
+
+class Spring {
+
+    pA;
+    pB;
+    rest_len;
+    stiffness;
+
+    constructor(pA, pB, rest_len, stiffness) {
+
+        this.pA = pA;
+        this.pB = pB;
+        this.rest_len = rest_len;
+        this.stiffness = stiffness;
+
+    }
+
+    display(ctx) {
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(this.pA.pos.x, this.pA.pos.y);
+        ctx.lineTo(this.pB.pos.x, this.pB.pos.y);
+        ctx.stroke();
+        ctx.restore();
+
+    }
+
+}
