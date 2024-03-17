@@ -28,7 +28,7 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
 
 }
 
-const spring = new Spring(particles[0], particles[1], 1, 1);
+const spring = new Spring(particles[0], particles[1], 0.01);
 
 console.log(grid.cells);
 
@@ -64,6 +64,8 @@ function loop(t) {
 
     grid.display();
 
+    spring.update();
+
     particles.forEach( (p, i) => {
         p.update(dT);
         p.checkBounds();
@@ -80,7 +82,7 @@ function loop(t) {
 
         const neighbours = grid.getNeighbours(p);
 
-        p.checkCollisions(neighbours);
+        //p.checkCollisions(neighbours);
         if (i == 0) {
             //p.displayGridCell(ctx);
             neighbours.forEach(n => n.displayGridCell(ctx));
@@ -88,6 +90,7 @@ function loop(t) {
         p.display(ctx);
         //p.displayVel(ctx);
     })
+
     spring.display(ctx);
     count++
 

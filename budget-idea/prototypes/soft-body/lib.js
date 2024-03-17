@@ -301,7 +301,7 @@ class Particle {
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
-        this.mass = rad * rad / 200;
+        this.mass = rad * rad / 1;
         this.vel = new Vec( 0.5 * (Math.random() - 0.5), 0.05 * (Math.random() - 0.5) );
         this.acc = new Vec( 0, .3); 
     }
@@ -554,11 +554,13 @@ class Spring {
     rest_len;
     stiffness;
 
-    constructor(pA, pB, rest_len, stiffness) {
+    constructor(pA, pB, stiffness) {
 
         this.pA = pA;
         this.pB = pB;
-        this.rest_len = rest_len;
+
+        const difference_vector = this.pA.pos.getDifferenceVec(this.pB.pos);
+        this.rest_len = difference_vector.mod();;
         this.stiffness = stiffness;
 
     }
@@ -582,8 +584,8 @@ class Spring {
         const f_el_vector_inv = new Vec(direction_vector.x, direction_vector.y);
         f_el_vector_inv.mult(f_el * -1);
 
-        this.pA.addForce(f_el_vector);
-        this.pB.addForce(f_el_vector_inv);
+        this.pA.addForce(f_el_vector_inv);
+        this.pB.addForce(f_el_vector);
 
     }
 
