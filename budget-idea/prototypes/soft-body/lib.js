@@ -192,21 +192,21 @@ class Grid {
             Math.floor( (y+r) / l )
         ];
 
-        console.log(x, y, r, top_left, bottom_right);
+        //console.log(x, y, r, top_left, bottom_right);
 
         let neighbours = [];
 
         for (let i = top_left[0]; i <= bottom_right[0]; i++) {
             for (let j = top_left[1]; j <= bottom_right[1]; j++) {
 
-                console.log(i,j);
+                //console.log(i,j);
 
                 // out of bounds test
                 if (i < 0 || j < 0 || i >= this.nCols || j >= this.nRows) continue
                 
                 const cell = this.cells[i][j];
 
-                console.log(cell);
+                //console.log(cell);
                 
                 cell.forEach(p => {
 
