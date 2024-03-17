@@ -558,6 +558,27 @@ class Spring {
 
     }
 
+    update() {
+
+        const difference_vector = this.pA.pos.getDifferenceVec(this.pB.pos);
+        const direction_vector = difference_vector.getUnitDirectionVector();
+
+        const actual_length = difference_vector.mod();
+
+        console.log(actual_length);
+
+        const deform = actual_length - this.rest_len;
+
+        const f_el = this.stiffness * deform;
+
+        const f_el_vector = new Vec(direction_vector.x, direction_vector.y);
+        f_el_vector.mult(f_el);
+
+        const f_el_vector_inv = new Vec(direction_vector.x, direction_vector.y);
+        f_el_vector_inv.mult(f_el * -1);
+
+    }
+
     display(ctx) {
 
         ctx.save();
