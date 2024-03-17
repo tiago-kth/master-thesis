@@ -582,6 +582,9 @@ class Spring {
         const f_el_vector_inv = new Vec(direction_vector.x, direction_vector.y);
         f_el_vector_inv.mult(f_el * -1);
 
+        this.pA.addForce(f_el_vector);
+        this.pB.addForce(f_el_vector_inv);
+
     }
 
     display(ctx) {
