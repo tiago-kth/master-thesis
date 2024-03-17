@@ -311,6 +311,11 @@ class Particle {
         // sum all acceleration vectors to get a resultant, and assign this vector to this.acc
     }
 
+    addForce(f) {
+        f.mult(1/this.mass);
+        this.acc.add(f);
+    }
+
     limitSpeed() {
         const speed = this.vel.mod();
         if (speed > 8) this.vel.mult(8 / speed);
