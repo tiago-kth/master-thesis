@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+canvas {
+    width: 500px;
+    height: 500px;
+    border: 2px solid tomato;
+}
+
+.container-buttons {
+    display: block;
+}
