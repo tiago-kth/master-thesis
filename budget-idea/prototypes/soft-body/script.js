@@ -79,7 +79,10 @@ function loop(t) {
         const neighbours = grid.getNeighbours(p);
 
         p.checkCollisions(neighbours);
-        if (i == 0) p.displayGridCell(ctx);
+        if (i == 0) {
+            //p.displayGridCell(ctx);
+            neighbours.forEach(n => n.displayGridCell(ctx));
+        }
         p.display(ctx, i == 0);
         p.displayVel(ctx);
     })
