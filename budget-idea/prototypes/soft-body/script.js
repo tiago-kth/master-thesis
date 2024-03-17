@@ -4,18 +4,18 @@ const ctx = cv.getContext('2d');
 
 const H = 500;
 const W = 500;
-const N_PARTICLES = 10;
+const N_PARTICLES = 100;
 
 const particles = [];
 
 cv.width = W;
 cv.height = H;
 
-const grid = new Grid(W, H, 100, ctx);
+const grid = new Grid(W, H, 50, ctx);
 
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
-    const r = 5 + Math.random() * 10;
+    const r = 5 + Math.random() * 5;
     const x = r + Math.random() * (W - 2 * r);
     const y = r + ( Math.random() ) * (H - 2 * r);
 
@@ -76,7 +76,9 @@ function loop(t) {
             //console.log('Particula ', p.index, ' NÃO mudou de célula');
         }
 
-        p.checkCollisions(particles);
+        const neighbours = grid.getNeighbours(p);
+
+        p.checkCollisions(neighbours);
         if (i == 0) p.displayGridCell(ctx);
         p.display(ctx, i == 0);
         p.displayVel(ctx);
