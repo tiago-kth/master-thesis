@@ -22,10 +22,13 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
     const p = new Particle( new Vec(x, y), r, grid, i );
     p.updateGridPos(); // we could include the grid in the particle constructor...
     grid.addParticle(p);
+    //console.log('Inicio ', p.index, p.cell_col, p.cell_row);
 
     particles.push(p)
 
 }
+
+console.log(grid.cells);
 
 //const p = new Particle(new Vec(200,200), 5);
 //console.log(p);
@@ -59,8 +62,11 @@ function loop(t) {
 
         // update grid information, if the particle changed cell
         if ( p.getChangedCell() ) {
+            console.log('Particula ', p.index, ' mudou de célula');
             grid.removeParticle(p);
             grid.addParticle(p);
+        } else {
+            //console.log('Particula ', p.index, ' NÃO mudou de célula');
         }
 
         p.checkCollisions(particles);
@@ -69,10 +75,11 @@ function loop(t) {
         p.displayVel(ctx);
     })
     count++
-    /*if (count < 100)*/ anim = window.requestAnimationFrame(loop);
+    ///*if (count < 100)*/ anim = window.requestAnimationFrame(loop);
 }
 
-anim = window.requestAnimationFrame(loop);
+//anim = window.requestAnimationFrame(loop);
+loop();
 
 // interac
 

@@ -143,8 +143,13 @@ class Grid {
     addParticle(particle) {
 
         const [col, row] = particle.getGridPos();
+
+        console.log('Célula (', col, ',', row, ') ', this.cells[col][row]);
           
-        this.cells[col][row].push(particle)
+        this.cells[col][row].push(particle);
+
+        console.log('Adicionada a particula ', particle.index, ' à célula (', col, ',', row, ') ', this.cells[col][row]);
+
         //particle.updateGridPos(col, row);
 
     }
@@ -154,16 +159,19 @@ class Grid {
         const [col, row] = particle.getGridPos();
         const cell = this.cells[col][row];
 
-        //console.log(col, row, cell, particle);
+        console.log('Removendo particula ', particle.index, ' da célula (', col, ',', row, ')');
 
         if (cell.length > 0) {
 
             const particle_index_in_the_cell = cell.indexOf(particle);
 
+            console.log('antes splice', cell, this.cells[col][row], particle_index_in_the_cell);
+
             cell.splice(particle_index_in_the_cell, 1);
+            console.log('depois splice', cell, this.cells[col][row]);
 
         } else {
-            console.log('empty cell');
+            console.log(particle.index, col, row, cell, this.cells[col][row], 'empty cell');
         }
         
     }
@@ -446,6 +454,9 @@ class Particle {
             this.cell_row = row;
 
             this.changed_cell = true;
+
+            //this.grid.removeParticle(this);
+            //this.grid.addParticle(this);
 
         }
 
