@@ -81,6 +81,23 @@ class Vec {
 
     }
 
+    display(p0, ctx) {
+
+        ctx.save();
+        ctx.moveTo(p0.x, p0.y);
+
+        const p1 = new Vec(p0.x, p0.y);
+        p1.add(this);
+        //console.log(p0, p1);
+
+        ctx.lineTo(p1.x, p1.y);
+        ctx.strokeStyle = 'yellow';
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.restore();
+
+    }
+
     draw(canvas) {
 
         const ctx = canvas.getContext('2d');
@@ -245,7 +262,7 @@ class Grid {
     display() {
 
         this.ctx.save();
-        this.ctx.strokeStyle = "blue";
+        this.ctx.strokeStyle = "ghostwhite";
 
         for (let i = 0; i < this.nCols; i++) {
 
@@ -295,15 +312,15 @@ class Particle {
     previous_cell_col;
     previous_cell_row;
 
-    constructor(pos, rad, grid, index) {
+    constructor(pos, rad, grid, index, mass) {
         this.index = index;
         this.grid = grid;
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
-        this.mass = rad * rad / 1;
-        this.vel = new Vec( 0.5 * (Math.random() - 0.5), 0.05 * (Math.random() - 0.5) );
-        this.acc = new Vec( 0, .3); 
+        this.mass = mass;
+        this.vel = new Vec( 0, 0 );
+        this.acc = new Vec( 0, .02); 
     }
 
     applyAcc(array_of_accelerations) {
@@ -318,13 +335,13 @@ class Particle {
 
     limitSpeed() {
         const speed = this.vel.mod();
-        if (speed > 8) this.vel.mult(8 / speed);
+        if (speed > 5) this.vel.mult(5 / speed);
     }
 
     update(dT) {
-        //this.acc.mult(dT);
+        this.acc.mult(1);
         this.vel.add(this.acc);
-        //this.vel.mult(dT/25);
+        this.vel.mult(1);
         this.pos.add(this.vel);
         //this.updateGridPos();
         this.limitSpeed();
@@ -492,7 +509,7 @@ class Particle {
         ctx.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI * 2);
 
         ctx.lineWidth = 1;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "goldenrod";
         ctx.fillStyle = "khaki";
         //let red;
         //if (this.hits > 255) red = 255;
@@ -553,8 +570,9 @@ class Spring {
     pB;
     rest_len;
     stiffness;
+    damping;
 
-    constructor(pA, pB, stiffness) {
+    constructor(pA, pB, rest_len, stiffness) {
 
         this.pA = pA;
         this.pB = pB;
@@ -563,16 +581,18 @@ class Spring {
         this.rest_len = difference_vector.mod();;
         this.stiffness = stiffness;
 
+        this.damping = .8;
+
     }
 
-    update() {
+    update(ctx) {
 
         const difference_vector = this.pA.pos.getDifferenceVec(this.pB.pos);
         const direction_vector = difference_vector.getUnitDirectionVector();
 
         const actual_length = difference_vector.mod();
 
-        console.log(actual_length);
+        //console.log(actual_length);
 
         const deform = actual_length - this.rest_len;
 
@@ -587,11 +607,30 @@ class Spring {
         this.pA.addForce(f_el_vector_inv);
         this.pB.addForce(f_el_vector);
 
+        //f_el_vector.display(this.pA.pos, ctx);
+        //f_el_vector_inv.display(this.pB.pos, ctx);
+        //console.log(f_el_vector);
+
+        // damping force
+        const dampingForce = new Vec(this.pA.vel.x, this.pA.vel.y);
+        dampingForce.mult(this.damping);
+
+        const dampingForce_inv = new Vec(dampingForce.x, dampingForce.y);
+        dampingForce_inv.mult(-1);
+
+        //console.log(dampingForce);
+
+        /*
+        this.pA.addForce(dampingForce_inv);
+        this.pB.addForce(dampingForce);
+        dampingForce_inv.display(this.pA.pos, ctx);*/
+
     }
 
     display(ctx) {
 
         ctx.save();
+        ctx.strokeStyle = 'gold';
         ctx.beginPath();
         ctx.moveTo(this.pA.pos.x, this.pA.pos.y);
         ctx.lineTo(this.pB.pos.x, this.pB.pos.y);

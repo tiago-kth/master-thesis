@@ -5,6 +5,10 @@ const ctx = cv.getContext('2d');
 const H = 500;
 const W = 500;
 const N_PARTICLES = 2;
+const STIFFNESS = .003;
+const REST_LEN = 100;
+const R = 10;
+const MASS = 1;
 
 const particles = [];
 
@@ -13,11 +17,23 @@ cv.height = H;
 
 const grid = new Grid(W, H, 50, ctx);
 
+const p0 = new Particle( new Vec(100, 100), 10, grid, 0, MASS );
+const p1 = new Particle( new Vec(200, 100), 10, grid, 1, MASS );
+const p2 = new Particle( new Vec(200, 200), 10, grid, 2, MASS );
+//const p3 = new Particle( new Vec(100, 200), 10, grid, 2 );
+
+particles.push(p0, p1, p2);//, p3);
+particles.forEach(p => {
+    p.updateGridPos();
+    grid.addParticle(p);
+})
+
+/*
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     const r = 5;// + Math.random() * 5;
-    const x = r + Math.random() * (W - 2 * r);
-    const y = r + ( Math.random() ) * (H - 2 * r);
+    const x = 200 + REST_LEN * i//r + Math.random() * (W - 2 * r);
+    const y = 100;//r + ( Math.random() ) * (H - 2 * r);
 
     const p = new Particle( new Vec(x, y), r, grid, i );
     p.updateGridPos(); // we could include the grid in the particle constructor...
@@ -26,9 +42,21 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     particles.push(p)
 
-}
+}*/
 
-const spring = new Spring(particles[0], particles[1], 0.01);
+const springs = [];
+
+const s0 = new Spring(particles[0], particles[1], REST_LEN, STIFFNESS);
+const s1 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
+const s2 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
+/*const s3 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
+const s4 = new Spring(particles[0], particles[3], REST_LEN, STIFFNESS);
+const s5 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
+const s6 = new Spring(particles[1], particles[3], REST_LEN, STIFFNESS);
+const s7 = new Spring(particles[2], particles[3], REST_LEN, STIFFNESS);
+const s8 = new Spring(particles[3], particles[2], REST_LEN, STIFFNESS);*/
+
+springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
 
 console.log(grid.cells);
 
@@ -64,7 +92,7 @@ function loop(t) {
 
     grid.display();
 
-    spring.update();
+    springs.forEach(s => s.update(ctx));
 
     particles.forEach( (p, i) => {
         p.update(dT);
@@ -82,7 +110,7 @@ function loop(t) {
 
         const neighbours = grid.getNeighbours(p);
 
-        //p.checkCollisions(neighbours);
+        p.checkCollisions(neighbours);
         if (i == 0) {
             //p.displayGridCell(ctx);
             neighbours.forEach(n => n.displayGridCell(ctx));
@@ -91,7 +119,7 @@ function loop(t) {
         //p.displayVel(ctx);
     })
 
-    spring.display(ctx);
+    springs.forEach(s => s.display(ctx));
     count++
 
     // perf 
