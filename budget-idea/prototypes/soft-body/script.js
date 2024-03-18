@@ -5,7 +5,7 @@ const ctx = cv.getContext('2d');
 const H = 500;
 const W = 500;
 const N_PARTICLES = 2;
-const STIFFNESS = .003;
+const STIFFNESS = 0.001;
 const REST_LEN = 100;
 const R = 10;
 const MASS = 1;
@@ -20,9 +20,9 @@ const grid = new Grid(W, H, 50, ctx);
 const p0 = new Particle( new Vec(100, 100), 10, grid, 0, MASS );
 const p1 = new Particle( new Vec(200, 100), 10, grid, 1, MASS );
 const p2 = new Particle( new Vec(200, 200), 10, grid, 2, MASS );
-//const p3 = new Particle( new Vec(100, 200), 10, grid, 2 );
+const p3 = new Particle( new Vec(100, 200), 10, grid, 2, MASS);
 
-particles.push(p0, p1, p2);//, p3);
+particles.push(p0, p1, p2, p3);
 particles.forEach(p => {
     p.updateGridPos();
     grid.addParticle(p);
@@ -48,15 +48,12 @@ const springs = [];
 
 const s0 = new Spring(particles[0], particles[1], REST_LEN, STIFFNESS);
 const s1 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
-const s2 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
-/*const s3 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
-const s4 = new Spring(particles[0], particles[3], REST_LEN, STIFFNESS);
-const s5 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
-const s6 = new Spring(particles[1], particles[3], REST_LEN, STIFFNESS);
-const s7 = new Spring(particles[2], particles[3], REST_LEN, STIFFNESS);
-const s8 = new Spring(particles[3], particles[2], REST_LEN, STIFFNESS);*/
+const s2 = new Spring(particles[2], particles[3], REST_LEN, STIFFNESS);
+const s3 = new Spring(particles[3], particles[0], REST_LEN, STIFFNESS);
+const s4 = new Spring(particles[0], particles[2], REST_LEN * Math.SQRT2, STIFFNESS);
+const s5 = new Spring(particles[1], particles[3], REST_LEN * Math.SQRT2, STIFFNESS);
 
-springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
+springs.push(s0, s1, s2, s3, s4, s5); //,s1 , s2, s3, s4, s5, s6, s7, s8);
 
 console.log(grid.cells);
 
@@ -111,10 +108,11 @@ function loop(t) {
         const neighbours = grid.getNeighbours(p);
 
         p.checkCollisions(neighbours);
+        /*
         if (i == 0) {
             //p.displayGridCell(ctx);
             neighbours.forEach(n => n.displayGridCell(ctx));
-        }
+        }*/
         p.display(ctx);
         //p.displayVel(ctx);
     })

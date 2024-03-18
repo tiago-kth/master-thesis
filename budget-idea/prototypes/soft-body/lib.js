@@ -335,7 +335,7 @@ class Particle {
 
     limitSpeed() {
         const speed = this.vel.mod();
-        if (speed > 5) this.vel.mult(5 / speed);
+        if (speed > 3) this.vel.mult(3 / speed);
     }
 
     update(dT) {
@@ -555,7 +555,7 @@ class Particle {
         //console.log(this.cell_col, this.cell_row, this.changed_cell);
 
         ctx.save();
-        ctx.fillStyle = "lightgreen";
+        ctx.fillStyle = "lightyellow";
         
         ctx.fillRect(x, y, l, l);
         ctx.restore();
@@ -578,10 +578,10 @@ class Spring {
         this.pB = pB;
 
         const difference_vector = this.pA.pos.getDifferenceVec(this.pB.pos);
-        this.rest_len = difference_vector.mod();;
+        this.rest_len = rest_len;//difference_vector.mod();;
         this.stiffness = stiffness;
 
-        this.damping = .8;
+        this.damping = .1;
 
     }
 
@@ -620,10 +620,10 @@ class Spring {
 
         //console.log(dampingForce);
 
-        /*
+        
         this.pA.addForce(dampingForce_inv);
         this.pB.addForce(dampingForce);
-        dampingForce_inv.display(this.pA.pos, ctx);*/
+        //dampingForce_inv.display(this.pA.pos, ctx);
 
     }
 
