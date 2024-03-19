@@ -9,7 +9,7 @@ const STIFFNESS = 0.001;
 const REST_LEN = 100;
 const R = 5;
 const MASS = 1;
-const TIMESTEP = 50;
+const TIMESTEP = 10;
 
 cv.width = W;
 cv.height = H;
@@ -30,10 +30,10 @@ particles.forEach(p => {
 
 const p1 = new Particle(
     new Vec(200,200),
-    10,
+    100,
     grid,
     0,
-    10,
+    100,
     new Vec(2, 0.1),
     new Vec(0, 0)
 )

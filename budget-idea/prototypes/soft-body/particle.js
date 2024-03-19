@@ -141,13 +141,15 @@ class Particle {
                     this.vel.selfSub(delta_v1);
                     that.vel.selfSub(delta_v2);
 
-                    console.log(v1, v2);
-
                     const repulsion = Vec.mult(x2_x1u, min_distance - distance);
           
                     // Apply repulsion force
-                    this.pos.selfSub(Vec.mult(repulsion, 1/this.mass));
-                    that.pos.selfAdd(Vec.mult(repulsion, 1/that.mass));
+                    this.pos.selfSub(Vec.mult(repulsion, 1/2))//this.mass));
+                    that.pos.selfAdd(Vec.mult(repulsion, 1/2))//that.mass));
+
+                    console.log(v1, v2);
+
+
 
                     //const this_repulsion = new Vec( repulsion.x, repulsion.y );
                     //this_repulsion.mult( 1 / this.rad);
