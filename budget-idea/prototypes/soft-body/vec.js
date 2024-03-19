@@ -10,7 +10,7 @@ class Vec {
         this.x = x;
         this.y = y;
         this.angle = this.#getAngle();
-        this.mag = this.#getMod();
+        this.mag = this.mod();
 
     }
 
@@ -31,7 +31,7 @@ class Vec {
 
     }
 
-    #getMod() {
+    mod() {
 
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) )
 
@@ -139,7 +139,7 @@ class Vec {
         v1.display(ctx, p_0, "blue");
         v2.display(ctx, p_0, "white");
         v3.display(ctx, p_0, "gold");
-        
+
         */
 
     }

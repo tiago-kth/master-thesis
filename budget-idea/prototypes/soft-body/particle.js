@@ -23,7 +23,7 @@ class Particle {
         this.pos = pos;
         this.rad = rad;
         this.mass = mass;
-        this.vel = new Vec( 0, 0 );
+        this.vel = index == 0 ? new Vec( 2, 1) : new Vec( 0, 0 );
         this.acc = new Vec( 0, .02); 
     }
 
@@ -33,20 +33,22 @@ class Particle {
     }
 
     addForce(f) {
-        f.mult(1/this.mass);
-        this.acc.add(f);
+        f = Vec.mult(f, 1/this.mass);
+        this.acc = Vec.add(this.acc + f);
     }
 
     limitSpeed() {
         const speed = this.vel.mod();
-        if (speed > 3) this.vel.mult(3 / speed);
+        if (speed > 3) {
+            this.vel.selfMult(3 / speed)
+        }
     }
 
     update(dT) {
-        this.acc.mult(1);
-        this.vel.add(this.acc);
-        this.vel.mult(1);
-        this.pos.add(this.vel);
+        // v = v0 + a.t
+        this.vel.selfAdd(Vec.mult(this.acc, dT / TIMESTEP));
+        // s = s0 + v.t
+        this.pos.selfAdd(Vec.mult(this.vel, dT / TIMESTEP));
         //this.updateGridPos();
         this.limitSpeed();
 
@@ -80,7 +82,7 @@ class Particle {
     getDifferenceVecFrom(particle) {
 
         // the basis for the direction and the distance
-        return this.pos.getDifferenceVec(particle.pos);
+        return Vec.sub(this.pos - particle.pos);
 
     }
 
@@ -94,7 +96,7 @@ class Particle {
     getDirectionFrom(particle) {
 
         const difference_vector = this.getDifferenceVecFrom(particle);
-        return difference_vector.getUnitDirectionVector();
+        return difference_vector.getUnitDir();
 
     }
 
@@ -106,9 +108,9 @@ class Particle {
 
             if (this != that) {
 
-                const difference_vector = this.getDifferenceVecFrom(that);
+                const difference_vector = Vec.sub(this.pos, that.pos);//this.getDifferenceVecFrom(that);
 
-                const distance = difference_vector.mod();
+                const distance = difference_vector.mod()
                 const min_distance = this.rad + that.rad;
 
                 if (distance <= min_distance) {
@@ -118,13 +120,18 @@ class Particle {
                     this.hits++
                     that.hits++
 
-                    const normal = difference_vector.getUnitDirectionVector();
+                    const normal = difference_vector.getUnitDir();
 
-                    const velocity_difference = this.vel.getDifferenceVec(that.vel);
+                    const velocity_difference = Vec.sub(this.vel, that.vel);
 
-                    const vel_difference_component_on_normal = velocity_difference.getDotProduct(normal);
+                    const vel_difference_component_on_normal = Vec.proj(velocity_difference, normal);//velocity_difference.getDotProduct(normal);
 
-                    const impulse = new Vec(normal.x, normal.y);
+                    const impulse_scalar = vel_difference_component_on_normal.mod() /// (this.mass + that.mass);
+                    //console.log(impulse_scalar);
+
+                    const impulse = Vec.mult(normal, impulse_scalar);//2 * Vec.dot(velocity_difference, normal) / 2);
+                    //console.log(vel_difference_component_on_normal.mod(), impulse.mod());
+                    //const impulse = new Vec(normal.x, normal.y);
                     //impulse.mult(vel_difference_component_on_normal);
                    // if (count < 10) console.log(this.vel, that.vel, velocity_difference, normal, vel_difference_component_on_normal, impulse);
 
@@ -133,29 +140,35 @@ class Particle {
                     //console.log(impulse.mod());
                     //console.log(normal, velocity_difference, vel_difference_component_on_normal, this.vel, impulse);
 
-                    const impulse_this = new Vec(impulse.x, impulse.y);
-                    impulse_this.mult( .98 / this.mass);
-                    this.vel.add(impulse_this);
+                    //const impulse_this = new Vec(impulse.x, impulse.y);
+                    //impulse_this.mult( .98 / this.mass);
+                    this.vel.selfAdd(Vec.mult(impulse, 1/ this.mass));
                     
-                    const impulse_that = new Vec(impulse.x, impulse.y);
-                    impulse_that.mult( .98 / that.mass);
-                    that.vel.sub(impulse_that);
+                    //const impulse_that = new Vec(impulse.x, impulse.y);
+                    //impulse_that.mult( .98 / that.mass);
+                    that.vel.selfSub(Vec.mult(impulse, 1 / that.mass));
 
                     // REPULSION, to avoid balls sticking together
 
                     
-                    const repulsion = new Vec(normal.x, normal.y);
+                    //const repulsion = new Vec(normal.x, normal.y);
                     //console.log(distance / min_distance);
-                    repulsion.mult( min_distance - distance );
+                    //repulsion.mult( min_distance - distance );
 
-                    const this_repulsion = new Vec( repulsion.x, repulsion.y );
-                    this_repulsion.mult( 1 / this.rad);
+                    const repulsion = Vec.mult(normal, min_distance - distance);
 
-                    const that_repulsion = new Vec( repulsion.x, repulsion.y );
-                    that_repulsion.mult( 1 / that.rad);
+                    // Apply repulsion force
+                    this.pos.selfAdd(Vec.mult(repulsion, 1 / this.mass));
+                    that.pos.selfSub(Vec.mult(repulsion, 1 / that.mass));
 
-                    this.pos.sub(this_repulsion);
-                    that.pos.add(that_repulsion);
+                    //const this_repulsion = new Vec( repulsion.x, repulsion.y );
+                    //this_repulsion.mult( 1 / this.rad);
+
+                    //const that_repulsion = new Vec( repulsion.x, repulsion.y );
+                    //that_repulsion.mult( 1 / that.rad);
+
+                    //this.pos.sub(this_repulsion);
+                    //that.pos.add(that_repulsion);
 
                     
                     
@@ -171,6 +184,8 @@ class Particle {
 
         let col = Math.floor( this.pos.x / this.grid.cell_size);
         let row = Math.floor( this.pos.y / this.grid.cell_size);
+
+        //console.log(this.index, col, row);
 
         if ( (col == this.cell_col) & (row == this.cell_row) ) {
 
