@@ -7,9 +7,9 @@ const W = 500;
 const N_PARTICLES = 20;
 const STIFFNESS = 0.001;
 const REST_LEN = 100;
-const R = 5;
-const MASS = 1;
-const TIMESTEP = 50;
+const R = 10;
+const MASS = 2;
+const TIMESTEP = 20;
 
 const particles = [];
 
@@ -33,12 +33,13 @@ particles.forEach(p => {
 
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
-    const r = 5;// + Math.random() * 5;
+    const r = R;
+    //const r = 5;// + Math.random() * 5;
     const x = Math.random() * (W - 2 * r);
     const y = r + ( Math.random() ) * (H - 2 * r);
     //console.log(x,y);
 
-    const p = new Particle( new Vec(x, y), i == 0 ? R * 10 : R, grid, i, i == 0 ? 10 : MASS );
+    const p = new Particle( new Vec(x, y), R, grid, i, MASS, new Vec(Math.random(), Math.random()), new Vec(0, 0.4) );
     p.updateGridPos(); // we could include the grid in the particle constructor...
     grid.addParticle(p);
     //console.log('Inicio ', p.index, p.cell_col, p.cell_row);

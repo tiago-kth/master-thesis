@@ -39,8 +39,8 @@ class Particle {
 
     limitSpeed() {
         const speed = this.vel.mod();
-        if (speed > 3) {
-            this.vel.selfMult(3 / speed)
+        if (speed > 5) {
+            this.vel.selfMult(5 / speed)
         }
     }
 
@@ -136,7 +136,7 @@ class Particle {
                     const delta_v1 = Vec.mult(v1_v2_proj_x1_x2, 2 * that.mass / (this.mass + that.mass));
                     const delta_v2 = Vec.mult(v2_v1_proj_x2_x1, 2 * this.mass / (this.mass + that.mass));
 
-                    console.log(v1, v2, distance, min_distance, distance - min_distance, v1_v2_proj_x1_x2, v2_v1_proj_x2_x1, delta_v1, delta_v2);
+                    //console.log(v1, v2, distance, min_distance, distance - min_distance, v1_v2_proj_x1_x2, v2_v1_proj_x2_x1, delta_v1, delta_v2);
 
                     this.vel.selfSub(delta_v1);
                     that.vel.selfSub(delta_v2);
@@ -144,10 +144,10 @@ class Particle {
                     const repulsion = Vec.mult(x2_x1u, min_distance - distance);
           
                     // Apply repulsion force
-                    this.pos.selfSub(Vec.mult(repulsion, 1/2))//this.mass));
-                    that.pos.selfAdd(Vec.mult(repulsion, 1/2))//that.mass));
+                    this.pos.selfSub(Vec.mult(repulsion, 1/this.mass));
+                    that.pos.selfAdd(Vec.mult(repulsion, 1/that.mass));
 
-                    console.log(v1, v2);
+                    //console.log(v1, v2);
 
 
 
