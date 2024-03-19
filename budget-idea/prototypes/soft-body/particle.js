@@ -16,15 +16,15 @@ class Particle {
     previous_cell_col;
     previous_cell_row;
 
-    constructor(pos, rad, grid, index, mass) {
+    constructor(pos, rad, grid, index, mass, vel, acc) {
         this.index = index;
         this.grid = grid;
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
         this.mass = mass;
-        this.vel = index == 0 ? new Vec( 2, 1) : new Vec( 0, 0 );
-        this.acc = new Vec( 0, .02); 
+        this.vel = vel;//index == 0 ? new Vec( 2, 1) : new Vec( 0, 0 );
+        this.acc = acc;//new Vec( 0, .02); 
     }
 
     applyAcc(array_of_accelerations) {
@@ -115,51 +115,39 @@ class Particle {
 
                 if (distance <= min_distance) {
 
-                    count++
+                    //count++
 
-                    this.hits++
-                    that.hits++
+                    //this.hits++
+                    //that.hits++
 
-                    const normal = difference_vector.getUnitDir();
+                    const x1 = this.pos;
+                    const x2 = that.pos;
+                    const x1_x2u = Vec.sub(x1, x2).getUnitDir();
+                    const x2_x1u = Vec.sub(x2, x1).getUnitDir();
 
-                    const velocity_difference = Vec.sub(this.vel, that.vel);
+                    const v1 = this.vel;
+                    const v2 = that.vel;
+                    const v1_v2 = Vec.sub(v1, v2);
+                    const v2_v1 = Vec.sub(v2, v1);
 
-                    const vel_difference_component_on_normal = Vec.proj(velocity_difference, normal);//velocity_difference.getDotProduct(normal);
+                    const v1_v2_proj_x1_x2 = Vec.proj(v1_v2, x1_x2u);
+                    const v2_v1_proj_x2_x1 = Vec.proj(v2_v1, x2_x1u);
 
-                    const impulse_scalar = vel_difference_component_on_normal.mod() /// (this.mass + that.mass);
-                    //console.log(impulse_scalar);
+                    const delta_v1 = Vec.mult(v1_v2_proj_x1_x2, 2 * that.mass / (this.mass + that.mass));
+                    const delta_v2 = Vec.mult(v2_v1_proj_x2_x1, 2 * this.mass / (this.mass + that.mass));
 
-                    const impulse = Vec.mult(normal, impulse_scalar);//2 * Vec.dot(velocity_difference, normal) / 2);
-                    //console.log(vel_difference_component_on_normal.mod(), impulse.mod());
-                    //const impulse = new Vec(normal.x, normal.y);
-                    //impulse.mult(vel_difference_component_on_normal);
-                   // if (count < 10) console.log(this.vel, that.vel, velocity_difference, normal, vel_difference_component_on_normal, impulse);
+                    console.log(v1, v2, distance, min_distance, distance - min_distance, v1_v2_proj_x1_x2, v2_v1_proj_x2_x1, delta_v1, delta_v2);
 
-                    //impulse.mult( 2 * vel_difference_component_on_normal / (this.mass + that.mass) );//vel_difference_component_on_normal);
+                    this.vel.selfSub(delta_v1);
+                    that.vel.selfSub(delta_v2);
 
-                    //console.log(impulse.mod());
-                    //console.log(normal, velocity_difference, vel_difference_component_on_normal, this.vel, impulse);
+                    console.log(v1, v2);
 
-                    //const impulse_this = new Vec(impulse.x, impulse.y);
-                    //impulse_this.mult( .98 / this.mass);
-                    this.vel.selfAdd(Vec.mult(impulse, 1/ this.mass));
-                    
-                    //const impulse_that = new Vec(impulse.x, impulse.y);
-                    //impulse_that.mult( .98 / that.mass);
-                    that.vel.selfSub(Vec.mult(impulse, 1 / that.mass));
-
-                    // REPULSION, to avoid balls sticking together
-
-                    
-                    //const repulsion = new Vec(normal.x, normal.y);
-                    //console.log(distance / min_distance);
-                    //repulsion.mult( min_distance - distance );
-
-                    const repulsion = Vec.mult(normal, min_distance - distance);
-
+                    const repulsion = Vec.mult(x2_x1u, min_distance - distance);
+          
                     // Apply repulsion force
-                    this.pos.selfAdd(Vec.mult(repulsion, 1 / this.mass));
-                    that.pos.selfSub(Vec.mult(repulsion, 1 / that.mass));
+                    this.pos.selfSub(Vec.mult(repulsion, 1/this.mass));
+                    that.pos.selfAdd(Vec.mult(repulsion, 1/that.mass));
 
                     //const this_repulsion = new Vec( repulsion.x, repulsion.y );
                     //this_repulsion.mult( 1 / this.rad);

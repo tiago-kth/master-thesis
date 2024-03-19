@@ -18,6 +18,16 @@ class Vec {
 
         const angle = Math.atan( Math.abs(this.y) / Math.abs(this.x) );
 
+        if (this.y == 0) {
+            if (this.x >= 0) return 0;
+            else return Math.PI;
+        } else {
+            if (this.x == 0) {
+                if (this.y >= 0) return Math.PI/2;
+                else return Math.PI * 3/2
+            }
+        }
+
         let mult = 0; // because for canvas 0 degrees is the y axis pointing up
         
         if (this.x < 0 & this.y > 0) mult = 1;
@@ -40,7 +50,7 @@ class Vec {
     selfAdd(vec_b) {
 
         this.x += vec_b.x;
-        this.y += vec_b.y
+        this.y += vec_b.y;
 
     }
 
@@ -109,14 +119,21 @@ class Vec {
 
     display(ctx, p0, color) {
 
-        const p1 = Vec.add(p0, this);
+        const h = ctx.canvas.height;
+        const w = ctx.canvas.width;
 
+        if (!p0) {
+
+            p0 = new Vec(w/2, h/2);
+
+        } 
+        
         ctx.save();
         ctx.strokeStyle = color ? color : "hotpink";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.translate(p0.x, p0.y);
-        ctx.rotate(-this.angle);
+        ctx.rotate(-1 * this.angle);
         ctx.moveTo(0,0);
         ctx.lineTo(this.mag, 0);
         ctx.translate(this.mag, 0);
