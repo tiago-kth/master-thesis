@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+
+    background-color: indigo;
+
+}
+
+canvas {
+    width: 500px;
+    height: 500px;
+    border: 2px solid khaki;
+}
+
+.container-buttons {
+    display: block;
+}
