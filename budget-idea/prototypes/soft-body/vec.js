@@ -18,11 +18,12 @@ class Vec {
 
         const angle = Math.atan( Math.abs(this.y) / Math.abs(this.x) );
 
-        let mult = 0;
+        let mult = 0; // because for canvas 0 degrees is the y axis pointing up
         
         if (this.x < 0 & this.y > 0) mult = 1;
         if (this.x < 0 & this.y < 0) mult = 2;
         if (this.x > 0 & this.y < 0) mult = 3;
+        //if (this.x > 0 & this.y > 0) mult = 3;
 
         // to test: [new Vec(1,1), new Vec(-1,1), new Vec(-1,-1), new Vec(1,-1)].forEach(v => console.log(v.angle * 180 / Math.PI))
 
@@ -106,25 +107,39 @@ class Vec {
 
     }
 
-    display(ctx, p0) {
+    display(ctx, p0, color) {
 
         const p1 = Vec.add(p0, this);
 
         ctx.save();
-
-        ctx.beginPath();
-        ctx.moveTo(p0.x, p0.y);
-        ctx.lineTo(p1.x, p1.y);
-        ctx.strokeStyle = 'yellow';
-        ctx.lineWidth = 10;
-        ctx.stroke();
-        ctx.closePath();
-        ctx.restore();
+        ctx.strokeStyle = color ? color : "hotpink";
         ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.translate(p0.x, p0.y);
+        ctx.rotate(-this.angle);
+        ctx.moveTo(0,0);
+        ctx.lineTo(this.mag, 0);
+        ctx.translate(this.mag, 0);
+        ctx.rotate(-Math.PI * 5/6);
+        ctx.lineTo(10,0);
+        ctx.moveTo(0,0);
+        ctx.rotate(Math.PI*10/6);
+        ctx.lineTo(10,0);
+        ctx.stroke();
+        ctx.restore();
 
         /* test
         const vs = [new Vec(100,100), new Vec(-100,100), new Vec(-100,-100), new Vec(100,-100)]
         vs.forEach(v => v.display(ctx, new Vec(W/2, H/2)))
+
+        const p_0 = new Vec(W/2, H/2);
+        const v1 = new Vec(100,0);
+        const v2 = new Vec(50,70);
+        const v3 = Vec.proj(v2, v1);
+        v1.display(ctx, p_0, "blue");
+        v2.display(ctx, p_0, "white");
+        v3.display(ctx, p_0, "gold");
+        
         */
 
     }
