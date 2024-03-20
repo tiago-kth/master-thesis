@@ -5,11 +5,11 @@ const ctx = cv.getContext('2d');
 const H = 500;
 const W = 500;
 const N_PARTICLES = 20;
-const STIFFNESS = 0.001;
-const REST_LEN = 100;
+let STIFFNESS = 0.001;
+let REST_LEN = 20;
 const R = 10;
-const MASS = 2;
-const TIMESTEP = 20;
+let MASS = 2;
+const TIMESTEP = 100;
 
 const particles = [];
 
@@ -17,20 +17,26 @@ cv.width = W;
 cv.height = H;
 
 const grid = new Grid(W, H, 50, ctx);
-/*
-const p0 = new Particle( new Vec(100, 100), 10, grid, 0, MASS );
-const p1 = new Particle( new Vec(200, 100), 10, grid, 1, MASS );
-const p2 = new Particle( new Vec(200, 200), 10, grid, 2, MASS );
-const p3 = new Particle( new Vec(100, 200), 10, grid, 2, MASS);
 
-particles.push(p0, p1, p2, p3);
+const p0 = new Particle( new Vec(100, 100), 10, grid, 0, MASS, new Vec(1,0), new Vec(0,0) );
+const p1 = new Particle( new Vec(400, 100), 10, grid, 1, MASS, new Vec(-1,1), new Vec(0,0) );
+const p2 = new Particle( new Vec(200, 300), 10, grid, 2, MASS, new Vec(1,-1), new Vec(0,0) );
+
+particles.push(p0, p1, p2);
 particles.forEach(p => {
     p.updateGridPos();
     grid.addParticle(p);
 })
-*/
 
+const springs = [];
 
+const s0 = new Spring(particles[0], particles[1], REST_LEN, STIFFNESS);
+const s1 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
+const s2 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
+
+springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
+
+/*
 for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     const r = R;
@@ -46,7 +52,7 @@ for ( let i = 0; i < N_PARTICLES; i++ ) {
 
     particles.push(p)
 
-}
+}*/
 /*
 const springs = [];
 
@@ -95,7 +101,7 @@ function loop(t) {
 
     grid.display();
 
-    //springs.forEach(s => s.update(ctx));
+    springs.forEach(s => s.update(ctx));
 
     particles.forEach( (p, i) => {
         p.update(dT);
@@ -124,7 +130,7 @@ function loop(t) {
         //p.displayVel(ctx);
     })
 
-    //springs.forEach(s => s.display(ctx));
+    springs.forEach(s => s.display(ctx));
     count++
 
     // perf 

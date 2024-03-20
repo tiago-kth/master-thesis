@@ -13,3 +13,7 @@ https://en.wikipedia.org/wiki/Elastic_collision
 ![](./prints/ellastic-collision.png)
 
 bola pequena às vezes orbita a grande
+
+### 2024.03.20
+
+Particle system seems to be working. Going to try implementing the spring-mass system.
