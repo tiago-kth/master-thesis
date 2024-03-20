@@ -4,6 +4,8 @@
 
 html {
 
+    color: khaki;
+
     background-color: indigo;
 
 }
@@ -16,4 +18,19 @@ canvas {
 
 .container-buttons {
     display: block;
+}
+
+.controls {
+
+    margin-block: 1rem;
+    
+}
+
+.wrapper-input {
+    display: flex;
+    margin-block: .5rem;
+}
+
+.wrapper-input > * + * {
+    margin-left: 1rem;
 }

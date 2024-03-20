@@ -5,11 +5,14 @@ const ctx = cv.getContext('2d');
 const H = 500;
 const W = 500;
 const N_PARTICLES = 20;
-let STIFFNESS = 0.001;
-let REST_LEN = 20;
 const R = 10;
 let MASS = 2;
 const TIMESTEP = 100;
+
+const params = {
+    STIFFNESS : 0.001,
+    REST_LEN : 20
+}
 
 const particles = [];
 
@@ -30,9 +33,9 @@ particles.forEach(p => {
 
 const springs = [];
 
-const s0 = new Spring(particles[0], particles[1], REST_LEN, STIFFNESS);
-const s1 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
-const s2 = new Spring(particles[2], particles[0], REST_LEN, STIFFNESS);
+const s0 = new Spring(particles[0], particles[1], params.REST_LEN, params.STIFFNESS);
+const s1 = new Spring(particles[1], particles[2], params.REST_LEN, params.STIFFNESS);
+const s2 = new Spring(particles[2], particles[0], params.REST_LEN, params.STIFFNESS);
 
 springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
 
@@ -152,16 +155,3 @@ function loop(t) {
 anim = window.requestAnimationFrame(loop);
 //loop();
 
-// interac
-
-const stopBTN = document.querySelector('[data-btn="stop"]');
-stopBTN.addEventListener('click', e => {
-    if (e.target.innerText == 'stop') {
-        e.target.innerText = "resume";
-        window.cancelAnimationFrame(anim);
-    } else {
-        e.target.innerText = "stop";
-        anim = window.requestAnimationFrame(loop);
-    }
-    
-})
