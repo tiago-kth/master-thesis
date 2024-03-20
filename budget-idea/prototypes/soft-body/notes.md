@@ -11,3 +11,5 @@ Improvements for the particle version with grid lookup (from https://www.gorilla
 https://en.wikipedia.org/wiki/Elastic_collision
 
 ![](./prints/ellastic-collision.png)
+
+bola pequena às vezes orbita a grande

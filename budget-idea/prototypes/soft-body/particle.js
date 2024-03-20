@@ -120,6 +120,8 @@ class Particle {
                     //this.hits++
                     //that.hits++
 
+                    if (min_distance - distance >= that.rad) console.log("engoliu", this, that);
+
                     const x1 = this.pos;
                     const x2 = that.pos;
                     const x1_x2u = Vec.sub(x1, x2).getUnitDir();
