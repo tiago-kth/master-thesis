@@ -17,6 +17,8 @@ class Spring {
     update() {
 
         const len_vector = Vec.sub(this.pa.pos, this.pb.pos);
+        // this vector points from pB to pA
+
         const len_actual = len_vector.mod();
 
         const f_dir = len_vector.getUnitDir();
@@ -27,8 +29,9 @@ class Spring {
 
         const f = Vec.mult(f_dir, f_mag);
 
+        // signs are very important here
         this.pa.addForce(Vec.mult(f, -1));
-        this.pb.addForce(f);
+        this.pb.addForce(Vec.mult(f, 1));
 
     }
 
