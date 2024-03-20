@@ -8,12 +8,7 @@ const N_PARTICLES = 20;
 const R = 10;
 let MASS = 2;
 
-const params = {
-    STIFFNESS : 0.001,
-    REST_LEN : 20,
-    DAMPING : 0.05,
-    TIMESTEP : 100
-}
+const params = {STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
 
@@ -22,9 +17,9 @@ cv.height = H;
 
 const grid = new Grid(W, H, 50, ctx);
 
-const p0 = new Particle( new Vec(100, 100), 10, grid, 0, MASS, new Vec(1,0), new Vec(0,0) );
-const p1 = new Particle( new Vec(400, 100), 10, grid, 1, MASS, new Vec(-1,1), new Vec(0,0) );
-const p2 = new Particle( new Vec(200, 300), 10, grid, 2, MASS, new Vec(1,-1), new Vec(0,0) );
+const p0 = new Particle( new Vec(100,  50), 10, grid, 0, MASS, new Vec(1,0), new Vec(0,0.1) );
+const p1 = new Particle( new Vec(400,  50), 10, grid, 1, MASS, new Vec(-1,1), new Vec(0,0.1) );
+const p2 = new Particle( new Vec(200, 150), 10, grid, 2, MASS, new Vec(1,-1), new Vec(0,0.1) );
 
 particles.push(p0, p1, p2);
 particles.forEach(p => {
