@@ -1,3 +1,5 @@
+// CREDITS: https://www.gorillasun.de/blog/spring-physics-and-connecting-particles-with-springs/
+
 let N_PARTICLES_X;
 let N_PARTICLES_Y;
 const particles = [];
