@@ -146,8 +146,8 @@ class Particle {
                     const repulsion = Vec.mult(x2_x1u, min_distance - distance);
           
                     // Apply repulsion force
-                    this.pos.selfSub(Vec.mult(repulsion, 1/this.mass));
-                    that.pos.selfAdd(Vec.mult(repulsion, 1/that.mass));
+                    this.pos.selfSub(Vec.mult(repulsion, 1/2));
+                    that.pos.selfAdd(Vec.mult(repulsion, 1/2));
 
                     //console.log(v1, v2);
 
