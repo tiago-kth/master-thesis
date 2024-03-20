@@ -4,6 +4,7 @@ class Spring {
     pb;
     len_0;
     stiff;
+    damping;
 
     constructor(pa, pb, len_0, k) {
 
@@ -11,6 +12,7 @@ class Spring {
         this.pb = pb;
         this.len_0 = len_0;
         this.k = k;
+        this.damping = 0.05;
 
     }
 
@@ -32,6 +34,17 @@ class Spring {
         // signs are very important here
         this.pa.addForce(Vec.mult(f, -1));
         this.pb.addForce(Vec.mult(f, 1));
+
+
+        // damping
+
+        const dampingForce = Vec.mult(
+            Vec.sub(this.pa.vel, this.pb.vel),
+            this.damping
+          );
+    
+        this.pa.addForce(Vec.mult(dampingForce, -1));
+        this.pb.addForce(dampingForce);
 
     }
 

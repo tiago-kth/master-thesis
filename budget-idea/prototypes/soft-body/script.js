@@ -11,7 +11,8 @@ const TIMESTEP = 100;
 
 const params = {
     STIFFNESS : 0.001,
-    REST_LEN : 20
+    REST_LEN : 20,
+    DAMPING : 0.05
 }
 
 const particles = [];

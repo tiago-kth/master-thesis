@@ -17,10 +17,12 @@ class Slider {
     el;
     el_text;
     name;
+    prop_name;
 
-    constructor(ref) {
+    constructor(ref, prop_name) {
 
         this.name = ref;
+        this.prop_name = prop_name;
 
         this.el = document.querySelector('#input-' + ref);
         this.el_text = document.querySelector(`.input-${ref}-value`);
@@ -53,21 +55,14 @@ class Slider {
 
     updateModel(value) {
 
-        if (this.name == "STIFFNESS") {
-            springs.forEach(s => {
-                s.k = value;
-            })
-        }
-
-        if (this.name == "REST_LEN") {
-            springs.forEach(s => {
-                s.len_0 = value;
-            })
-        }
+        springs.forEach(s => {
+            s[this.prop_name] = value;
+        })
 
     }
 
 }
 
-const slider_stiffness = new Slider("STIFFNESS");
-const slider_restlen = new Slider("REST_LEN");
+const slider_stiffness = new Slider("STIFFNESS", 'k');
+const slider_restlen = new Slider("REST_LEN", 'len_0');
+const slider_damping = new Slider("DAMPING", 'damping');
