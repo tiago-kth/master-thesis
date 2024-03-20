@@ -103,7 +103,7 @@ class Vec {
 
     static dot(vec_a, vec_b) {
 
-        return (vec_a.x * vec_b.x) + (vec_a.y * vec_b.y);
+        return vec_a.x * vec_b.x + vec_b.y * vec_b.y;
 
     }
 
