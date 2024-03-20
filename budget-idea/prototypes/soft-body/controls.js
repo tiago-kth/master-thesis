@@ -22,7 +22,7 @@ class Slider {
     constructor(ref, prop_name) {
 
         this.name = ref;
-        this.prop_name = prop_name;
+        this.prop_name = prop_name ? prop_name : ref;
 
         this.el = document.querySelector('#input-' + ref);
         this.el_text = document.querySelector(`.input-${ref}-value`);
@@ -33,7 +33,7 @@ class Slider {
 
             const value = +this.el.value;
             this.updateParams(value);
-            this.updateModel(value);
+            if (this.name != "TIMESTEP") this.updateModel(value);
 
         })
 
@@ -66,3 +66,4 @@ class Slider {
 const slider_stiffness = new Slider("STIFFNESS", 'k');
 const slider_restlen = new Slider("REST_LEN", 'len_0');
 const slider_damping = new Slider("DAMPING", 'damping');
+const slider_timestep = new Slider("TIMESTEP");

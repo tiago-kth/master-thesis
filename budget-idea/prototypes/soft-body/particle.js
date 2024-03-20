@@ -46,9 +46,9 @@ class Particle {
 
     update(dT) {
         // v = v0 + a.t
-        this.vel.selfAdd(Vec.mult(this.acc, dT / TIMESTEP));
+        this.vel.selfAdd(Vec.mult(this.acc, dT / params.TIMESTEP));
         // s = s0 + v.t
-        this.pos.selfAdd(Vec.mult(this.vel, dT / TIMESTEP));
+        this.pos.selfAdd(Vec.mult(this.vel, dT / params.TIMESTEP));
         //this.updateGridPos();
         this.limitSpeed();
 

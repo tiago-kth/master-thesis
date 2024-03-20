@@ -7,12 +7,12 @@ const W = 500;
 const N_PARTICLES = 20;
 const R = 10;
 let MASS = 2;
-const TIMESTEP = 100;
 
 const params = {
     STIFFNESS : 0.001,
     REST_LEN : 20,
-    DAMPING : 0.05
+    DAMPING : 0.05,
+    TIMESTEP : 100
 }
 
 const particles = [];
@@ -40,40 +40,9 @@ const s2 = new Spring(particles[2], particles[0], params.REST_LEN, params.STIFFN
 
 springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
 
-/*
-for ( let i = 0; i < N_PARTICLES; i++ ) {
-
-    const r = R;
-    //const r = 5;// + Math.random() * 5;
-    const x = Math.random() * (W - 2 * r);
-    const y = r + ( Math.random() ) * (H - 2 * r);
-    //console.log(x,y);
-
-    const p = new Particle( new Vec(x, y), R, grid, i, MASS, new Vec(Math.random(), Math.random()), new Vec(0, 0.4) );
-    p.updateGridPos(); // we could include the grid in the particle constructor...
-    grid.addParticle(p);
-    //console.log('Inicio ', p.index, p.cell_col, p.cell_row);
-
-    particles.push(p)
-
-}*/
-/*
-const springs = [];
-
-const s0 = new Spring(particles[0], particles[1], REST_LEN, STIFFNESS);
-const s1 = new Spring(particles[1], particles[2], REST_LEN, STIFFNESS);
-const s2 = new Spring(particles[2], particles[3], REST_LEN, STIFFNESS);
-const s3 = new Spring(particles[3], particles[0], REST_LEN, STIFFNESS);
-const s4 = new Spring(particles[0], particles[2], REST_LEN * Math.SQRT2, STIFFNESS);
-const s5 = new Spring(particles[1], particles[3], REST_LEN * Math.SQRT2, STIFFNESS);
-
-springs.push(s0, s1, s2, s3, s4, s5); //,s1 , s2, s3, s4, s5, s6, s7, s8);
-*/
 console.log(grid.cells);
 console.log(particles, particles[0].cell_col);
 
-//const p = new Particle(new Vec(200,200), 5);
-//console.log(p);
 
 let count = 0;
 
