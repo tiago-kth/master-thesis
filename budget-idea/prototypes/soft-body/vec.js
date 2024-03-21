@@ -107,6 +107,12 @@ class Vec {
 
     }
 
+    static dist(vec_a, vec_b) {
+
+        return Vec.sub(vec_a, vec_b).mod();
+
+    }
+
     static proj(vec_a, vec_b) {
 
         const vec_bU = vec_b.getUnitDir();

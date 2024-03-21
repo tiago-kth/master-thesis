@@ -48,10 +48,21 @@ class Spring {
 
     }
 
+    getLen() {
+
+        return Vec.dist(this.pa.pos, this.pb.pos);
+
+    }
+
     display(ctx) {
+
+        const l = this.getLen();
+
 
         ctx.save();
         ctx.strokeStyle = 'gold';
+        if (l > this.len_0) ctx.strokeStyle = 'dodgerblue';
+        if (l < this.len_0) ctx.strokeStyle = 'tomato';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(this.pa.pos.x, this.pa.pos.y);

@@ -7,7 +7,7 @@ const W = 500;
 const R = 10;
 let MASS = 2;
 
-const params = {STIFFNESS: 0.1, REST_LEN: 150, DAMPING: 0.01, TIMESTEP: 1000};
+const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 1000, SPEEDLIMIT: 15};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -41,7 +41,7 @@ function setup_square() {
 function setup_circle(center, N) {
 
     const nullvec = new Vec(0,0);
-    const acc = new Vec(0, 0.3);
+    const acc = new Vec(0, 0.05);
     const r = 100;
 
     const p0 = new Particle(center, 5, grid, 0, MASS, nullvec, acc);
@@ -61,7 +61,7 @@ function setup_circle(center, N) {
         )
 
         const sr = new Spring(
-            p, p0, r, params.STIFFNESS / 10
+            p, p0, Vec.dist(p.pos, p0.pos), params.STIFFNESS / 10
         )
 
         springs.push(sr);
@@ -75,7 +75,7 @@ function setup_circle(center, N) {
             const sc = new Spring(
                 p, 
                 particles[i-1], 
-                l, params.STIFFNESS
+                Vec.dist(p.pos, particles[i-1].pos), params.STIFFNESS
             );
 
             springs.push(sc);
@@ -87,7 +87,7 @@ function setup_circle(center, N) {
             const slast = new Spring(
                 particles[1],
                 p,
-                l, params.STIFFNESS
+                Vec.dist(particles[1].pos, p.pos), params.STIFFNESS
             )
 
             springs.push(slast);
@@ -96,8 +96,19 @@ function setup_circle(center, N) {
 
         particles.push(p);
 
-
     }
+
+    particles.forEach( (p,i,a) => {
+
+        const sc2 = new Spring(
+                p,
+                particles[ (i+2) % a.length ],
+                l, params.STIFFNESS
+        )
+
+        springs.push(sc2);
+
+    })
 
 }
 
@@ -106,7 +117,7 @@ function setup_ring(center, N, r) {
     const particles = [];
 
     const nullvec = new Vec(0,0);
-    const acc = new Vec(0, 0.3);
+    const acc = new Vec(0, 0.1);
 
     const theta = 2*Math.PI / N;
 
@@ -201,13 +212,13 @@ function setup_blob(center, N, R) {
 
 }
 
-setup_square();
+//setup_square();
 
 const center = new Vec(W/2, 150);
 
-//setup_blob(center, 10, 90);
+//setup_blob(center, 20, 90);
 
-//setup_circle(center, 16);
+setup_circle(center, 32);
 
 particles.forEach(p => {
     p.updateGridPos();
@@ -252,7 +263,7 @@ function loop(t) {
 
     particles.forEach( (p, i) => {
         p.update(dT);
-        p.checkBounds2();
+        p.checkBounds();
     
         p.updateGridPos();
 
