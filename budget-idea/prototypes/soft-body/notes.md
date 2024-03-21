@@ -17,3 +17,9 @@ bola pequena às vezes orbita a grande
 ### 2024.03.20
 
 Particle system seems to be working. Going to try implementing the spring-mass system.
+
+Worked. But not the circular structures.
+
+> It kind of blows my mind that with relatively little such an interesting system emerges. The beauty of emergence: the mesh doesn't really know that it exists, it's simply the particles and springs working in tandem to create this intricate and dynamic structure.
+(https://www.gorillasun.de/blog/spring-physics-and-connecting-particles-with-springs/)
+

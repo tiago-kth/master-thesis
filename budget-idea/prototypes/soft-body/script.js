@@ -7,7 +7,7 @@ const W = 500;
 const R = 10;
 let MASS = 2;
 
-const params = {STIFFNESS: 0.3, REST_LEN: 150, DAMPING: 0.01, TIMESTEP: 1000};
+const params = {STIFFNESS: 0.1, REST_LEN: 150, DAMPING: 0.01, TIMESTEP: 1000};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -21,8 +21,8 @@ const grid = new Grid(W, H, 50, ctx);
 function setup_square() {
 
     const p0 = new Particle( new Vec(200,  50), 10, grid, 0, MASS, new Vec(1,2), new Vec(0,0.2) );
-    const p1 = new Particle( new Vec(400,  50), 10, grid, 1, MASS, new Vec(3,0), new Vec(0,0.2) );
-    const p2 = new Particle( new Vec(400, 150), 10, grid, 2, MASS, new Vec(2,1), new Vec(0,0.2) );
+    const p1 = new Particle( new Vec(400,  50), 10, grid, 1, MASS, new Vec(1,-2), new Vec(0,0.2) );
+    const p2 = new Particle( new Vec(400, 150), 10, grid, 2, MASS, new Vec(1,1), new Vec(0,0.2) );
     const p3 = new Particle( new Vec(200, 150), 10, grid, 3, MASS, new Vec(1,-1), new Vec(0,0.2) );
 
     particles.push(p0, p1, p2, p3);
@@ -192,6 +192,7 @@ function setup_blob(center, N, R) {
         ...outer_particles
     );
 
+
     springs.push(
         ...perim_springs_inner,
         ...perim_springs_outer,
@@ -200,11 +201,11 @@ function setup_blob(center, N, R) {
 
 }
 
-//setup_square();
+setup_square();
 
 const center = new Vec(W/2, 150);
 
-setup_blob(center, 10, 90);
+//setup_blob(center, 10, 90);
 
 //setup_circle(center, 16);
 
@@ -251,7 +252,7 @@ function loop(t) {
 
     particles.forEach( (p, i) => {
         p.update(dT);
-        p.checkBounds();
+        p.checkBounds2();
     
         p.updateGridPos();
 

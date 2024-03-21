@@ -54,6 +54,32 @@ class Particle {
 
     }
 
+    checkBounds2() {
+
+        if (this.pos.x - this.rad < 0) {
+            this.pos.x = this.rad; // Prevent from leaving the canvas from the left side
+            //this.velocity.x *= -1;
+            this.addForce(new Vec(1, 0))
+          } else if (this.pos.x + this.rad > W) {
+            this.pos.x = W - this.rad; // Prevent from leaving the canvas from the right side
+            //this.velocity.x *= -1;
+            this.addForce(new Vec(-1, 0))
+          }
+      
+          if (this.pos.y - this.radius < 0) {
+            this.pos.y = this.rad; // Prevent from leaving the canvas from the top
+            //this.velocity.y *= -1;
+            this.addForce(new Vec(0, 1))
+          } else if (this.pos.y + this.rad > H) {
+            this.pos.y = H - this.rad; // Prevent from leaving the canvas from the bottom
+            //this.velocity.y *= -1;
+            this.addForce(new Vec(0, -1))
+          }
+
+
+    }
+
+
     checkBounds() {
         //let opa = false;
         if ( (this.pos.x + this.rad) > W ) {
