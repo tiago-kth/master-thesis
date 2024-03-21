@@ -17,11 +17,12 @@ cv.height = H;
 
 const grid = new Grid(W, H, 50, ctx);
 
-const p0 = new Particle( new Vec(100,  50), 10, grid, 0, MASS, new Vec(1,0), new Vec(0,0.1) );
-const p1 = new Particle( new Vec(400,  50), 10, grid, 1, MASS, new Vec(-1,1), new Vec(0,0.1) );
-const p2 = new Particle( new Vec(200, 150), 10, grid, 2, MASS, new Vec(1,-1), new Vec(0,0.1) );
+const p0 = new Particle( new Vec(200,  50), 10, grid, 0, MASS, new Vec(1,2), new Vec(0,0.2) );
+const p1 = new Particle( new Vec(400,  50), 10, grid, 1, MASS, new Vec(1,0), new Vec(0,0.2) );
+const p2 = new Particle( new Vec(400, 150), 10, grid, 2, MASS, new Vec(-1,1), new Vec(0,0.2) );
+const p3 = new Particle( new Vec(200, 150), 10, grid, 3, MASS, new Vec(1,-1), new Vec(0,0.2) );
 
-particles.push(p0, p1, p2);
+particles.push(p0, p1, p2, p3);
 particles.forEach(p => {
     p.updateGridPos();
     grid.addParticle(p);
@@ -31,9 +32,12 @@ const springs = [];
 
 const s0 = new Spring(particles[0], particles[1], params.REST_LEN, params.STIFFNESS);
 const s1 = new Spring(particles[1], particles[2], params.REST_LEN, params.STIFFNESS);
-const s2 = new Spring(particles[2], particles[0], params.REST_LEN, params.STIFFNESS);
+const s2 = new Spring(particles[2], particles[3], params.REST_LEN, params.STIFFNESS);
+const s3 = new Spring(particles[3], particles[0], params.REST_LEN, params.STIFFNESS);
+const s4 = new Spring(particles[0], particles[2], params.REST_LEN, params.STIFFNESS);
+const s5 = new Spring(particles[1], particles[3], params.REST_LEN, params.STIFFNESS);
 
-springs.push(s0, s1, s2); //,s1 , s2, s3, s4, s5, s6, s7, s8);
+springs.push(s0, s1, s2, s3, s4, s5); //,s1 , s2, s3, s4, s5, s6, s7, s8);
 
 console.log(grid.cells);
 console.log(particles, particles[0].cell_col);
