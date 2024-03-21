@@ -188,7 +188,7 @@ class Vec {
     static fromAngle(mag, ang, p0) {
 
         let x = p0.x + Math.cos(ang) * mag;
-        let y = H - p0.y - Math.sin(ang) * mag;
+        let y = p0.y - Math.sin(ang) * mag;
 
         return new Vec(x, y)
 

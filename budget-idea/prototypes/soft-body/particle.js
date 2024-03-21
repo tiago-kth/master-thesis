@@ -13,8 +13,8 @@ class Particle {
     cell_col;
     cell_row;
     changed_cell = false;
-    previous_cell_col;
-    previous_cell_row;
+    cell_previous_col;
+    cell_previous_row;
 
     constructor(pos, rad, grid, index, mass, vel, acc) {
         this.index = index;
