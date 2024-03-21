@@ -7,7 +7,7 @@ const W = 500;
 const R = 10;
 let MASS = 2;
 
-const params = {STIFFNESS: 0.107, REST_LEN: 150, DAMPING: 0.01, TIMESTEP: 1000};
+const params = {STIFFNESS: 0.3, REST_LEN: 150, DAMPING: 0.01, TIMESTEP: 1000};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -61,7 +61,7 @@ function setup_circle(center, N) {
         )
 
         const sr = new Spring(
-            p, p0, r, params.STIFFNESS
+            p, p0, r, params.STIFFNESS / 10
         )
 
         springs.push(sr);
@@ -101,11 +101,112 @@ function setup_circle(center, N) {
 
 }
 
+function setup_ring(center, N, r) {
+
+    const particles = [];
+
+    const nullvec = new Vec(0,0);
+    const acc = new Vec(0, 0.3);
+
+    const theta = 2*Math.PI / N;
+
+    //console.log(l, theta * 180 / Math.PI);
+
+    for (let i = 0; i < N; i++) {
+
+        const p = new Particle(
+            Vec.fromAngle(r, theta * i, center),
+            5, grid, i, MASS, nullvec, acc
+        )
+
+        particles.push(p);
+
+    }
+
+    return particles;
+
+}
+
+function create_perimeter_springs(particles, l) {
+
+    const springs = [];
+
+    particles.forEach( (p, i, array) => {
+
+        const sp = new Spring(
+
+            p, 
+            (i < array.length - 1) ? array[i + 1] : array[0],
+            l, 
+            params.STIFFNESS
+
+        )
+
+        springs.push(sp);
+
+    })
+
+    return springs;
+ 
+}
+
+function create_connecting_springs(inner, outer, d) {
+
+    const N = inner.length;
+
+    const springs = [];
+
+    for (let i = 0; i < N; i++) {
+
+        const sc = new Spring(
+
+            inner[i],
+            outer[i],
+            d,
+            params.STIFFNESS
+
+        )
+
+        springs.push(sc);
+
+    }
+
+    return springs
+
+}
+
+function setup_blob(center, N, R) {
+
+    const outer_particles = setup_ring(center, N, R);
+    const inner_particles = setup_ring(center, N, R/3);
+
+    const theta = 2*Math.PI / N;
+    const l = 2 * R * Math.sin(theta / 2);
+
+    const perim_springs_outer = create_perimeter_springs(outer_particles, l);
+    const perim_springs_inner = create_perimeter_springs(inner_particles, l/3);
+    const connecting_springs = create_connecting_springs(inner_particles, outer_particles, l - l/3);
+
+    particles.push(
+        ...inner_particles, 
+        ...outer_particles
+    );
+
+    springs.push(
+        ...perim_springs_inner,
+        ...perim_springs_outer,
+        ...connecting_springs
+    )
+
+}
+
 //setup_square();
 
 const center = new Vec(W/2, 150);
 
-setup_circle(center, 8);
+setup_blob(center, 10, 90);
+
+//setup_circle(center, 16);
 
 particles.forEach(p => {
     p.updateGridPos();
