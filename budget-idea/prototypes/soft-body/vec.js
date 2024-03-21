@@ -161,6 +161,16 @@ class Vec {
 
     }
 
+    display_as_point() {
+        ctx.save();
+        ctx.strokeStyle = "tomato";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+    }
+
     draw(canvas) {
 
         const ctx = canvas.getContext('2d');
@@ -175,10 +185,10 @@ class Vec {
     }
 
     /* this make it possible to use the utility function without instantiating an object */
-    static fromAngle(mag, ang) {
+    static fromAngle(mag, ang, p0) {
 
-        let x = Math.cos(ang) * mag;
-        let y = Math.sin(ang) * mag;
+        let x = p0.x + Math.cos(ang) * mag;
+        let y = H - p0.y - Math.sin(ang) * mag;
 
         return new Vec(x, y)
 
