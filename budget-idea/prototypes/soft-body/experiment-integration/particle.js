@@ -9,16 +9,7 @@ class Particle {
     mass;
     hits;
 
-    grid;
-    cell_col;
-    cell_row;
-    changed_cell = false;
-    cell_previous_col;
-    cell_previous_row;
-
-    constructor(pos, rad, grid, index, mass, vel, acc) {
-        this.index = index;
-        this.grid = grid;
+    constructor(pos, rad, mass, vel, acc) {
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
@@ -54,7 +45,7 @@ class Particle {
         // s = s0 + v.t
         this.pos.selfAdd(Vec.mult(this.vel, dT / params.TIMESTEP));
         //this.updateGridPos();
-        this.limitSpeed();
+        //this.limitSpeed();
 
     }
 
@@ -249,7 +240,7 @@ class Particle {
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI * 2);
 
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.strokeStyle = "goldenrod";
         ctx.fillStyle = "khaki";
         //let red;
@@ -270,7 +261,7 @@ class Particle {
         ctx.closePath();
         ctx.font = "14px Serif";
         ctx.fillStyle = "black";
-        ctx.fillText(this.index, this.pos.x, this.pos.y);
+        //ctx.fillText(this.index, this.pos.x, this.pos.y);
     }
 
     displayVel(ctx) {
@@ -301,6 +292,27 @@ class Particle {
         ctx.fillRect(x, y, l, l);
         ctx.restore();
     
+    }
+
+}
+
+class P2 extends Particle {
+
+    constructor(pos, rad, mass, vel, acc) {
+
+        super(pos, rad, mass, vel, acc)
+
+    }
+
+    update(dT) {
+        // v = v0 + a.t
+
+        // s = s0 + v.t
+        this.pos.selfAdd(Vec.mult(this.vel, dT / params.TIMESTEP));
+        this.vel.selfAdd(Vec.mult(this.acc, dT / params.TIMESTEP));
+        //this.updateGridPos();
+        //this.limitSpeed();
+
     }
 
 }
