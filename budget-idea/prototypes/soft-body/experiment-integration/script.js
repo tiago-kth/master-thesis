@@ -23,7 +23,8 @@ const p0 = new Particle(
     10,
     10,
     new Vec(1,0),
-    new Vec(1,0)
+    new Vec(1,0),
+    "Updates velocity, then position"
 )
 
 const p0a = new P2(
@@ -31,7 +32,8 @@ const p0a = new P2(
     10,
     10,
     new Vec(1,0),
-    new Vec(1,0)
+    new Vec(1,0),
+    "Updates position, then velocity"
 )
 
 particles.push(p0, p0a);
@@ -50,7 +52,7 @@ function loop(t) {
 
     if (!t_ant) t_ant = t;
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
-    const dT = 16;//t - t_ant;
+    const dT = 20;//t - t_ant;
     t_ant = t;
 
 
@@ -65,9 +67,9 @@ function loop(t) {
 
     })
 
-    //anim = window.requestAnimationFrame(loop);
+    anim = window.requestAnimationFrame(loop);
 }
 
-//anim = window.requestAnimationFrame(loop);
+anim = window.requestAnimationFrame(loop);
 
 
