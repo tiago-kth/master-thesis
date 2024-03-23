@@ -90,7 +90,7 @@ class Vec {
 
         const angle = Math.atan( Math.abs(y) / Math.abs(x) );
 
-        console.log(angle * 180 / Math.PI);
+        //console.log(angle * 180 / Math.PI);
  
         if (x < 0 & y > 0) return Math.PI - angle;
         if (x < 0 & y < 0) return Math.PI + angle;
@@ -153,9 +153,67 @@ class Vec {
 
         } 
         
+        const p1 = new Vec(p0.x + this.x, p0.y + this.y);
+
+        //console.log(p1);
+
+        const theta = Vec.ang2points(p1, p0);
+        const mag = this.mod();//Vec.sub(p1, p0).mod();
+
+        ctx.save();
+        ctx.strokeStyle = color ? color : "hotpink";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        //
+        /*
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        */
+        ctx.translate(p0.x, p0.y);
+        ctx.rotate(theta);
+        ctx.moveTo(0,0);
+        ctx.lineTo(mag, 0);
+
+        ctx.translate(mag, 0);
+        ctx.rotate(Math.PI * 5/6);
+        ctx.moveTo(0,0);
+        ctx.lineTo(10,0);
+        ctx.moveTo(0,0);
+        ctx.rotate(Math.PI * -10/6);
+        ctx.lineTo(10,0);
+        ctx.stroke();
+        ctx.restore();
+
+        /* test
+        const vs = [new Vec(100,100), new Vec(-100,100), new Vec(-100,-100), new Vec(100,-100)]
+        vs.forEach(v => v.display(ctx, new Vec(W/2, H/2)))
+
+        const p_0 = new Vec(W/2, H/2);
+        const v1 = new Vec(100,0);
+        const v2 = new Vec(50,70);
+        const v3 = Vec.proj(v2, v1);
+        v1.display(ctx, p_0, "blue");
+        v2.display(ctx, p_0, "white");
+        v3.display(ctx, p_0, "gold");
+
+        */
+
+    }
+
+    display_diagram(ctx, p0, color) {
+
+        const h = ctx.canvas.height;
+        const w = ctx.canvas.width;
+
+        if (!p0) {
+
+            p0 = new Vec(w/2, h/2);
+
+        } 
+        
         const p1 = new Vec(p0.x + this.x, p0.y - this.y);
 
-        console.log(p1);
+        //console.log(p1);
 
         const theta = Vec.ang2points(p1, p0);
         const mag = this.mod();//Vec.sub(p1, p0).mod();
