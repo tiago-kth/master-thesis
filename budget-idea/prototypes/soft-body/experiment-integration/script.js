@@ -26,7 +26,7 @@ const p0 = new Particle(
     new Vec(1,0)
 )
 
-const p0a = new Particle(
+const p0a = new P2(
     new Vec(50,400),
     10,
     10,
@@ -48,8 +48,16 @@ let dt_perfs = Array(100)
 
 function loop(t) {
 
+    if (!t_ant) t_ant = t;
+    //the highest precision available is the duration of a single frame, 16.67ms @60hz
+    const dT = 16;//t - t_ant;
+    t_ant = t;
+
+
+    clearCanvas();
+
     particles.forEach( (p, i) => {
-        p.update(t);
+        p.update(dT);
         p.checkBounds();
 
         p.checkCollisions(particles);
@@ -57,6 +65,9 @@ function loop(t) {
 
     })
 
+    //anim = window.requestAnimationFrame(loop);
 }
+
+//anim = window.requestAnimationFrame(loop);
 
 
