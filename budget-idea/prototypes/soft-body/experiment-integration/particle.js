@@ -9,7 +9,10 @@ class Particle {
     mass;
     hits;
 
-    constructor(pos, rad, mass, vel, acc) {
+    constructor(pos, rad, mass, vel, acc, name, color) {
+        this.pos0 = new Vec(pos.x, pos.y);
+        this.color = color;
+        this.name = name;
         this.hits = 0;
         this.pos = pos;
         this.rad = rad;
@@ -240,9 +243,9 @@ class Particle {
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI * 2);
 
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "goldenrod";
-        ctx.fillStyle = "khaki";
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "coral";
+        ctx.fillStyle = this.color;//"khaki";
         //let red;
         //if (this.hits > 255) red = 255;
         //else red = Math.floor(this.hits);
@@ -260,8 +263,8 @@ class Particle {
         ctx.fill();
         ctx.closePath();
         ctx.font = "14px Serif";
-        ctx.fillStyle = "black";
-        //ctx.fillText(this.index, this.pos.x, this.pos.y);
+        ctx.fillStyle = "White";
+        ctx.fillText(this.name, this.pos0.x, this.pos0.y - this.rad * 2);
     }
 
     displayVel(ctx) {
@@ -298,9 +301,9 @@ class Particle {
 
 class P2 extends Particle {
 
-    constructor(pos, rad, mass, vel, acc) {
+    constructor(pos, rad, mass, vel, acc, name, color) {
 
-        super(pos, rad, mass, vel, acc)
+        super(pos, rad, mass, vel, acc, name, color)
 
     }
 
