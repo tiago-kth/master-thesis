@@ -2,19 +2,19 @@ class Vec {
 
     x;
     y;
-    angle;
+    //angle;
     mag;
 
     constructor(x, y) {
 
         this.x = x;
         this.y = y;
-        this.angle = this.#getAngle();
+        //this.angle = this.getAngle();
         this.mag = this.mod();
 
     }
 
-    #getAngle() {
+    getAngle() {
 
         const angle = Math.atan( Math.abs(this.y) / Math.abs(this.x) );
 
@@ -83,6 +83,25 @@ class Vec {
 
     }
 
+    static ang2points(p1, p0) {
+
+        const x = p1.x - p0.x;
+        const y = p1.y - p0.y;
+
+        const angle = Math.atan( Math.abs(y) / Math.abs(x) );
+
+        console.log(angle * 180 / Math.PI);
+ 
+        if (x < 0 & y > 0) return Math.PI - angle;
+        if (x < 0 & y < 0) return Math.PI + angle;
+        if (x > 0 & y < 0) return Math.PI * 2 - angle;
+        
+        return angle;
+
+        // to test: [new Vec(1,1), new Vec(-1,1), new Vec(-1,-1), new Vec(1,-1)].forEach(v => console.log(v.angle * 180 / Math.PI))
+
+    }
+
     static add(vec_a, vec_b) {
 
         return new Vec(vec_a.x + vec_b.x, vec_a.y + vec_b.y);
@@ -134,19 +153,33 @@ class Vec {
 
         } 
         
+        const p1 = new Vec(p0.x + this.x, p0.y - this.y);
+
+        console.log(p1);
+
+        const theta = Vec.ang2points(p1, p0);
+        const mag = this.mod();//Vec.sub(p1, p0).mod();
+
         ctx.save();
         ctx.strokeStyle = color ? color : "hotpink";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
+        //
+        /*
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        */
         ctx.translate(p0.x, p0.y);
-        ctx.rotate(-1 * this.angle);
+        ctx.rotate(theta);
         ctx.moveTo(0,0);
-        ctx.lineTo(this.mag, 0);
-        ctx.translate(this.mag, 0);
-        ctx.rotate(-Math.PI * 5/6);
+        ctx.lineTo(mag, 0);
+
+        ctx.translate(mag, 0);
+        ctx.rotate(Math.PI * 5/6);
+        ctx.moveTo(0,0);
         ctx.lineTo(10,0);
         ctx.moveTo(0,0);
-        ctx.rotate(Math.PI*10/6);
+        ctx.rotate(Math.PI * -10/6);
         ctx.lineTo(10,0);
         ctx.stroke();
         ctx.restore();
