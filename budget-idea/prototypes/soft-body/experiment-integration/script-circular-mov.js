@@ -70,7 +70,8 @@ function loop(t) {
         ctx.stroke();
 
         const v_dir = Vec.sub(center, p.pos).getUnitDir();
-        p.acc = Vec.mult(v_dir, 1 / (center.y - p.pos0.y));
+        const r_motion = Vec.sub(center, p.pos).mod()
+        p.acc = Vec.mult(v_dir, 1 / r_motion);
 
         p.update(dT);
         p.checkBounds();
