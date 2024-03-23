@@ -60,11 +60,13 @@ function setup_circle(center, N) {
             5, grid, i, MASS, nullvec, acc
         )
 
+        /*
         const sr = new Spring(
             p, p0, Vec.dist(p.pos, p0.pos), params.STIFFNESS / 10
         )
 
         springs.push(sr);
+        */
 
         // particles
         // i: [     0,  1,    , i     ]
@@ -98,6 +100,7 @@ function setup_circle(center, N) {
 
     }
 
+    /*
     particles.forEach( (p,i,a) => {
 
         const sc2 = new Spring(
@@ -109,6 +112,7 @@ function setup_circle(center, N) {
         springs.push(sc2);
 
     })
+    */
 
 }
 

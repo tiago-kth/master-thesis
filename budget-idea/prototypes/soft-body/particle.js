@@ -33,9 +33,12 @@ class Particle {
     }
 
     addForce(f) {
+
+        if (this.index == 24) console.log(this.vel.mod(), f);
         const a = Vec.mult(f, 1/this.mass);
         //this.acc.selfAdd(a);
         this.vel.selfAdd(a);
+
     }
 
     limitSpeed() {
