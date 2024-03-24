@@ -72,4 +72,10 @@ function loop(t) {
 
 anim = window.requestAnimationFrame(loop);
 
+function timestep() {
 
+    // aggregate forces
+    // integrate
+    // enforce constraints
+
+}
