@@ -1,3 +1,4 @@
+let i = 0;
 class Particle {
 
     pos;
@@ -40,12 +41,33 @@ class Particle {
         this.pos.selfAdd( Vec.mult(this.vel, dt) );
 
         // get acceleration
-        this.acc.selfAdd( Vec.mult(this.force_acum, this.inv_mass) );
+        const acc = new Vec(this.acc.x, this.acc.y);
+        acc.selfAdd( Vec.mult(this.force_acum, this.inv_mass) );
 
         // update velocity
-        this.vel.selfAdd( Vec.mult(this.acc, dt) );
+        this.vel.selfAdd( Vec.mult(acc, dt) );
+
+        if (this.vel.mod() < 10) console.log(dt, this.vel, this.force_acum);
+
+
 
         // impose drag?
+
+        // clear Forces
+
+        this.clear_force_acum();
+
+    }
+
+    add_force(force) {
+
+        this.force_acum.selfAdd(force);
+
+    }
+
+    clear_force_acum() {
+
+        this.force_acum = new Vec(0,0);
 
     }
 
@@ -55,6 +77,10 @@ class Particle {
 
     setInvMass(invMass) {
         this.inv_mass = invMass;
+    }
+
+    getInvMass() {
+        return this.inv_mass;
     }
     
     setAcc(acc) {
@@ -77,4 +103,96 @@ class Particle {
         ctx.restore();
 
     }
+}
+
+class Force {
+
+    static updateForce(particle, t) {
+
+    }
+
+}
+
+class Gravity extends Force {
+
+    gravity;
+
+    constructor(gravity) {
+        super();
+        this.gravity = gravity;
+    }
+
+    updateForce(particle) {
+
+        particle.add_force( Vec.mult(this.gravity, particle.getInvMass() ) );
+
+    }
+
+}
+
+class ForceRegistry {
+
+    registry;
+
+    constructor() {
+
+        this.registry = [];
+
+    }
+
+    add(particle, force) {
+
+        this.registry.push({
+
+            particle: particle,
+            force: force
+
+        })
+
+    }
+
+    remove(particle, force) {
+
+        if (!particle && !force) return;
+
+        let entries_found;
+
+        if (!particle) {
+
+            entries_found = this.registry.filter(r => r.force == force);
+
+        } else {
+
+            if (!force) {
+
+                entries_found = this.registry.filter(r => r.particle == particle);
+
+            }  else {
+
+                entries_found = this.registry.filter(r => r.particle == particle && r.force == force)
+
+            }
+
+        }
+
+        entries_found.forEach( (entry, i, a) => {
+
+            const index = a.indexOf(entry);
+
+            this.registry.splice(index, 1);
+
+        })
+
+    }
+
+    updateForces() {
+
+        this.registry.forEach(entry => {
+
+            entry.force.updateForce(entry.particle);
+
+        })
+
+    }
+
 }

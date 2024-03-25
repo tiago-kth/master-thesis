@@ -26,9 +26,19 @@ const p1 = new Particle(
     new Vec(300,50)
 )
 
-particles.push(p0, p1);
+const p2 = new Particle(
+    new Vec(100,100)
+)
 
-particles.forEach(p => p.setAcc(new Vec(0, 1)));
+particles.push(p0, p1, p2);
+
+const force_registry = new ForceRegistry();
+
+const gf = new Gravity(
+    new Vec(0,1)
+);
+
+//particles.forEach(p => force_registry.add(p, gf));
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -71,6 +81,8 @@ function loop(t) {
 
 
     clearCanvas();
+
+    force_registry.updateForces();
 
     particles.forEach( (p, i) => {
         p.time_step(dt/params.TIMESTEP);
