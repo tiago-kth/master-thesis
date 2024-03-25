@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+
+    color: white;
+    font-weight: 300;
+    font-family: Rubik;
+
+    background-color: indigo;
+
+}
+
+canvas {
+    width: 500px;
+    height: 500px;
+    border: 2px solid khaki;
+}
+
+.container-buttons {
+    display: block;
+}
+
+.controls {
+
+    margin-block: 1rem;
+    
+}
+
+.wrapper-input {
+    display: flex;
+    margin-block: .5rem;
+}
+
+.wrapper-input > * + * {
+    margin-left: 1rem;
+}

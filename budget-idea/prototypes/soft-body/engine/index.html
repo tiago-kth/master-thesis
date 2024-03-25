@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container-buttons">
+        <button data-btn="stop">stop</button>
+    </div>
+
+    <div class="controls">
+
+        <div class="wrapper-input">
+            <label for="input-STIFFNESS">Stiffness</label>
+            <input type="range" name="input-STIFFNESS" id="input-STIFFNESS" min="0.001" step="0.001" max="5">
+            <span class="input-STIFFNESS-value">0</span>
+        </div>
+
+        <div class="wrapper-input">
+            <label for="input-REST_LEN">Length at Rest</label>
+            <input type="range" name="input-REST_LEN" id="input-REST_LEN" min="5" step="5" max="200">
+            <span class="input-REST_LEN-value">0</span>
+        </div>
+
+        <div class="wrapper-input">
+            <label for="input-DAMPING">Damping</label>
+            <input type="range" name="input-DAMPING" id="input-DAMPING" min="0.01" step="0.01" max="0.99">
+            <span class="input-DAMPING-value">0</span>
+        </div>
+
+        <div class="wrapper-input">
+            <label for="input-TIMESTEP">Time step</label>
+            <input type="range" name="input-TIMESTEP" id="input-TIMESTEP" min="1" step="10" max="500">
+            <span class="input-TIMESTEP-value">0</span>
+        </div>
+    </div>
+    
+
+    <canvas>
+        
+    </canvas>
+
+    <script src="vec.js"></script>
+    <script src="particle.js"></script>
+    <script src="script-circular-mov.js"></script>
+    <script src="controls.js"></script>
+
+</body>
+</html>
