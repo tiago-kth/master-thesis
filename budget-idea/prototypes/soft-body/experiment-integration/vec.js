@@ -47,6 +47,10 @@ class Vec {
 
     }
 
+    square_mag() {
+        return this.x * this.x + this.y * this.y;
+    }
+
     selfAdd(vec_b) {
 
         this.x += vec_b.x;

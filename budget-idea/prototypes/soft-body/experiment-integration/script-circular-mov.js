@@ -1,3 +1,9 @@
+/* 
+    the idea here is to see how the different update methods behave in the long run, that is, how they introduce deviations into the expected motion of our particles. I thought this would be clearer by using circular motions, with centripetal accelarations.
+
+    also, I wanted to visualize the velocity and acceleration vectors. 
+*/
+
 const cv = document.querySelector('canvas');
 
 const ctx = cv.getContext('2d');

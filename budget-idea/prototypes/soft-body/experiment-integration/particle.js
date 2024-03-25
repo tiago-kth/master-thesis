@@ -313,6 +313,7 @@ class P2 extends Particle {
         // s = s0 + v.t
         this.pos.selfAdd(Vec.mult(this.vel, dT / params.TIMESTEP));
         this.vel.selfAdd(Vec.mult(this.acc, dT / params.TIMESTEP));
+        //this.vel.selfMult(0.9996); // damping
         //this.updateGridPos();
         //this.limitSpeed();
 
