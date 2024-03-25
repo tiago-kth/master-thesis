@@ -16,27 +16,19 @@ const springs = [];
 cv.width = W;
 cv.height = H;
 
-const center = new Vec(W/2, 150);
+const center = new Vec(W/2, H/2);
 
 const p0 = new Particle(
-    new Vec(50,200),
-    10,
-    10,
-    new Vec(1,0),
-    new Vec(1,0),
-    "Updates velocity, then position"
+    new Vec(50,200)
 )
 
-const p0a = new P2(
-    new Vec(50,400),
-    10,
-    10,
-    new Vec(1,0),
-    new Vec(1,0),
-    "Updates position, then velocity"
+const p1 = new Particle(
+    new Vec(300,50)
 )
 
-particles.push(p0, p0a);
+particles.push(p0, p1);
+
+particles.forEach(p => p.setAcc(new Vec(0, 1)));
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -46,36 +38,50 @@ let anim;
 let t_ant = 0;
 
 let t_perf0, t_perf1;
-let dt_perfs = Array(100)
+let dt_perfs = Array(100);
+
+let dt;
+let started = false;
+
+function get_fr(t) {
+    if (!t_ant) t_ant = t;
+    dt = t - t_ant;
+    t_ant = t;
+    if (!started) {
+
+        console.log("First, dt = ", dt);
+
+        started = true;
+
+        window.requestAnimationFrame(get_fr);
+
+    } else {
+
+        anim = window.requestAnimationFrame(loop)
+
+    }
+}
 
 function loop(t) {
 
-    if (!t_ant) t_ant = t;
+
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
-    const dT = 20;//t - t_ant;
+    const dt = 20;//t - t_ant;
     t_ant = t;
 
 
     clearCanvas();
 
     particles.forEach( (p, i) => {
-        p.update(dT);
-        p.checkBounds();
+        p.time_step(dt/params.TIMESTEP);
+        //p.checkBounds();
 
-        p.checkCollisions(particles);
-        p.display(ctx);
+        //p.checkCollisions(particles);
+        p.render(ctx);
 
     })
 
     anim = window.requestAnimationFrame(loop);
 }
 
-anim = window.requestAnimationFrame(loop);
-
-function timestep() {
-
-    // aggregate forces
-    // integrate
-    // enforce constraints
-
-}
+window.requestAnimationFrame(get_fr);
