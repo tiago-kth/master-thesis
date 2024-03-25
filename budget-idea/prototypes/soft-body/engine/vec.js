@@ -167,24 +167,31 @@ class Vec {
         ctx.save();
         ctx.strokeStyle = color ? color : "hotpink";
         ctx.lineWidth = 2;
-        ctx.beginPath();
-        //
-        /*
-        ctx.moveTo(p0.x, p0.y);
-        ctx.lineTo(p1.x, p1.y);
-        */
-        ctx.translate(p0.x, p0.y);
-        ctx.rotate(theta);
-        ctx.moveTo(0,0);
-        ctx.lineTo(mag, 0);
 
-        ctx.translate(mag, 0);
-        ctx.rotate(Math.PI * 5/6);
-        ctx.moveTo(0,0);
-        ctx.lineTo(10,0);
-        ctx.moveTo(0,0);
-        ctx.rotate(Math.PI * -10/6);
-        ctx.lineTo(10,0);
+        ctx.beginPath();
+        ctx.translate(p0.x, p0.y);
+
+        if (mag == 0) {
+
+            ctx.arc(0,0,1,0,Math.PI*2);
+            ctx.closePath();
+
+        } 
+        
+        else {
+
+            ctx.rotate(theta);
+            ctx.moveTo(0,0);
+            ctx.lineTo(mag, 0);
+            ctx.translate(mag, 0);
+            ctx.rotate(Math.PI * 5/6);
+            ctx.moveTo(0,0);
+            ctx.lineTo(10,0);
+            ctx.moveTo(0,0);
+            ctx.rotate(Math.PI * -10/6);
+            ctx.lineTo(10,0);
+        }
+
         ctx.stroke();
         ctx.restore();
 

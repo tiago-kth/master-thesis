@@ -44,12 +44,10 @@ class Particle {
         const acc = new Vec(this.acc.x, this.acc.y);
         acc.selfAdd( Vec.mult(this.force_acum, this.inv_mass) );
 
+        Vec.mult(acc, 50).display(ctx, this.pos, "tomato");
+
         // update velocity
         this.vel.selfAdd( Vec.mult(acc, dt) );
-
-        if (this.vel.mod() < 10) console.log(dt, this.vel, this.force_acum);
-
-
 
         // impose drag?
 
@@ -161,6 +159,8 @@ class ForceRegistry {
 
             entries_found = this.registry.filter(r => r.force == force);
 
+            console.log(entries_found);
+
         } else {
 
             if (!force) {
@@ -177,9 +177,13 @@ class ForceRegistry {
 
         entries_found.forEach( (entry, i, a) => {
 
-            const index = a.indexOf(entry);
+            const index = this.registry.indexOf(entry);
+
+            console.log(i, a, this.registry);
 
             this.registry.splice(index, 1);
+
+            console.log(i, a, this.registry);
 
         })
 

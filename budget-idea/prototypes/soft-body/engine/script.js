@@ -7,7 +7,7 @@ const W = 500;
 const R = 10;
 let MASS = 2;
 
-const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 1000, SPEEDLIMIT: 15};
+const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -32,13 +32,16 @@ const p2 = new Particle(
 
 particles.push(p0, p1, p2);
 
+
 const force_registry = new ForceRegistry();
 
 const gf = new Gravity(
     new Vec(0,1)
 );
 
-//particles.forEach(p => force_registry.add(p, gf));
+particles.forEach(p => force_registry.add(p, gf));
+
+
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -85,10 +88,8 @@ function loop(t) {
     force_registry.updateForces();
 
     particles.forEach( (p, i) => {
+        
         p.time_step(dt/params.TIMESTEP);
-        //p.checkBounds();
-
-        //p.checkCollisions(particles);
         p.render(ctx);
 
     })
