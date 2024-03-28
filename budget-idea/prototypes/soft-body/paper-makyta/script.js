@@ -24,9 +24,9 @@ const N_PARTICLES = 20;
 const H = 500;
 const W = 500;
 const R = 10;
-let MASS = 2;
 
-const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15};
+
+const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15, MASS: 2};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -37,21 +37,6 @@ cv.height = H;
 
 const center = new Vec(W/2, H/2);
 
-const p0 = new Particle(
-    new Vec(50,200)
-)
-
-const p1 = new Particle(
-    new Vec(300,50)
-)
-
-const p2 = new Particle(
-    new Vec(100,100)
-)
-
-particles.push(p0, p1, p2);
-
-
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
 }
@@ -61,6 +46,19 @@ let t_ant = 0;
 
 let dt;
 let started = false;
+
+const g = new Vec(0,1);
+
+function compute_gravity() {
+
+    blobs.forEach(b => {
+        b.particles.forEach(p => {
+            p.add_force( Vec.mult(g, p.getMass() ) );
+        })
+    })
+
+}
+
 
 function get_fr(t) {
 

@@ -8,6 +8,7 @@ class Particle {
 
     r;
 
+    mass;
     inv_mass;
 
     constructor(pos) {
@@ -18,7 +19,8 @@ class Particle {
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
         this.r = 5;
-        this.inv_mass = 1;
+        this.mass = params.MASS;
+        this.inv_mass = 1 / params.MASS;
 
     }
 
@@ -72,6 +74,10 @@ class Particle {
 
     setInvMass(invMass) {
         this.inv_mass = invMass;
+    }
+
+    getMass() {
+        return this.mass;
     }
 
     getInvMass() {
