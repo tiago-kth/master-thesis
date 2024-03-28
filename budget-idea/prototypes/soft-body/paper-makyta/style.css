@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: ghostwhite;
+    --txt-color: #333;
+    --particle-color: #333;
+    --spring-color: crimson;
+
+}
+
+html {
+
+    color: var(--txt-color);
+    font-weight: 300;
+    font-family: Rubik;
+
+    background-color: var(--bg);
+
+}
+
+canvas {
+    width: 500px;
+    height: 500px;
+    border: 2px solid tomato;
+}
+
+.container-buttons {
+    display: block;
+}
+
+.controls {
+
+    margin-block: 1rem;
+    
+}
+
+.wrapper-input {
+    display: flex;
+    margin-block: .5rem;
+}
+
+.wrapper-input > * + * {
+    margin-left: 1rem;
+}
