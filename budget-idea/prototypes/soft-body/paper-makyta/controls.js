@@ -11,6 +11,40 @@ stopBTN.addEventListener('click', e => {
     }
     
 })
+let dragging = false;
+cv.addEventListener('mousedown', mousedown);
+cv.addEventListener('mousemove', mousemove);
+cv.addEventListener('mouseup', mouseup);
+
+function mousedown(e) {
+
+    console.log(e);
+
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+
+    dragging = true;
+
+}
+
+function mousemove(e) {
+
+    if (!dragging) return;
+
+    else {
+
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+
+    }
+
+}
+
+function mouseup(e) {
+
+    dragging = false;
+
+}
 
 class Slider {
 
