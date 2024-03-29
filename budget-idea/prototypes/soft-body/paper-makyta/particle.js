@@ -67,7 +67,7 @@ class Particle {
 
         // clear Forces
 
-        Vec.mult(this.force_acum, 10).display(ctx, this.pos, "tomato");
+        Vec.mult(this.force_acum, params.VECTOR_SIZE).display(ctx, this.pos, "tomato");
 
         this.clear_force_acum();
 

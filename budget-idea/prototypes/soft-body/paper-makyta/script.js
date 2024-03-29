@@ -26,7 +26,7 @@ const W = 500;
 const R = 10;
 
 
-const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15, MASS: 2};
+const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15, MASS: 2, GRAVITY: 0.1, VECTOR_SIZE: 10};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -52,9 +52,9 @@ let t_ant = 0;
 let dt;
 let started = false;
 
-const g = new Vec(0,1);
-
 function compute_gravity() {
+
+    const g = new Vec(0, params.GRAVITY);
 
     blobs.forEach(b => {
 
@@ -64,7 +64,7 @@ function compute_gravity() {
 
             p.add_force(f_vector);
 
-            Vec.mult(f_vector, 10).display(ctx, p.pos, "green");
+            Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, p.pos, "green");
 
         })
 
@@ -86,17 +86,19 @@ function compute_spring_force() {
 
             const v12 = Vec.sub(s.p1.vel, s.p2.vel);
 
-            const f = 
+            let f = 
                 ( current_length - rest_length ) * params.STIFFNESS 
                 +
                 ( Vec.dot(v12, s_direction)) * params.DAMPING
             ;
 
+            if (f < 1e-9) f = 0;
+
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
 
-            Vec.mult(f_vector_minus, 10).display(ctx, s.p1.pos, "blue" );
-            Vec.mult(f_vector, 10).display(ctx, s.p2.pos, "blue" );
+            Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, "blue" );
+            Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, "blue" );
 
             s.p1.add_force(f_vector_minus);
             s.p2.add_force(f_vector);

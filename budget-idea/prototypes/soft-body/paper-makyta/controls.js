@@ -101,7 +101,7 @@ class Slider {
 
             const value = +this.el.value;
             this.updateParams(value);
-            if (this.name != "TIMESTEP") this.updateModel(value);
+            //if (this.name != "TIMESTEP") this.updateModel(value);
 
         })
 
@@ -132,6 +132,8 @@ class Slider {
 }
 
 const slider_stiffness = new Slider("STIFFNESS", 'k');
-const slider_restlen = new Slider("REST_LEN", 'len_0');
 const slider_damping = new Slider("DAMPING", 'damping');
 const slider_timestep = new Slider("TIMESTEP");
+const slider_gravity = new Slider("GRAVITY");
+const slider_mass = new Slider("MASS");
+const slider_vector_size = new Slider("VECTOR_SIZE");
