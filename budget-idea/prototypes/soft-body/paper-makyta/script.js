@@ -60,7 +60,11 @@ function compute_gravity() {
 
         b.particles.forEach(p => {
 
-            p.add_force( Vec.mult(g, p.getMass() ) );
+            const f_vector = Vec.mult( g, p.getMass() );
+
+            p.add_force(f_vector);
+
+            Vec.mult(f_vector, 10).display(ctx, p.pos, "green");
 
         })
 
@@ -129,12 +133,14 @@ function get_fr(t) {
 // integrate
 // display
 
-function loop(t) {
+function accumulate_forces() {
 
+    compute_gravity();
+    compute_spring_force();
 
-    //the highest precision available is the duration of a single frame, 16.67ms @60hz
-    const dt = 20;//t - t_ant;
-    //t_ant = t;
+}
+
+function render() {
 
     clearCanvas();
 
@@ -145,6 +151,20 @@ function loop(t) {
         //blob.springs.forEach(s => s.display(ctx));
 
     })
+
+}
+
+function loop(t) {
+
+
+    //the highest precision available is the duration of a single frame, 16.67ms @60hz
+    const dt = 20;//t - t_ant;
+    //t_ant = t;
+
+    accumulate_forces();
+    render();
+
+
 
     /*
     particles.forEach( (p, i) => {
