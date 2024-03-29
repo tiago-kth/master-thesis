@@ -50,7 +50,7 @@ cv.height = H;
 const center = new Vec(W/2, H/2);
 
 blobs.push(
-    new Blob(new Vec(W/2, H/2), 100, 12)
+    new Blob(new Vec(W/2, H/2), 100, 24)
 )
 
 function clearCanvas() {
