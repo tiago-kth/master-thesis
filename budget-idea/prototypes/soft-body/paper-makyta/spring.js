@@ -1,7 +1,8 @@
 class Spring {
 
-    p1; p2;
-    pa; pb;
+    p1; 
+    p2;
+
     rest_length;
     normal;
 
@@ -10,14 +11,11 @@ class Spring {
         this.p1 = pa;
         this.p2 = pb;
 
-        this.pa = p1.pos;
-        this.pb = p2.pos;
-
-        const pa_pb = Vec.sub(this.pa, this.pb);
+        const p1_p2 = Vec.sub(this.p1.pos, this.p2.pos);
 
         // k_s, k_d will be defined as global variables, so we call change them in real time;
 
-        this.rest_length = pa_pb.mod();
+        this.rest_length = p1_p2.mod();
 
     }
 
@@ -26,15 +24,15 @@ class Spring {
         const l = this.get_length();
 
         this.normal = new Vec(
-                 ( this.pa.y - this.pb.y ) / l,
-            -1 * ( this.pa.x - this.pb.x ) / l
+                 ( this.p1.pos.y - this.p2.pos.y ) / l,
+            -1 * ( this.p1.pos.x - this.p2.pos.x ) / l
         )
 
     }
 
     get_length() {
 
-        return Vec.sub(this.pa, this.pb).mod();
+        return Vec.sub(this.p1.pos, this.p2.pos).mod();
 
     }
 
@@ -46,7 +44,7 @@ class Spring {
 
     get_direction() {
 
-        return Vec.sub(this.pa, this.pb).getUnitDir();
+        return Vec.sub(this.p1.pos, this.p2.pos).getUnitDir();
     }
 
     display(ctx) {
@@ -59,8 +57,8 @@ class Spring {
         //if (l < this.len_0) ctx.strokeStyle = 'tomato';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(this.pa.x, this.pa.y);
-        ctx.lineTo(this.pb.x, this.pb.y);
+        ctx.moveTo(this.p1.pos.x, this.p1.pos.y);
+        ctx.lineTo(this.p2.pos.x, this.p2.pos.y);
         ctx.stroke();
         ctx.restore();
 
