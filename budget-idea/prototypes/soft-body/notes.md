@@ -32,4 +32,12 @@ Seguindo agora o Makyta
 Gauss formula para área de polígono:
 https://www.thecivilengineer.org/education/professional-examinations-preparation/calculation-examples/calculation-example-three-point-resection
 
+Melhor aqui (Shoelace formula): https://en.wikipedia.org/wiki/Shoelace_formula
 
+Verlet integration: 
+https://en.wikipedia.org/wiki/Verlet_integration
+
+Leapfrog integration
+https://en.wikipedia.org/wiki/Leapfrog_integration
+
+Velocity Verlet
