@@ -17,6 +17,8 @@ class Spring {
 
         this.rest_length = p1_p2.mod();
 
+        this.update_normal();
+
     }
 
     update_normal() {
@@ -27,6 +29,12 @@ class Spring {
                  ( this.p1.pos.y - this.p2.pos.y ) / l,
             -1 * ( this.p1.pos.x - this.p2.pos.x ) / l
         )
+
+    }
+
+    get_normal() {
+
+        return this.normal;
 
     }
 
@@ -61,6 +69,13 @@ class Spring {
         ctx.lineTo(this.p2.pos.x, this.p2.pos.y);
         ctx.stroke();
         ctx.restore();
+
+    }
+
+    display_normals(ctx) {
+
+        Vec.mult(this.normal, params.VECTOR_SIZE).display(ctx, this.p1.pos, "brown");
+        Vec.mult(this.normal, params.VECTOR_SIZE).display(ctx, this.p2.pos, "brown");
 
     }
 

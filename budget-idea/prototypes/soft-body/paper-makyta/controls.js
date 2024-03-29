@@ -137,3 +137,4 @@ const slider_timestep = new Slider("TIMESTEP");
 const slider_gravity = new Slider("GRAVITY");
 const slider_mass = new Slider("MASS");
 const slider_vector_size = new Slider("VECTOR_SIZE");
+const pressure_factor_size = new Slider("PRESSURE_FACTOR");

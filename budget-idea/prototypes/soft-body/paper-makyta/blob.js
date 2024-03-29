@@ -2,7 +2,7 @@ class Blob {
 
     R;
     center;
-    area;
+    rest_area;
     particles;
     springs;
 
@@ -33,6 +33,8 @@ class Blob {
             this.springs.push(s);
 
         }
+
+        this.rest_area = this.get_area();
 
     }
 

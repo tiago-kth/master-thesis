@@ -26,7 +26,17 @@ const W = 500;
 const R = 10;
 
 
-const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SPEEDLIMIT: 15, MASS: 2, GRAVITY: 0, VECTOR_SIZE: 10};
+const params = {
+    STIFFNESS: 0.05, 
+    REST_LEN: 0, 
+    DAMPING: 0.01, 
+    TIMESTEP: 10000, 
+    SPEEDLIMIT: 15, 
+    MASS: 2, 
+    GRAVITY: 0, 
+    VECTOR_SIZE: 10,
+    PRESSURE_FACTOR: 1
+};
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -111,6 +121,36 @@ function compute_spring_force() {
 
 }
 
+function compute_pressure() {
+
+    blobs.forEach(blob => {
+
+        const delta_pressure = ( blob.rest_area - blob.get_area() ) * params.PRESSURE_FACTOR;
+
+        blob.springs.forEach(spring => {
+
+            const current_length = spring.get_length();
+
+            const f = delta_pressure * current_length / blob.rest_area;
+
+            spring.update_normal();
+
+            const n = spring.get_normal();
+
+            spring.p1.add_force( Vec.mult( n, f ) );
+            spring.p2.add_force( Vec.mult( n, f ) );
+
+            spring.display_normals(ctx);
+
+        })
+
+
+    })
+
+
+
+}
+
 /*
 function get_fr(t) {
 
@@ -139,6 +179,7 @@ function accumulate_forces() {
 
     compute_gravity();
     compute_spring_force();
+    compute_pressure();
 
 }
 
@@ -156,7 +197,7 @@ function render() {
 
         blob.display(ctx);
         //blob.particles.forEach(p => p.render(ctx));
-        //blob.springs.forEach(s => s.display(ctx));
+        //blob.springs.forEach(s => s.display_normals(ctx));
 
     })
 
