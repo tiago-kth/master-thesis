@@ -8,8 +8,8 @@ class Spring {
 
     constructor(p1, p2) {
 
-        this.p1 = pa;
-        this.p2 = pb;
+        this.p1 = p1;
+        this.p2 = p2;
 
         const p1_p2 = Vec.sub(this.p1.pos, this.p2.pos);
 

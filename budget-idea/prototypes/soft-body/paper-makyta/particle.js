@@ -3,6 +3,7 @@ class Particle {
     pos;
     vel;
     acc;
+    dragging;
 
     force_acum;
 
@@ -14,6 +15,7 @@ class Particle {
     constructor(pos) {
 
         this.pos = pos;
+        this.dragging = false;
 
         this.vel = new Vec(0,0);
         this.acc = new Vec(0,0);

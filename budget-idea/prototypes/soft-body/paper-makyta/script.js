@@ -31,11 +31,16 @@ const params = {STIFFNESS: 0.05, REST_LEN: 0, DAMPING: 0.01, TIMESTEP: 10000, SP
 
 const particles = [];
 const springs = [];
+const blobs = [];
 
 cv.width = W;
 cv.height = H;
 
 const center = new Vec(W/2, H/2);
+
+blobs.push(
+    new Blob(new Vec(W/2, H/3), 100, 12)
+)
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -80,11 +85,14 @@ function compute_spring_force() {
             const f = 
                 ( current_length - rest_length ) * params.STIFFNESS 
                 +
-                ( Vec.dot(v12, s_direction))
+                ( Vec.dot(v12, s_direction)) * params.DAMPING
             ;
 
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
+
+            Vec.mult(f_vector_minus, 10).display(ctx, s.p1.pos, "blue" );
+            Vec.mult(f_vector, 10).display(ctx, s.p2.pos, "blue" );
 
             s.p1.add_force(f_vector_minus);
             s.p2.add_force(f_vector);
@@ -126,20 +134,28 @@ function loop(t) {
 
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
     const dt = 20;//t - t_ant;
-    t_ant = t;
+    //t_ant = t;
 
     clearCanvas();
 
-    force_registry.updateForces();
+    blobs.forEach(blob => {
 
+        blob.display(ctx);
+        //blob.particles.forEach(p => p.render(ctx));
+        //blob.springs.forEach(s => s.display(ctx));
+
+    })
+
+    /*
     particles.forEach( (p, i) => {
         
         p.time_step(dt/params.TIMESTEP);
         p.render(ctx);
 
     })
+    */
 
-    anim = window.requestAnimationFrame(loop);
+    //anim = window.requestAnimationFrame(loop);
 }
 
-window.requestAnimationFrame(get_fr);
+//window.requestAnimationFrame(get_fr);

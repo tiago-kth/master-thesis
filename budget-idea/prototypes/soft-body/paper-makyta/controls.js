@@ -16,14 +16,44 @@ cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
 cv.addEventListener('mouseup', mouseup);
 
+const sensitivity = 10;
+let particle_being_dragged;
+
 function mousedown(e) {
 
     console.log(e);
 
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    if (particle_being_dragged) return
 
-    dragging = true;
+    blobs.forEach(blob => {
+
+        if (particle_being_dragged) return
+
+        blob.particles.forEach(p => {
+
+            const mouse_pos = new Vec(e.offsetX, e.offsetY);
+
+            const distance = Vec.sub(mouse_pos, p.pos).mod();
+
+            if (distance <= p.r) {
+
+                dragging = true;
+
+                particle_being_dragged = p;
+
+                console.log('dragging particle ', p);
+                
+                return
+
+            }
+
+        })
+
+    })
+
+    //ctx.beginPath();
+    //ctx.moveTo(e.offsetX, e.offsetY);
+    //dragging = true;
 
 }
 
@@ -33,8 +63,11 @@ function mousemove(e) {
 
     else {
 
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
+        const mouse_pos = new Vec(e.offsetX, e.offsetY);
+        particle_being_dragged.pos = mouse_pos;
+        particle_being_dragged.render(ctx);
+        //ctx.lineTo(e.offsetX, e.offsetY);
+        //ctx.stroke();
 
     }
 
@@ -43,6 +76,7 @@ function mousemove(e) {
 function mouseup(e) {
 
     dragging = false;
+    particle_being_dragged = false;
 
 }
 
