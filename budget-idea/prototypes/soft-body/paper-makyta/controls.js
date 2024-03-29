@@ -156,6 +156,7 @@ class Toggle {
 
 const slider_stiffness = new Slider("STIFFNESS", 'k');
 const slider_damping = new Slider("DAMPING", 'damping');
+const slider_vel_damping = new Slider("VEL_DAMPING");
 const slider_timestep = new Slider("TIMESTEP");
 const slider_gravity = new Slider("GRAVITY");
 const slider_mass = new Slider("MASS");

@@ -24,9 +24,15 @@
         </div>
 
         <div class="wrapper-input">
-            <label for="input-DAMPING">Damping</label>
+            <label for="input-DAMPING">Spring Damping</label>
             <input type="range" name="input-DAMPING" id="input-DAMPING" min="0.01" step="0.01" max="0.99">
             <span class="input-DAMPING-value">0</span>
+        </div>
+
+        <div class="wrapper-input">
+            <label for="input-VEL_DAMPING">Velocity Damping</label>
+            <input type="range" name="input-VEL_DAMPING" id="input-VEL_DAMPING" min="0.900" step="0.001" max="1">
+            <span class="input-VEL_DAMPING-value">0</span>
         </div>
 
         <div class="wrapper-input">
@@ -42,7 +48,7 @@
         </div>
 
         <div class="wrapper-input">
-            <label for="input-PRESSURE_FACTOR">Pressure factor</label>
+            <label for="input-PRESSURE_FACTOR">Pressure constant</label>
             <input type="range" name="input-PRESSURE_FACTOR" id="input-PRESSURE_FACTOR" min="0.01" step="0.05" max="500">
             <span class="input-PRESSURE_FACTOR-value">0</span>
         </div>
@@ -55,7 +61,7 @@
 
         <div class="wrapper-input">
             <label for="input-VECTOR_SIZE">Vectors size</label>
-            <input type="range" name="input-VECTOR_SIZE" id="input-VECTOR_SIZE" min="1" step="5" max="100">
+            <input type="range" name="input-VECTOR_SIZE" id="input-VECTOR_SIZE" min="1" step="5" max="200">
             <span class="input-VECTOR_SIZE-value">0</span>
         </div>
 

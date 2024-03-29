@@ -27,16 +27,22 @@ const H = 500;
 const W = 500;
 const R = 10;
 
+const N_LEFT = new Vec(-1,0);
+const N_RIGHT = new Vec(1,0);
+const N_TOP = new Vec(0,-1);
+const N_BOTTOM = new Vec(0,1);
+
 const params = {
     "STIFFNESS": 0.45,
     "REST_LEN": 0,
     "DAMPING": 0.9,
+    "VEL_DAMPING" : 0.995,
     "TIMESTEP": 200,
     "SPEEDLIMIT": 15,
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 50,
+    "PRESSURE_FACTOR": 100,
     "DISPLAY_VECTORS": true,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true
@@ -178,8 +184,6 @@ function compute_pressure() {
 
     })
 
-
-
 }
 
 /*
@@ -222,6 +226,53 @@ function integrate(dt) {
 
 }
 
+function satisfy_constraints() {
+
+    edges_constraints();
+
+}
+
+function edges_constraints() {
+
+    blobs.forEach(blob => {
+        blob.particles.forEach(p => {
+
+            const pos = p.pos;
+            const r = p.r;
+
+            // horizontal borders
+
+            if ( (pos.x + r) > W ) {
+                p.add_force(N_RIGHT);
+                p.pos.x = W - r;
+            }
+            else if ( (pos.x - r) < 0 ) {
+                p.add_force(N_LEFT);
+                p.pos.x = r;
+            }
+
+            // vertical borders
+
+            if ( (pos.y + r) > H ) {
+                p.add_force(N_TOP);
+                p.pos.y = H - r;
+            }
+            else if ( (pos.y - r) < 0 ) {
+                p.add_force(N_BOTTOM);
+                p.pos.y = r;
+            }
+
+            // limit vmax?
+            //const v = p.vel.mod();
+            //if (v > 20) p.vel.selfMult( 20 / (1.1 * v) );
+
+        })
+
+        
+    })
+
+}
+
 function render() {
 
     blobs.forEach(blob => {
@@ -245,8 +296,12 @@ function loop(t) {
     //const t0 = performance.now();
     clearCanvas();
     render();
+
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
+    satisfy_constraints();
+
+
 
     //console.log(blobs[0].particles[0]);
 

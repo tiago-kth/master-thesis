@@ -20,7 +20,7 @@ class Particle {
         this.vel = new Vec(0,0);
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
-        this.r = 5;
+        this.r = 8;
         // commenting to let the mass be update by the global parameters
         //this.mass = params.MASS;
         //this.inv_mass = 1 / params.MASS;
@@ -49,7 +49,10 @@ class Particle {
         // new velocity
         const new_vel = Vec.add(
 
-            this.vel,
+            Vec.mult(
+                this.vel,
+                params.VEL_DAMPING // damping
+            ),
 
             Vec.mult(
 
