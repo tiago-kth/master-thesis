@@ -109,7 +109,7 @@ function compute_spring_force() {
 
 }
 
-
+/*
 function get_fr(t) {
 
     if (!t_ant) t_ant = t;
@@ -127,7 +127,7 @@ function get_fr(t) {
         anim = window.requestAnimationFrame(loop)
 
     }
-}
+}*/
 
 // accumulate forces: GRAVITY, SPRING, PRESSURE
 // integrate
@@ -159,13 +159,13 @@ function loop(t) {
     const dt = 20;//t - t_ant;
     //t_ant = t;
 
-    const t0 = performance.now();
+    //const t0 = performance.now();
     clearCanvas();
 
     accumulate_forces();
     render();
-    const t1 = performance.now();
-    console.log('Rendering time ', t1 - t0);
+    //const t1 = performance.now();
+    //console.log('Rendering time ', t1 - t0);
 
 
 
@@ -178,7 +178,7 @@ function loop(t) {
     })
     */
 
-    //anim = window.requestAnimationFrame(loop);
+    anim = window.requestAnimationFrame(loop);
 }
 
-//window.requestAnimationFrame(get_fr);
+window.requestAnimationFrame(loop);//get_fr);

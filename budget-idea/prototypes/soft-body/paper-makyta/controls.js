@@ -65,7 +65,7 @@ function mousemove(e) {
 
         const mouse_pos = new Vec(e.offsetX, e.offsetY);
         particle_being_dragged.pos = mouse_pos;
-        particle_being_dragged.render(ctx);
+        //particle_being_dragged.render(ctx);
         //ctx.lineTo(e.offsetX, e.offsetY);
         //ctx.stroke();
 
