@@ -36,6 +36,23 @@ class Blob {
 
     }
 
+    get_area() {
+
+        let area = 0;
+        let area2 = 0;
+
+        this.particles.map(d => d.pos).forEach( (d, i, a) => {
+
+            const inext = i + 1 > this.particles.length - 1 ? 0            : i + 1;
+
+            area  += a[i].x * a[inext].y - a[inext].x * a[i].y;
+            
+        })
+
+        return Math.abs(area / 2);
+
+    }
+
     display(ctx) {
 
         this.springs.forEach(s => s.display(ctx));

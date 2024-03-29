@@ -39,7 +39,7 @@ cv.height = H;
 const center = new Vec(W/2, H/2);
 
 blobs.push(
-    new Blob(new Vec(W/2, H/3), 100, 12)
+    new Blob(new Vec(W/2, H/2), 100, 12)
 )
 
 function clearCanvas() {
@@ -161,9 +161,9 @@ function loop(t) {
 
     //const t0 = performance.now();
     clearCanvas();
-
-    accumulate_forces();
     render();
+    accumulate_forces();
+
     //const t1 = performance.now();
     //console.log('Rendering time ', t1 - t0);
 
@@ -182,3 +182,28 @@ function loop(t) {
 }
 
 window.requestAnimationFrame(loop);//get_fr);
+
+
+
+/* ============ TEST FUNCTIONS ============ */
+
+function test_shoelace_formula() {
+
+    let ns = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 1000];
+
+    const pad_len = ns.reduce( (a,b) => Math.max(a.toString().length, b.toString().length));
+    
+    ns.forEach(n => {
+    
+        const R = 10;
+        const blob = new Blob( new Vec(100,100), R, n);
+    
+        const area_shoelace = blob.get_area();
+        const area_circle = Math.PI * Math.pow(R,2);
+        const error = (100 * Math.abs(area_shoelace - area_circle)/area_circle).toFixed(2) + "%";
+    
+        console.log(`N: ${n.toString().padStart(pad_len, " ")} | Shoelace Formula: ${area_shoelace.toFixed(4)} | Circle Area: ${area_circle.toFixed4} | Error: ${error}`)
+        
+    })
+
+}

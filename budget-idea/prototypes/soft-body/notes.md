@@ -24,3 +24,12 @@ Worked. But not the circular structures.
 (https://www.gorillasun.de/blog/spring-physics-and-connecting-particles-with-springs/)
 
 Refatorar tudo.
+
+## 2024.03.29
+
+Seguindo agora o Makyta
+
+Gauss formula para área de polígono:
+https://www.thecivilengineer.org/education/professional-examinations-preparation/calculation-examples/calculation-example-three-point-resection
+
+
