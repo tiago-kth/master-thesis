@@ -25,8 +25,19 @@ const H = 500;
 const W = 500;
 const R = 10;
 
-
 const params = {
+    "STIFFNESS": 0.45,
+    "REST_LEN": 0,
+    "DAMPING": 0.9,
+    "TIMESTEP": 200,
+    "SPEEDLIMIT": 15,
+    "MASS": 2,
+    "GRAVITY": 0,
+    "VECTOR_SIZE": 20,
+    "PRESSURE_FACTOR": 1.36,
+    "DISPLAY_VECTORS": true
+}
+/*const params = {
     STIFFNESS: 0.05, 
     REST_LEN: 0, 
     DAMPING: 0.2, 
@@ -37,7 +48,7 @@ const params = {
     VECTOR_SIZE: 20,
     PRESSURE_FACTOR: 0.2,
     DISPLAY_VECTORS: true
-};
+};*/
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
 const particles = [];
@@ -130,13 +141,17 @@ function compute_pressure() {
 
     blobs.forEach(blob => {
 
-        const delta_pressure = ( blob.rest_area - blob.get_area() ) * params.PRESSURE_FACTOR;
+        //const delta_pressure = ( blob.rest_area - blob.get_area() ) * params.PRESSURE_FACTOR; //
+
+        const current_area = blob.get_area();
+        const rest_area = blob.rest_area;
+        const nRT = params.PRESSURE_FACTOR;
 
         blob.springs.forEach(spring => {
 
             const current_length = spring.get_length();
 
-            const f = delta_pressure * current_length / blob.rest_area;
+            const f = nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
 
             spring.update_normal();
 
@@ -273,3 +288,16 @@ function test_shoelace_formula() {
     })
 
 }
+
+/*{
+    "STIFFNESS": 0.45,
+    "REST_LEN": 0,
+    "DAMPING": 0.9,
+    "TIMESTEP": 200,
+    "SPEEDLIMIT": 15,
+    "MASS": 2,
+    "GRAVITY": 0,
+    "VECTOR_SIZE": 20,
+    "PRESSURE_FACTOR": 1.36,
+    "DISPLAY_VECTORS": true
+}*/
