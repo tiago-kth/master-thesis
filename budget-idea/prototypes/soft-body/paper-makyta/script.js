@@ -60,7 +60,7 @@ function compute_gravity() {
 
         b.particles.forEach(p => {
 
-            const f_vector = Vec.mult( g, p.getMass() );
+            const f_vector = Vec.mult( g, params.MASS );//p.getMass() );
 
             p.add_force(f_vector);
 
@@ -140,6 +140,14 @@ function accumulate_forces() {
 
 }
 
+function integrate(dt) {
+
+    blobs.forEach(blob => {
+        blob.particles.forEach(p => p.integrate(dt));
+    })
+
+}
+
 function render() {
 
     blobs.forEach(blob => {
@@ -163,6 +171,9 @@ function loop(t) {
     clearCanvas();
     render();
     accumulate_forces();
+    integrate(dt/params.TIMESTEP);
+
+    //console.log(blobs[0].particles[0]);
 
     //const t1 = performance.now();
     //console.log('Rendering time ', t1 - t0);

@@ -21,8 +21,9 @@ class Particle {
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
         this.r = 5;
-        this.mass = params.MASS;
-        this.inv_mass = 1 / params.MASS;
+        // commenting to let the mass be update by the global parameters
+        //this.mass = params.MASS;
+        //this.inv_mass = 1 / params.MASS;
 
     }
 
@@ -36,23 +37,37 @@ class Particle {
 
     integrate(dt) {
 
-        //console.log(this.acc, Vec.mult(this.force_acum, this.inv_mass));
+        // new position
+        let new_pos = Vec.add(this.pos, Vec.mult(this.vel, dt));
+        new_pos = Vec.add(new_pos, Vec.mult(this.acc, dt * dt * 0.5));
 
-        // update position
-        this.pos.selfAdd( Vec.mult(this.vel, dt) );
+        // new acceleration
+        const new_acc = Vec.mult(this.force_acum, 1 / params.MASS);
 
-        // get acceleration
-        const acc = new Vec(this.acc.x, this.acc.y);
-        acc.selfAdd( Vec.mult(this.force_acum, this.inv_mass) );
+        //console.log(this.force_acum, new_acc);
 
-        Vec.mult(acc, 50).display(ctx, this.pos, "tomato");
+        // new velocity
+        const new_vel = Vec.add(
 
-        // update velocity
-        this.vel.selfAdd( Vec.mult(acc, dt) );
+            this.vel,
 
-        // impose drag?
+            Vec.mult(
+
+                Vec.add(this.acc, new_acc), // not sure about this procedure
+                dt * 0.5
+
+            )
+
+        )
+
+        // update particle vectors
+        this.pos = new_pos;
+        this.vel = new_vel;
+        this.acc = new_acc;
 
         // clear Forces
+
+        Vec.mult(this.force_acum, 10).display(ctx, this.pos, "tomato");
 
         this.clear_force_acum();
 
@@ -60,6 +75,7 @@ class Particle {
 
     add_force(force) {
 
+        //console.log(force, this.force_acum);
         this.force_acum.selfAdd(force);
 
     }
