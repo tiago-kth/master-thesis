@@ -34,8 +34,9 @@ const params = {
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 1.36,
-    "DISPLAY_VECTORS": true
+    "PRESSURE_FACTOR": 50,
+    "DISPLAY_VECTORS": true,
+    "DISPLAY_MESH": true
 }
 /*const params = {
     STIFFNESS: 0.05, 
@@ -222,7 +223,7 @@ function render() {
 
     blobs.forEach(blob => {
 
-        blob.display(ctx);
+        if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
 

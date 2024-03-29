@@ -59,11 +59,13 @@ class Blob {
 
     }
 
-    display(ctx) {
+    display_mesh(ctx) {
 
         this.springs.forEach(s => s.display(ctx));
         this.particles.forEach(p => p.render(ctx));
 
     }
+
+
 
 }
