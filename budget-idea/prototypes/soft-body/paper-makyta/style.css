@@ -3,10 +3,17 @@
 }
 
 :root {
-    --bg: ghostwhite;
+    --bg: #F6E2DF;
     --txt-color: #333;
-    --particle-color: #333;
-    --spring-color: crimson;
+    --particle-color: #BF2C62;
+    --spring-color: #1E5693;
+    --blob-fill-color: #F2A007;
+    --blob-stroke-color: #D95407;
+
+    --vector-spring-force-color: 
+    --vector-gravity-color:
+    --vector-pressure-force-color:
+    --vector-resultant-force-color:
 
 }
 
