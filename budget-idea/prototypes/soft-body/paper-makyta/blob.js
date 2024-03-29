@@ -32,6 +32,10 @@ class Blob {
 
             this.springs.push(s);
 
+            const s2 = new Spring(this.particles[i], this.particles[ (i + 2) % (this.particles.length) ]);
+
+            this.springs.push(s2);
+
         }
 
         this.rest_area = this.get_area();
