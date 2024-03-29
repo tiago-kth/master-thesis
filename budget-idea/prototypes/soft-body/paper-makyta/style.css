@@ -44,3 +44,27 @@ canvas {
 .wrapper-input > * + * {
     margin-left: 1rem;
 }
+
+button {
+
+    font-family: inherit;
+    padding: .25em .5em;
+    border-radius: 5px;
+
+}
+
+button.toggle {
+
+    background-color: transparent;
+    border-style: dashed;
+
+}
+
+button.toggle.activated {
+
+    background-color: var(--txt-color);
+    border-color: gray;
+    color: var(--bg);
+    border-style: solid;
+
+}

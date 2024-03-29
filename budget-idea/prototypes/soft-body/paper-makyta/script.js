@@ -29,13 +29,14 @@ const R = 10;
 const params = {
     STIFFNESS: 0.05, 
     REST_LEN: 0, 
-    DAMPING: 0.01, 
-    TIMESTEP: 10000, 
+    DAMPING: 0.2, 
+    TIMESTEP: 200, 
     SPEEDLIMIT: 15, 
     MASS: 2, 
     GRAVITY: 0, 
-    VECTOR_SIZE: 10,
-    PRESSURE_FACTOR: 1
+    VECTOR_SIZE: 20,
+    PRESSURE_FACTOR: 0.2,
+    DISPLAY_VECTORS: true
 };
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
@@ -74,7 +75,7 @@ function compute_gravity() {
 
             p.add_force(f_vector);
 
-            Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, p.pos, "green");
+            if (params.DISPLAY_VECTORS) Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, p.pos, "green");
 
         })
 
@@ -107,8 +108,12 @@ function compute_spring_force() {
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
 
-            Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, "blue" );
-            Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, "blue" );
+            if (params.DISPLAY_VECTORS) {
+
+                Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, "blue" );
+                Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, "blue" );
+
+            }
 
             s.p1.add_force(f_vector_minus);
             s.p2.add_force(f_vector);
@@ -137,10 +142,17 @@ function compute_pressure() {
 
             const n = spring.get_normal();
 
-            spring.p1.add_force( Vec.mult( n, f ) );
-            spring.p2.add_force( Vec.mult( n, f ) );
+            const f_vector = Vec.mult( n, f );
 
-            spring.display_normals(ctx);
+            spring.p1.add_force( f_vector );
+            spring.p2.add_force( f_vector );
+
+            if (params.DISPLAY_VECTORS) {
+                //spring.display_normals(ctx);
+                Vec.mult( f_vector, params.VECTOR_SIZE ).display(ctx, spring.p1.pos, "hotpink");
+                Vec.mult( f_vector, params.VECTOR_SIZE ).display(ctx, spring.p2.pos, "hotpink");
+
+            }
 
         })
 

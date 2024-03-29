@@ -131,6 +131,29 @@ class Slider {
 
 }
 
+class Toggle {
+
+    el;
+    param_name;
+
+    constructor(ref, param_name) {
+
+        this.el = document.querySelector('.toggle.btn-' + ref);
+        this.param_name = param_name ? param_name : ref;
+
+        this.el.addEventListener('click', e => this.click_event(e, this));
+
+    }
+
+    click_event(e, this_obj) {
+
+        this_obj.el.classList.toggle('activated');
+        params[this_obj.param_name] = !params[this_obj.param_name];
+
+    }
+
+}
+
 const slider_stiffness = new Slider("STIFFNESS", 'k');
 const slider_damping = new Slider("DAMPING", 'damping');
 const slider_timestep = new Slider("TIMESTEP");
@@ -138,3 +161,5 @@ const slider_gravity = new Slider("GRAVITY");
 const slider_mass = new Slider("MASS");
 const slider_vector_size = new Slider("VECTOR_SIZE");
 const pressure_factor_size = new Slider("PRESSURE_FACTOR");
+
+const btn_display_vector = new Toggle("DISPLAY_VECTORS");
