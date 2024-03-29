@@ -164,3 +164,4 @@ const pressure_factor_size = new Slider("PRESSURE_FACTOR");
 
 const btn_display_vector = new Toggle("DISPLAY_VECTORS");
 const btn_display_mesh = new Toggle("DISPLAY_MESH");
+const btn_display_blob = new Toggle("DISPLAY_BLOB");

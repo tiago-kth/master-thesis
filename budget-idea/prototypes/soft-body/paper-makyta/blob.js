@@ -59,6 +59,30 @@ class Blob {
 
     }
 
+    display(ctx) {
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = colors["blob-fill"];
+        ctx.strokeStyle = colors["blob-stroke"];
+        ctx.lineWidth = 6;
+
+        this.particles.forEach( (p,i) => {
+
+            if (i == 0) ctx.moveTo(p.pos.x, p.pos.y);
+            else {
+                ctx.lineTo(p.pos.x, p.pos.y);
+            }
+            if (i == this.particles.length - 1) {
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        })
+
+    }
+
     display_mesh(ctx) {
 
         this.springs.forEach(s => s.display(ctx));

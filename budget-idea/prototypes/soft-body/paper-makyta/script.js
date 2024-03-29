@@ -2,7 +2,9 @@ const cv = document.querySelector('canvas');
 
 const colors = {
     particle : null,
-    spring : null
+    spring : null,
+    "blob-fill" : null,
+    "blob-stroke" : null
 }
 
 function get_colors() {
@@ -36,7 +38,8 @@ const params = {
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 50,
     "DISPLAY_VECTORS": true,
-    "DISPLAY_MESH": true
+    "DISPLAY_MESH": true,
+    "DISPLAY_BLOB": true
 }
 /*const params = {
     STIFFNESS: 0.05, 
@@ -223,6 +226,7 @@ function render() {
 
     blobs.forEach(blob => {
 
+        if (params.DISPLAY_BLOB) blob.display(ctx);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
