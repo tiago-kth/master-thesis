@@ -142,8 +142,6 @@ function accumulate_forces() {
 
 function render() {
 
-    clearCanvas();
-
     blobs.forEach(blob => {
 
         blob.display(ctx);
@@ -161,8 +159,13 @@ function loop(t) {
     const dt = 20;//t - t_ant;
     //t_ant = t;
 
+    const t0 = performance.now();
+    clearCanvas();
+
     accumulate_forces();
     render();
+    const t1 = performance.now();
+    console.log('Rendering time ', t1 - t0);
 
 
 
