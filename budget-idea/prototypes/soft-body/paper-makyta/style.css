@@ -23,7 +23,7 @@ html {
 canvas {
     width: 500px;
     height: 500px;
-    border: 2px solid tomato;
+    border: 5px solid var(--txt-color);
 }
 
 .container-buttons {
