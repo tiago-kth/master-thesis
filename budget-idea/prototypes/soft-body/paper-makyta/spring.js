@@ -1,19 +1,34 @@
 class Spring {
 
-    pa;
-    pb;
+    p1; p2;
+    pa; pb;
     rest_length;
     normal;
 
-    constructor(pa, pb) {
+    constructor(p1, p2) {
 
-        this.pa = pa.pos;
-        this.pb = pb.pos;
+        this.p1 = pa;
+        this.p2 = pb;
+
+        this.pa = p1.pos;
+        this.pb = p2.pos;
 
         const pa_pb = Vec.sub(this.pa, this.pb);
 
-        this.normal = pa_pb.getUnitDir();
+        // k_s, k_d will be defined as global variables, so we call change them in real time;
+
         this.rest_length = pa_pb.mod();
+
+    }
+
+    update_normal() {
+
+        const l = this.get_length();
+
+        this.normal = new Vec(
+                 ( this.pa.y - this.pb.y ) / l,
+            -1 * ( this.pa.x - this.pb.x ) / l
+        )
 
     }
 
@@ -21,6 +36,17 @@ class Spring {
 
         return Vec.sub(this.pa, this.pb).mod();
 
+    }
+
+    get_rest_length() {
+
+        return this.rest_length;
+
+    }
+
+    get_direction() {
+
+        return Vec.sub(this.pa, this.pb).getUnitDir();
     }
 
     display(ctx) {

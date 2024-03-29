@@ -52,9 +52,47 @@ const g = new Vec(0,1);
 function compute_gravity() {
 
     blobs.forEach(b => {
+
         b.particles.forEach(p => {
+
             p.add_force( Vec.mult(g, p.getMass() ) );
+
         })
+
+    })
+
+}
+
+function compute_spring_force() {
+
+    blobs.forEach(b => {
+
+        b.springs.forEach(s => {
+
+            const current_length = s.get_length();
+
+            const rest_length = s.get_rest_length();
+
+            const s_direction = s.get_direction();
+
+            const v12 = Vec.sub(s.p1.vel, s.p2.vel);
+
+            const f = 
+                ( current_length - rest_length ) * params.STIFFNESS 
+                +
+                ( Vec.dot(v12, s_direction))
+            ;
+
+            const f_vector = Vec.mult(s_direction, f);
+            const f_vector_minus = Vec.mult(f_vector, -1);
+
+            s.p1.add_force(f_vector_minus);
+            s.p2.add_force(f_vector);
+
+            s.update_normal();
+
+        })
+
     })
 
 }
