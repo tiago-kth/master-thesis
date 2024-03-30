@@ -72,6 +72,12 @@ class Vec {
 
     }
 
+    selfInv() {
+
+        this.selfMult(-1);
+
+    }
+
     getDifferenceVec(vec_b) {
 
         const x = this.x - vec_b.x;
