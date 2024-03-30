@@ -43,3 +43,9 @@ https://en.wikipedia.org/wiki/Leapfrog_integration
 Velocity Verlet
 
 Pressure factor can be used to deflate / inflate the blobs
+
+## 2024.03.30, madrugada
+
+it works! for one blob, no collisions, though.
+
+Check wall collisions
