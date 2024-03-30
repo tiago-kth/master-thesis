@@ -247,22 +247,26 @@ function edges_constraints() {
             // horizontal borders
 
             if ( (pos.x + r) > W ) {
-                p.add_force(N_RIGHT);
+                p.add_force(Vec.mult(N_RIGHT, params.MASS));
+                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
                 p.pos.x = W - r;
             }
             else if ( (pos.x - r) < 0 ) {
-                p.add_force(N_LEFT);
+                p.add_force(Vec.mult(N_LEFT, params.MASS));
+                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
                 p.pos.x = r;
             }
 
             // vertical borders
 
             if ( (pos.y + r) > H ) {
-                p.add_force(N_TOP);
+                //p.add_force(Vec.mult(N_TOP, params.MASS));
+                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
                 p.pos.y = H - r;
             }
             else if ( (pos.y - r) < 0 ) {
-                p.add_force(N_BOTTOM);
+                p.add_force(Vec.mult(N_BOTTOM, params.MASS));
+                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
                 p.pos.y = r;
             }
 
@@ -301,9 +305,11 @@ function loop(t) {
     clearCanvas();
     render();
 
+    
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
     satisfy_constraints();
+    
 
 
 
