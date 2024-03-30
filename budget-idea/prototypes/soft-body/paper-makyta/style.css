@@ -75,3 +75,28 @@ button.toggle.activated {
     border-style: solid;
 
 }
+
+button.vectors-main.activated {
+
+    background-color: transparent;
+    color: currentColor;
+    border-style: solid;
+}
+
+.dependent-wrapper {
+    overflow: hidden;
+}
+
+.dependent-wrapper button {
+    transition: transform .5s;
+}
+
+.dependent-wrapper.hidden button {
+    transform: translateY(-100%);
+}
+
+.dependent-wrapper button:nth-child(1) { transition-delay: 0s}
+.dependent-wrapper button:nth-child(2) { transition-delay: .2s}
+.dependent-wrapper button:nth-child(3) { transition-delay: .4s}
+.dependent-wrapper button:nth-child(4) { transition-delay: .6s}
+

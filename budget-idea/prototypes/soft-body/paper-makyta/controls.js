@@ -154,6 +154,30 @@ class Toggle {
 
 }
 
+class VectorMainToggle extends Toggle {
+
+    constructor(ref, param_name) {
+
+        super(ref, param_name);
+
+    }
+
+    click_event(e) {
+
+        document.querySelector('.dependent-wrapper').classList.toggle("hidden");
+        e.target.classList.toggle('activated');
+
+        if (!params.DISPLAY_VECTORS) {
+            toggles.forEach(name => {
+                params[name] = false;
+                document.querySelector('.toggle.btn-' + name).classList.remove("activated");
+            })
+        }
+
+    }
+
+}
+
 const slider_stiffness = new Slider("STIFFNESS", 'k');
 const slider_damping = new Slider("DAMPING", 'damping');
 const slider_vel_damping = new Slider("VEL_DAMPING");
@@ -163,6 +187,15 @@ const slider_mass = new Slider("MASS");
 const slider_vector_size = new Slider("VECTOR_SIZE");
 const pressure_factor_size = new Slider("PRESSURE_FACTOR");
 
-const btn_display_vector = new Toggle("DISPLAY_VECTORS");
+const btn_display_vector = new VectorMainToggle("DISPLAY_VECTORS");
 const btn_display_mesh = new Toggle("DISPLAY_MESH");
 const btn_display_blob = new Toggle("DISPLAY_BLOB");
+
+const toggles = [
+    'DISPLAY_SPRING_VECTORS',
+    'DISPLAY_GRAVITY_VECTORS',
+    'DISPLAY_PRESSURE_VECTORS',
+    'DISPLAY_RESULTANT_VECTORS'
+];
+
+toggles.forEach(name => new Toggle(name));

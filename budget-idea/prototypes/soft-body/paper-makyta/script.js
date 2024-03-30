@@ -36,14 +36,18 @@ const params = {
     "STIFFNESS": 0.45,
     "REST_LEN": 0,
     "DAMPING": 0.9,
-    "VEL_DAMPING" : 0.995,
+    "VEL_DAMPING" : 0.99,
     "TIMESTEP": 200,
     "SPEEDLIMIT": 15,
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 100,
-    "DISPLAY_VECTORS": true,
+    "DISPLAY_VECTORS": false,
+    'DISPLAY_SPRING_VECTORS': false,
+    'DISPLAY_GRAVITY_VECTORS': false,
+    'DISPLAY_PRESSURE_VECTORS': false,
+    'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true
 }
@@ -96,7 +100,7 @@ function compute_gravity() {
 
             p.add_force(f_vector);
 
-            if (params.DISPLAY_VECTORS) Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, p.pos, "green");
+            if (params.DISPLAY_GRAVITY_VECTORS) Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, p.pos, "green");
 
         })
 
@@ -129,7 +133,7 @@ function compute_spring_force() {
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
 
-            if (params.DISPLAY_VECTORS) {
+            if (params.DISPLAY_SPRING_VECTORS) {
 
                 Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, "blue" );
                 Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, "blue" );
@@ -172,7 +176,7 @@ function compute_pressure() {
             spring.p1.add_force( f_vector );
             spring.p2.add_force( f_vector );
 
-            if (params.DISPLAY_VECTORS) {
+            if (params.DISPLAY_PRESSURE_VECTORS) {
                 //spring.display_normals(ctx);
                 Vec.mult( f_vector, params.VECTOR_SIZE ).display(ctx, spring.p1.pos, "hotpink");
                 Vec.mult( f_vector, params.VECTOR_SIZE ).display(ctx, spring.p2.pos, "hotpink");
