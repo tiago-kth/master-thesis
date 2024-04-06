@@ -49,3 +49,9 @@ Pressure factor can be used to deflate / inflate the blobs
 it works! for one blob, no collisions, though.
 
 Check wall collisions
+
+## 2024.04.04
+
+Millington, Chapter 7. Collision resolution.
+
+
