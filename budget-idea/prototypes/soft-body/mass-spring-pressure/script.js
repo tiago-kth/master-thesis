@@ -17,8 +17,6 @@ function get_colors() {
 
     Object.keys(colors).forEach(color => {
 
-        console.log(color, html_styles.getPropertyValue(`--${color}-color`));
-
         colors[color] = html_styles.getPropertyValue(`--${color}-color`);
 
     })
