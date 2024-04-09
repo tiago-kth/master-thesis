@@ -12,6 +12,8 @@ class Particle {
     mass;
     inv_mass;
 
+    grid_cell;
+
     constructor(pos) {
 
         this.pos = pos;
@@ -23,7 +25,26 @@ class Particle {
         this.r = 8;
         // commenting to let the mass be update by the global parameters
         //this.mass = params.MASS;
-        //this.inv_mass = 1 / params.MASS;
+        //this.inv_mass = 1 / params.MASS;   
+        
+        const index = grid.get_index_from_px(this.pos.x, this.pos.y);
+        this.grid_cell = index;
+        grid.cells[index].particles.add(this);
+
+    }
+
+    update_grid(grid) {
+
+        const index = grid.get_index_from_px(this.pos.x, this.pos.y);
+        const old_index = this.grid_cell;
+
+        if ( index != old_index ) {
+
+            grid.cells[old_index].particles.remove(this);
+            grid.cells[index].particles.add(this);
+            this.grid_cell = index;
+
+        }
 
     }
 
@@ -32,6 +53,7 @@ class Particle {
         //this.accumulate_forces();
         this.integrate(dt);
         //this.satisfy_constraints();
+        this.update_grid(grid);
 
     }
 
