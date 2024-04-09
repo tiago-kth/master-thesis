@@ -141,6 +141,32 @@ class Grid {
 
     }
 
+    retrieve_neighboring_particles(index) {
+
+        let particles_set = this.cells[index].particles;
+
+        let neighboring_cells = this.cells[index].neighbors;
+
+        neighboring_cells.forEach(neighbor_index => {
+
+            particles_set = particles_set.union(
+                this.cells[neighbor_index].particles
+            )
+
+        })
+
+        return particles_set;
+
+
+    }
+
+    highlight_particles(particles) {
+
+        particles.forEach(p => p.render(ctx, "purple", "purple"));
+
+
+    }
+
 
 }
 

@@ -135,14 +135,14 @@ class Particle {
 
     // set all other stuff
 
-    render(ctx) {
+    render(ctx, stroke, fill) {
 
         ctx.save();
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = colors["spring"];
-        ctx.fillStyle = colors["particle"];
+        ctx.strokeStyle = stroke ? stroke : colors["spring"];
+        ctx.fillStyle = fill? fill : colors["particle"];
         ctx.fill();
         ctx.restore();
 
