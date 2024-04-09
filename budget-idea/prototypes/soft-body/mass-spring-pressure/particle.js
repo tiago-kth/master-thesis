@@ -40,7 +40,7 @@ class Particle {
 
         if ( index != old_index ) {
 
-            grid.cells[old_index].particles.remove(this);
+            grid.cells[old_index].particles.delete(this);
             grid.cells[index].particles.add(this);
             this.grid_cell = index;
 
@@ -53,7 +53,6 @@ class Particle {
         //this.accumulate_forces();
         this.integrate(dt);
         //this.satisfy_constraints();
-        this.update_grid(grid);
 
     }
 
@@ -95,6 +94,7 @@ class Particle {
         if (params.DISPLAY_RESULTANT_VECTORS) Vec.mult(this.force_acum, params.VECTOR_SIZE).display(ctx, this.pos, "tomato");
 
         this.clear_force_acum();
+        this.update_grid(grid);
 
     }
 
