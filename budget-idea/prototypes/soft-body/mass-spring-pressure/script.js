@@ -1,10 +1,12 @@
 const cv = document.querySelector('canvas');
 
+// for every new color, just add the custom variable in :root, and a corresponding line here
 const colors = {
     particle : null,
     spring : null,
     "blob-fill" : null,
-    "blob-stroke" : null
+    "blob-stroke" : null,
+    grid : null
 }
 
 function get_colors() {
@@ -49,7 +51,8 @@ const params = {
     'DISPLAY_PRESSURE_VECTORS': false,
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
-    "DISPLAY_BLOB": true
+    "DISPLAY_BLOB": true,
+    "DISPLAY_GRID": false
 }
 
 // grid setup //
@@ -309,6 +312,7 @@ function loop(t) {
 
     //const t0 = performance.now();
     clearCanvas();
+    if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);
     render();
 
     
