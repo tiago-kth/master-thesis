@@ -54,4 +54,14 @@ Check wall collisions
 
 Millington, Chapter 7. Collision resolution.
 
+## 2024.04.09
+
+Back to work.
+
+Trying to build the grid lookup for the spatial hashing.
+
+Playing with some of the parameters, those will be fundamental to achieve the visual effect we're aiming at.
+
+For lower timesteps, we need lower (meaning, stronger) velocity damping to help stabilise the system. Time steps of 50 seem to work well.
+
 
