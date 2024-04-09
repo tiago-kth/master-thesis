@@ -51,6 +51,12 @@ const params = {
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true
 }
+
+// grid setup //
+
+const grid = new Grid(W, H, 50);
+
+
 /*const params = {
     STIFFNESS: 0.05, 
     REST_LEN: 0, 
