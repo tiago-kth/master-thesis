@@ -6,7 +6,9 @@ const colors = {
     spring : null,
     "blob-fill" : null,
     "blob-stroke" : null,
-    grid : null
+    grid : null,
+    cell : null,
+    "cell-neighbor": null
 }
 
 function get_colors() {
@@ -14,6 +16,8 @@ function get_colors() {
     const html_styles = getComputedStyle(document.documentElement);
 
     Object.keys(colors).forEach(color => {
+
+        console.log(color, html_styles.getPropertyValue(`--${color}-color`));
 
         colors[color] = html_styles.getPropertyValue(`--${color}-color`);
 
@@ -52,7 +56,11 @@ const params = {
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true,
-    "DISPLAY_GRID": false
+    "DISPLAY_GRID": false,
+    "HIGHLIGHT_CELLS": false,
+    "_MOUSE_MOVING": false,
+    "_x": false,
+    "_y": false
 }
 
 // grid setup //
@@ -305,6 +313,7 @@ function render() {
 
 function loop(t) {
 
+    //let tp0 = performance.now();
 
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
     const dt = 20;//t - t_ant;
@@ -312,6 +321,18 @@ function loop(t) {
 
     //const t0 = performance.now();
     clearCanvas();
+
+    if (params.HIGHLIGHT_CELLS && params._MOUSE_MOVING && params._x > 0 && params._y > 0) {
+
+        const index = grid.get_index_from_px(
+            params._x,
+            params._y
+        );
+
+        grid.render_cell(index, ctx, colors["cell"]);
+        grid.render_neighbors(index, ctx, colors["cell-neighbor"]);
+    }
+
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);
     render();
 
@@ -338,6 +359,9 @@ function loop(t) {
 
     })
     */
+
+    //let tp1 = performance.now();
+    //console.log( (tp1 - tp0).toFixed(2) );
 
     anim = window.requestAnimationFrame(loop);
 }

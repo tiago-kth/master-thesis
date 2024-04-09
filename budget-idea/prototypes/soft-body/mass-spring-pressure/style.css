@@ -10,6 +10,8 @@
     --blob-fill-color: #F2A007;
     --blob-stroke-color: #D95407;
     --grid-color: #555;
+    --cell-color: coral;
+    --cell-neighbor-color: lightcoral;
 
     --vector-spring-force-color: 
     --vector-gravity-color:

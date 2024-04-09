@@ -15,6 +15,7 @@ let dragging = false;
 cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
 cv.addEventListener('mouseup', mouseup);
+cv.addEventListener('mouseout', mouseout);
 
 const sensitivity = 10;
 let particle_being_dragged;
@@ -59,6 +60,12 @@ function mousedown(e) {
 
 function mousemove(e) {
 
+    if (params.HIGHLIGHT_CELLS) {
+        params._MOUSE_MOVING = true;
+        params._x = e.offsetX;
+        params._y = e.offsetY;
+    }
+
     if (!dragging) return;
 
     else {
@@ -77,6 +84,13 @@ function mouseup(e) {
 
     dragging = false;
     particle_being_dragged = false;
+
+}
+
+function mouseout(e) {
+
+    params._MOUSE_MOVING = false;
+    dragging = false;
 
 }
 
@@ -191,6 +205,7 @@ const btn_display_vector = new VectorMainToggle("DISPLAY_VECTORS");
 const btn_display_mesh = new Toggle("DISPLAY_MESH");
 const btn_display_blob = new Toggle("DISPLAY_BLOB");
 const btn_display_grid = new Toggle("DISPLAY_GRID");
+const btn_highlight_cells = new Toggle("HIGHLIGHT_CELLS");
 
 const toggles = [
     'DISPLAY_SPRING_VECTORS',

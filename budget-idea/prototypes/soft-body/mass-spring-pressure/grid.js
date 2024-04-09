@@ -81,6 +81,15 @@ class Grid {
         return this.cells[index];
     }
 
+    get_index_from_px(x, y) {
+
+        const i = Math.floor(x / this.dim);
+        const j = Math.floor(y / this.dim);
+
+        return this.get_index(i, j);
+
+    }
+
     render_cell(index, ctx, color) {
 
         const [i, j] = this.get_ij(index);
