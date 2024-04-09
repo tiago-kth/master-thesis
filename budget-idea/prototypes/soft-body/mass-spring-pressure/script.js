@@ -329,6 +329,10 @@ function loop(t) {
 
         grid.render_cell(index, ctx, colors["cell"]);
         grid.render_neighbors(index, ctx, colors["cell-neighbor"]);
+
+        // to highlight the particles within the selection  
+        //const parts = grid.retrieve_neighboring_particles(index);
+        //grid.highlight_particles(parts);
     }
 
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);

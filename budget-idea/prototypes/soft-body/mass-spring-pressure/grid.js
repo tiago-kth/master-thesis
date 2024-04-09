@@ -162,6 +162,8 @@ class Grid {
 
     highlight_particles(particles) {
 
+        //console.log(particles);
+
         particles.forEach(p => p.render(ctx, "purple", "purple"));
 
 
