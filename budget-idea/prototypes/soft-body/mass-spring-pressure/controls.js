@@ -22,7 +22,7 @@ let particle_being_dragged;
 
 function mousedown(e) {
 
-    console.log(e);
+    //console.log(e);
 
     if (particle_being_dragged) return
 
@@ -36,7 +36,7 @@ function mousedown(e) {
 
             const distance = Vec.sub(mouse_pos, p.pos).mod();
 
-            if (distance <= p.r) {
+            if (distance <= 2 * p.r) {
 
                 dragging = true;
 
