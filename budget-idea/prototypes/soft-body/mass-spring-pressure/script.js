@@ -8,7 +8,8 @@ const colors = {
     "blob-stroke" : null,
     grid : null,
     cell : null,
-    "cell-neighbor": null
+    "cell-neighbor": null,
+    "highlighted-particle": null
 }
 
 function get_colors() {
@@ -64,6 +65,29 @@ const params = {
 // grid setup //
 
 const grid = new Grid(W, H, 50);
+
+let particles_highlighted = []; // used for debugging
+
+function highlight_particles_color(index) { // used for debugging
+
+    if (!index) {
+
+        particles_highlighted.forEach(p => {
+            p.color_particle = colors.particle;
+            p.color_stroke = colors.spring;
+        })
+
+    } else {
+
+        particles_highlighted = grid.retrieve_neighboring_particles(index);
+
+        particles_highlighted.forEach(p => {
+            p.color_stroke = colors["highlighted-particle"];
+            p.color_particle = colors["highlighted-particle"];
+        })
+
+    }
+}
 
 
 /*const params = {
@@ -320,6 +344,8 @@ function loop(t) {
     //const t0 = performance.now();
     clearCanvas();
 
+    highlight_particles_color(false);
+
     if (params.HIGHLIGHT_CELLS && params._MOUSE_MOVING && params._x > 0 && params._y > 0) {
 
         const index = grid.get_index_from_px(
@@ -330,9 +356,12 @@ function loop(t) {
         grid.render_cell(index, ctx, colors["cell"]);
         grid.render_neighbors(index, ctx, colors["cell-neighbor"]);
 
-        // to highlight the particles within the selection  
-        //const parts = grid.retrieve_neighboring_particles(index);
-        //grid.highlight_particles(parts);
+        // to highlight the particles within the selection 
+        highlight_particles_color(index); 
+
+        
+    } else {
+
     }
 
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);

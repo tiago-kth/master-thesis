@@ -95,6 +95,7 @@ class Grid {
         const [i, j] = this.get_ij(index);
 
         ctx.save();
+        //ctx.globalAlpha = 0.5;
         ctx.fillStyle = color;
         ctx.fillRect(i * this.dim, j * this.dim, this.dim, this.dim);
         ctx.restore();

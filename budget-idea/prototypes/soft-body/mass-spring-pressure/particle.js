@@ -14,6 +14,9 @@ class Particle {
 
     grid_cell;
 
+    color_stroke;
+    color_particle;
+
     constructor(pos) {
 
         this.pos = pos;
@@ -26,10 +29,14 @@ class Particle {
         // commenting to let the mass be update by the global parameters
         //this.mass = params.MASS;
         //this.inv_mass = 1 / params.MASS;   
+
+        this.color_stroke = colors["spring"];
+        this.color_particle = colors["particle"];
         
         const index = grid.get_index_from_px(this.pos.x, this.pos.y);
         this.grid_cell = index;
         grid.cells[index].particles.add(this);
+
 
     }
 
@@ -141,8 +148,8 @@ class Particle {
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = stroke ? stroke : colors["spring"];
-        ctx.fillStyle = fill? fill : colors["particle"];
+        ctx.strokeStyle = stroke ? stroke : this.color_stroke;
+        ctx.fillStyle = fill? fill : this.color_particle;
         ctx.fill();
         ctx.restore();
 
