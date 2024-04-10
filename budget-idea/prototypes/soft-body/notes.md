@@ -64,4 +64,8 @@ Playing with some of the parameters, those will be fundamental to achieve the vi
 
 For lower timesteps, we need lower (meaning, stronger) velocity damping to help stabilise the system. Time steps of 50 seem to work well.
 
+## 2024.04.10
 
+Higher stiffness make the blobs blobbier when under contact.
+
+Gas constant and stiffness constant impact in the final blob size compared to its reference circle.
