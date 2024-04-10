@@ -131,6 +131,53 @@ class Blob {
 
     }
 
+    display_exp(ctx) {
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = colors["blob-fill"];
+        ctx.strokeStyle = colors["blob-stroke"];
+        ctx.lineWidth = 6;
+
+        const [xc, yc] = this.get_blob_center();
+        const p_center = new Vec(xc, yc);
+
+        let lastx, lasty;
+
+        this.particles.forEach( (p,i) => {
+
+            if (i == 0) {
+                ctx.moveTo(p.pos.x, p.pos.y);
+                lastx = p.pos.x; 
+                lasty = p.pos.y;
+            }
+            else {
+
+                const pa = new Vec(lastx, lasty);
+                const pb = p.pos;
+
+                let va = Vec.sub(pa, p_center);
+                let vb = Vec.sub(pb, p_center);
+
+                const cp = Vec.mult( Vec.add(va, vb), 0.52 );
+
+                ctx.quadraticCurveTo(cp.x + xc, cp.y + yc, pb.x, pb.y);
+
+                lastx = p.pos.x; 
+                lasty = p.pos.y;
+
+                //ctx.lineTo(p.pos.x, p.pos.y);
+            }
+            if (i == this.particles.length - 1) {
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        })
+
+    }
+
     display_exp_wrong(ctx) {
 
         //ctx.save();
