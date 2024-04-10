@@ -84,7 +84,7 @@ class Blob {
 
     }
 
-    display_exp(ctx) {
+    display_exp_art(ctx) {
 
         ctx.save();
         ctx.beginPath();
@@ -125,6 +125,74 @@ class Blob {
                 ctx.closePath();
                 ctx.fill();
                 ctx.stroke();
+                ctx.restore();
+            }
+        })
+
+    }
+
+    display_exp_wrong(ctx) {
+
+        //ctx.save();
+        //ctx.globalAlpha = 0.7;
+        //ctx.beginPath();
+        //ctx.fillStyle = colors["blob-fill"];
+        //ctx.strokeStyle = colors["blob-stroke"];
+        ctx.lineWidth = 6;
+
+        const [xc, yc] = this.get_blob_center();
+        const p_center = new Vec(xc, yc);
+
+        let lastx, lasty;
+
+        this.particles.forEach( (p,i) => {
+
+            if (i == 0) {
+                //ctx.moveTo(p.pos.x, p.pos.y);
+                lastx = p.pos.x; 
+                lasty = p.pos.y;
+            }
+            else {
+
+                const pa = new Vec(lastx, lasty);
+                const pb = p.pos;
+
+                let va = Vec.sub(pa, p_center);
+                let vb = Vec.sub(pb, p_center);
+
+                const cp = Vec.mult( Vec.add(va, vb), 0.6 );
+
+                if (i == 5) {
+
+                    va.display(ctx, p_center, "blue");
+                    vb.display(ctx, p_center, "red");
+                    cp.display(ctx, p_center, "green");
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.fillStyle = colors["blob-fill"];
+                    ctx.strokeStyle = colors["blob-stroke"];
+                    ctx.moveTo(va.x, va.y);
+                    ctx.quadraticCurveTo(cp.x, cp.y, pb.x, pb.y);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                }
+
+
+                //ctx.quadraticCurveTo(pa.x, pa.y, pb.x, pb.y);
+
+                lastx = p.pos.x; 
+                lasty = p.pos.y;
+
+                //ctx.lineTo(p.pos.x, p.pos.y);
+            }
+            if (i == this.particles.length - 1) {
+                //ctx.closePath();
+                //ctx.fill();
+                //ctx.stroke();
                 ctx.restore();
             }
         })

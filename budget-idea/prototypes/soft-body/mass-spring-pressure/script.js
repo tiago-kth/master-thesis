@@ -325,7 +325,7 @@ function render() {
 
     blobs.forEach(blob => {
 
-        if (params.DISPLAY_BLOB) blob.display_exp(ctx);
+        if (params.DISPLAY_BLOB) blob.display(ctx);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
         //blob.particles.forEach(p => p.render(ctx));
