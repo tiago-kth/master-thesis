@@ -55,6 +55,7 @@ const params = {
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true,
+    "DISPLAY_BLOB_CIRCLE": false,
     "DISPLAY_GRID": false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
@@ -326,6 +327,7 @@ function render() {
 
         if (params.DISPLAY_BLOB) blob.display(ctx);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
+        if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
 

@@ -8,6 +8,7 @@ class Blob {
 
     constructor(center, r, n) {
 
+        this.R = r;
         this.center = center;
         this.particles = [];
         this.springs = [];
@@ -87,6 +88,31 @@ class Blob {
 
         this.springs.forEach(s => s.display(ctx));
         this.particles.forEach(p => p.render(ctx));
+
+    }
+
+    get_blob_center() {
+
+        const xm = this.particles.map(p => p.pos.x).reduce( (previous, current) => previous + current) / this.particles.length;
+        const ym = this.particles.map(p => p.pos.y).reduce( (previous, current) => previous + current) / this.particles.length;
+
+        return( [ Math.round(xm), Math.round(ym) ] );
+
+    }
+
+    display_reference_circle(ctx) {
+
+        const [xc, yc] = this.get_blob_center();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(xc, yc, this.R, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.restore();
 
     }
 
