@@ -14,7 +14,15 @@ https://en.wikipedia.org/wiki/Elastic_collision
 
 bola pequena às vezes orbita a grande
 
-### 2024.03.20
+## COISAS A RESOLVER NA FRENTE
+
+* Usar bézier em vez de linhas? `quadraticCurveTo(cpx, cpy, x, y)`
+
+`(cpx, cpy)` poderiam ser encontrados usando `[ (pa - pcenter) + (pb - pcenter) ] * c`, onde `c > 1/2` (`c = 1/2` posicionaria o ponto de controle no ponto médio dos dois pontos). Fazer interativo.
+
+* colliders maiores que os pontos, para evitar penetração
+
+## 2024.03.20
 
 Particle system seems to be working. Going to try implementing the spring-mass system.
 
