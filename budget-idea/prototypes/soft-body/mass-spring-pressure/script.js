@@ -49,7 +49,7 @@ const params = {
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 200,
-    "RESTITUTION_COEFFICIENT" : 1,
+    "RESTITUTION_COEFFICIENT" : 0.8,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
@@ -140,9 +140,9 @@ function compute_gravity() {
 
             let f_vector = Vec.mult( g, params.MASS );//p.getMass() );
 
-            if ( (p.pos.y + p.r) >= H ) {
+            /*if ( (p.pos.y + p.r) > H ) {
                 f_vector = NULL_VEC;
-            }
+            }*/
 
             p.add_force(f_vector);
 
@@ -307,8 +307,8 @@ function edges_constraints() {
 
             if ( (pos.y + r) > H ) {
                 //const g_ = new Vec(0, -1 * params.GRAVITY);
-                //p.add_force(Vec.mult( g_, params.MASS ));
-                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
+                //p.add_force(Vec.mult( N_TOP, params.MASS ));
+                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING / 2);
                 p.pos.y = H - r;
             }
             else if ( (pos.y - r) < 0 ) {
@@ -376,9 +376,9 @@ function loop(t) {
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);
     render();
 
-    satisfy_constraints();
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
+    satisfy_constraints();
 
     
 
