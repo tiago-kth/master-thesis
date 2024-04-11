@@ -40,7 +40,6 @@ class Blob {
             this.particles[i].immediate_neighbors = [
                 this.particles[previous_index], this.particles[next_index]
             ];
-            console.log(i, next_index, previous_index);
             //
 
             const s = new Spring(this.particles[i], this.particles[next_index]);

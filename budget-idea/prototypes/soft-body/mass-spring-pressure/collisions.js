@@ -8,10 +8,11 @@ class CollisionSystem {
 
     }
 
-    run_for_frame(particles) {
+    update_collisions(particles) {
 
         this.current_collisions_registry.clear();
         this.detect_collisions(particles);
+        this.render_colliders();
         // resolve penetrations
         // resolve collisions
 
@@ -24,13 +25,12 @@ class CollisionSystem {
             const cell = particle.grid_cell;
 
             const group_of_particles = grid.retrieve_neighboring_particles(cell);
-            console.log(group_of_particles.length);
 
             if (group_of_particles) {
 
                 group_of_particles.forEach(other_particle => {
 
-                    if (other_particle != particle) {
+                    if ( other_particle != particle && particle != particle.immediate_neighbors[0] && particle != particle.immediate_neighbors[1] ) {
     
                         const collision = new PottentialCollision(particle, other_particle);
     
@@ -43,6 +43,13 @@ class CollisionSystem {
             }
 
         })
+
+    }
+
+    render_colliders() {
+
+        this.current_collisions_registry.forEach(collision => {
+            collision.p1.render(ctx, "red", "red"); collision.p2.render(ctx, "black", "black")})
 
     }
 
@@ -95,7 +102,7 @@ class PottentialCollision {
 
         collision_system.current_collisions_registry.set([this.p1, this.p2], this);
 
-        console.log(collision_system.current_collisions_registry);
+        //console.log(collision_system.current_collisions_registry);
 
     }
 

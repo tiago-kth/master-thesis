@@ -93,6 +93,10 @@ function highlight_particles_color(index) { // used for debugging
     }
 }
 
+// for the collision system
+
+const all_particles = [];
+
 
 /*const params = {
     STIFFNESS: 0.05, 
@@ -108,7 +112,7 @@ function highlight_particles_color(index) { // used for debugging
 };*/
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
-const particles = [];
+//const particles = [];
 const springs = [];
 const blobs = [];
 
@@ -121,6 +125,9 @@ blobs.push(
     new Blob(new Vec(2*W/3, H/4), 60, 36),
     new Blob(new Vec(W/3, H/2), 50, 24)
 )
+
+// populate all particles array
+blobs.forEach(blob => all_particles.push(...blob.particles));
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -381,6 +388,7 @@ function loop(t) {
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
     satisfy_constraints();
+    collision_system.update_collisions(all_particles);
 
     
 
