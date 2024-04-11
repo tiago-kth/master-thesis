@@ -83,3 +83,9 @@ Gas constant and stiffness constant impact in the final blob size compared to it
 Building the collision system. Based on Millington, chapter 7. Thinking if I need to iterate over all particles or over all cells, and whether that makes any difference.
 
 Collisions with rods / springs? Not on this version.
+
+Smaller radius seem more unstable for lower time steps.
+
+Parametrizar particle radius.
+
+No collision detection, ignorar as partículas adjacentes. Talvez adicionar índice às partículas.

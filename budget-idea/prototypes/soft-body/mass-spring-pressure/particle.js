@@ -25,7 +25,7 @@ class Particle {
         this.vel = new Vec(0,0);
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
-        this.r = 4;
+        this.r = 10;
         // commenting to let the mass be update by the global parameters
         //this.mass = params.MASS;
         //this.inv_mass = 1 / params.MASS;   
@@ -149,7 +149,8 @@ class Particle {
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.lineWidth = 2;
         ctx.strokeStyle = stroke ? stroke : this.color_stroke;
-        ctx.fillStyle = fill? fill : this.color_particle;
+        ctx.fillStyle = "transparent";//fill? fill : this.color_particle;
+        ctx.stroke();
         ctx.fill();
         ctx.restore();
 
