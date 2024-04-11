@@ -89,3 +89,11 @@ Smaller radius seem more unstable for lower time steps.
 Parametrizar particle radius.
 
 No collision detection, ignorar as partículas adjacentes. Talvez adicionar índice às partículas.
+
+Experimentar com mais springs também.
+
+Relação time_step x velocity damping. Smaller blobs seem more instable, but increasing the time step makes them stabilize, just like reducing the velocity damping factor (thus increasing the damping) would.
+
+Calcula theta de acordo com R do blob e r das partículas. E depois recalcula o theta para ficar perfeito.
+
+Time_step 70 parece funcionar bem.

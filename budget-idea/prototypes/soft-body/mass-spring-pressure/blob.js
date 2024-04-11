@@ -14,10 +14,12 @@ class Blob {
         this.springs = [];
 
         //const theta = 2*Math.PI / n;
-        const theta = Math.atan(20 / r); // 20 = 2 * r_particles
+        let theta = Math.atan(20 / r); // 20 = 2 * r_particles
         console.log(theta);
         const n = Math.round(2 * Math.PI / theta);
         console.log(n);
+        theta = 2*Math.PI / n;
+
 
         for (let i = 0; i < n; i++) {
 
