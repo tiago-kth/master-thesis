@@ -36,6 +36,7 @@ const N_LEFT = new Vec(-1,0);
 const N_RIGHT = new Vec(1,0);
 const N_TOP = new Vec(0,-1);
 const N_BOTTOM = new Vec(0,1);
+const NULL_VEC = new Vec(0,0);
 
 const params = {
     "STIFFNESS": 0.45,
@@ -47,7 +48,7 @@ const params = {
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 100,
+    "PRESSURE_FACTOR": 200,
     "RESTITUTION_COEFFICIENT" : 1,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
@@ -137,7 +138,11 @@ function compute_gravity() {
 
         b.particles.forEach(p => {
 
-            const f_vector = Vec.mult( g, params.MASS );//p.getMass() );
+            let f_vector = Vec.mult( g, params.MASS );//p.getMass() );
+
+            if ( (p.pos.y + p.r) >= H ) {
+                f_vector = NULL_VEC;
+            }
 
             p.add_force(f_vector);
 
@@ -288,26 +293,27 @@ function edges_constraints() {
             // horizontal borders
 
             if ( (pos.x + r) > W ) {
-                p.add_force(Vec.mult(N_RIGHT, params.MASS));
-                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
+                //p.add_force(Vec.mult(N_RIGHT, params.MASS));
+                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
                 p.pos.x = W - r;
             }
             else if ( (pos.x - r) < 0 ) {
-                p.add_force(Vec.mult(N_LEFT, params.MASS));
-                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
+                //p.add_force(Vec.mult(N_LEFT, params.MASS));
+                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
                 p.pos.x = r;
             }
 
             // vertical borders
 
             if ( (pos.y + r) > H ) {
-                //p.add_force(Vec.mult(N_TOP, params.MASS));
-                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
+                //const g_ = new Vec(0, -1 * params.GRAVITY);
+                //p.add_force(Vec.mult( g_, params.MASS ));
+                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
                 p.pos.y = H - r;
             }
             else if ( (pos.y - r) < 0 ) {
-                p.add_force(Vec.mult(N_BOTTOM, params.MASS));
-                p.vel.selfMult(-1 * params.VEL_DAMPING / 2);
+                //p.add_force(Vec.mult(N_BOTTOM, params.MASS));
+                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
                 p.pos.y = r;
             }
 
@@ -370,10 +376,10 @@ function loop(t) {
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);
     render();
 
-    
+    satisfy_constraints();
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
-    satisfy_constraints();
+
     
 
 
