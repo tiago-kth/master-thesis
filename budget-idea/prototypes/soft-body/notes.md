@@ -77,3 +77,9 @@ For lower timesteps, we need lower (meaning, stronger) velocity damping to help 
 Higher stiffness make the blobs blobbier when under contact.
 
 Gas constant and stiffness constant impact in the final blob size compared to its reference circle.
+
+## 2024.04.11
+
+Building the collision system. Based on Millington, chapter 7. Thinking if I need to iterate over all particles or over all cells, and whether that makes any difference.
+
+Collisions with rods / springs? Not on this version.

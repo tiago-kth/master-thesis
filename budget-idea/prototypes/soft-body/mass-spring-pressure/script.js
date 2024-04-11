@@ -48,6 +48,7 @@ const params = {
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 100,
+    "RESTITUTION_COEFFICIENT" : 1,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
