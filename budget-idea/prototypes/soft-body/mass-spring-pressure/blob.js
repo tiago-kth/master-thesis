@@ -35,6 +35,14 @@ class Blob {
 
             const next_index = i == this.particles.length - 1 ? 0 : i + 1;
 
+            // saves neighbors, for the collision system
+            const previous_index = i == 0 ? this.particles.length - 1 : i - 1;
+            this.particles[i].immediate_neighbors = [
+                this.particles[previous_index], this.particles[next_index]
+            ];
+            console.log(i, next_index, previous_index);
+            //
+
             const s = new Spring(this.particles[i], this.particles[next_index]);
 
             this.springs.push(s);

@@ -17,6 +17,8 @@ class Particle {
     color_stroke;
     color_particle;
 
+    immediate_neighbors;
+
     constructor(pos) {
 
         this.pos = pos;
