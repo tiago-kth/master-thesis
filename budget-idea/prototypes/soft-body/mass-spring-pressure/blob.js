@@ -14,7 +14,7 @@ class Blob {
         this.springs = [];
 
         //const theta = 2*Math.PI / n;
-        let theta = Math.atan(20 / r); // 20 = 2 * r_particles
+        let theta = Math.atan( params.PARTICLE_RADIUS * 2 / r); // 20 = 2 * r_particles
         console.log(theta);
         const n = Math.round(2 * Math.PI / theta);
         console.log(n);

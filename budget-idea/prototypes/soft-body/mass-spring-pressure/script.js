@@ -50,6 +50,7 @@ const params = {
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 200,
     "RESTITUTION_COEFFICIENT" : 0.8,
+    "PARTICLE_RADIUS" : 6,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,

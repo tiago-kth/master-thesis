@@ -25,7 +25,7 @@ class Particle {
         this.vel = new Vec(0,0);
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
-        this.r = 10;
+        this.r = params.PARTICLE_RADIUS;
         // commenting to let the mass be update by the global parameters
         //this.mass = params.MASS;
         //this.inv_mass = 1 / params.MASS;   
