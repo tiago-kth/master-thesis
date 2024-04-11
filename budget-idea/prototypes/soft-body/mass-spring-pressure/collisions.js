@@ -24,18 +24,23 @@ class CollisionSystem {
             const cell = particle.grid_cell;
 
             const group_of_particles = grid.retrieve_neighboring_particles(cell);
+            console.log(group_of_particles.length);
 
-            group_of_particles.forEach(other_particle => {
+            if (group_of_particles) {
 
-                if (other_particle != particle) {
+                group_of_particles.forEach(other_particle => {
 
-                    const collision = new PottentialCollision(particle, other_particle);
+                    if (other_particle != particle) {
+    
+                        const collision = new PottentialCollision(particle, other_particle);
+    
+                        //console.log(collision);
+    
+                    }
+    
+                })
 
-                    console.log(collision);
-
-                }
-
-            })
+            }
 
         })
 
@@ -74,7 +79,7 @@ class PottentialCollision {
         // d = 0, touch
         // d > 0, penetration
 
-        if (this.penetration <= 0) {
+        if (this.penetration >= 0) {
 
             this.register_collision();
 
