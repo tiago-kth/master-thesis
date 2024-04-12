@@ -103,3 +103,11 @@ Time_step 70 parece funcionar bem.
 Ajustes na detecção de colisões, havia um erro no código que ignorava os vizinhos imediatos. Acrescentei botão para controlar o display dos colliders.
 
 Agora vamos a implementar a resolução de colisões.
+
+Funcionou!
+
+Como evitar emaranhados?
+
+Melhorar a história de colorir os colliders.
+
+Larger colliders would avoid the problem of particles traversing each other, or traversing the boundaries...

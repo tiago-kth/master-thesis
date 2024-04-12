@@ -6,12 +6,18 @@ class Blob {
     particles;
     springs;
 
-    constructor(center, r, nn) {
+    blob_fill_color;
+    blob_stroke_color;
+
+    constructor(center, r, blob_fill_color, blob_stroke_color) {
 
         this.R = r;
         this.center = center;
         this.particles = [];
         this.springs = [];
+
+        this.blob_fill_color = blob_fill_color ? blob_fill_color : colors["blob-fill"];
+        this.blob_stroke_color = blob_stroke_color ? blob_stroke_color : colors["blob-stroke"];
 
         //const theta = 2*Math.PI / n;
         let theta = Math.atan( params.PARTICLE_RADIUS * 2 / r); // 20 = 2 * r_particles
@@ -77,9 +83,9 @@ class Blob {
 
         ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = colors["blob-fill"];
-        ctx.strokeStyle = colors["blob-stroke"];
-        ctx.lineWidth = 6;
+        ctx.fillStyle = this.blob_fill_color;
+        ctx.strokeStyle = this.blob_stroke_color; 
+        ctx.lineWidth = 8;
 
         this.particles.forEach( (p,i) => {
 

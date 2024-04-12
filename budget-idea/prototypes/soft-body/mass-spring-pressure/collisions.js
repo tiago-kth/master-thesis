@@ -122,7 +122,7 @@ class PottentialCollision {
 
     resolve_collision() {
 
-        console.log("RESOLVING COLLISION");
+        //console.log("RESOLVING COLLISION");
 
         const delta_velocity = Vec.sub(
             this.p1.vel,
@@ -133,7 +133,7 @@ class PottentialCollision {
         const separating_velocity = Vec.dot(delta_velocity, this.contact_normal);
 
         if (separating_velocity > 0) {
-            console.log("ALERT!");
+            //console.log("ALERT!");
             return;
         }
 

@@ -2,6 +2,7 @@ const cv = document.querySelector('canvas');
 
 // for every new color, just add the custom variable in :root, and a corresponding line here
 const colors = {
+    "generic-stroke": null,
     particle : null,
     spring : null,
     "blob-fill" : null,
@@ -123,8 +124,9 @@ cv.height = H;
 const center = new Vec(W/2, H/2);
 
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 60, 36),
-    new Blob(new Vec(W/3, H/2), 50, 24)
+    new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
+    new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"])
 )
 
 // populate all particles array
