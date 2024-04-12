@@ -202,11 +202,6 @@ const slider_vector_size = new Slider("VECTOR_SIZE");
 const pressure_factor_size = new Slider("PRESSURE_FACTOR");
 
 const btn_display_vector = new VectorMainToggle("DISPLAY_VECTORS");
-const btn_display_mesh = new Toggle("DISPLAY_MESH");
-const btn_display_blob = new Toggle("DISPLAY_BLOB");
-const btn_display_blob_circle = new Toggle("DISPLAY_BLOB_CIRCLE");
-const btn_display_grid = new Toggle("DISPLAY_GRID");
-const btn_highlight_cells = new Toggle("HIGHLIGHT_CELLS");
 
 const toggles = [
     'DISPLAY_SPRING_VECTORS',
@@ -216,3 +211,14 @@ const toggles = [
 ];
 
 toggles.forEach(name => new Toggle(name));
+
+const btns = [
+    "DISPLAY_MESH",
+    "DISPLAY_BLOB",
+    "DISPLAY_GRID",
+    "DISPLAY_BLOB_CIRCLE",
+    "DISPLAY_COLLIDERS",
+    "HIGHLIGHT_CELLS"
+]
+
+btns.forEach(name => new Toggle(name));

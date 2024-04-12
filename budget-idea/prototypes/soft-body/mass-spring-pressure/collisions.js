@@ -12,7 +12,7 @@ class CollisionSystem {
 
         this.current_collisions_registry.clear();
         this.detect_collisions(particles);
-        this.render_colliders();
+        if (params.DISPLAY_COLLIDERS) this.render_colliders();
         // resolve penetrations
         // resolve collisions
 
@@ -30,7 +30,7 @@ class CollisionSystem {
 
                 group_of_particles.forEach(other_particle => {
 
-                    if ( other_particle != particle && particle != particle.immediate_neighbors[0] && particle != particle.immediate_neighbors[1] ) {
+                    if ( other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
     
                         const collision = new PottentialCollision(particle, other_particle);
     

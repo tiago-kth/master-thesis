@@ -60,6 +60,7 @@ const params = {
     "DISPLAY_BLOB": true,
     "DISPLAY_BLOB_CIRCLE": false,
     "DISPLAY_GRID": false,
+    "DISPLAY_COLLIDERS": false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
     "_x": false,
