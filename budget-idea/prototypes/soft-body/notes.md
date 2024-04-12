@@ -111,3 +111,22 @@ Como evitar emaranhados?
 Melhorar a história de colorir os colliders.
 
 Larger colliders would avoid the problem of particles traversing each other, or traversing the boundaries...
+
+"In an essence, yes. But there are some tricks that happen during the collision detection, like offsetting the colliders based on the surface normals and some other factors." (https://x.com/JuhaniHalkomaki/status/1727620541316534351)
+
+"alright, I thought it was based of a paper which I saw ages ago 🙃https://panoramx.ift.uni.wroc.pl/~maq/soft2d/howtosoftbody.pdf"
+https://x.com/banterless_ai/status/1727729376106553525
+
+Inspirations:
+First, Daniel:
+https://x.com/shiffman/status/1638561972928106498
+then:
+https://x.com/JuhaniHalkomaki/status/1629184126837305347
+and then:
+https://x.com/JuhaniHalkomaki/status/1727409502327300435
+and then:
+https://x.com/JuhaniHalkomaki/status/1624761948402319360
+
+Escrevi pro Juhani.
+
+
