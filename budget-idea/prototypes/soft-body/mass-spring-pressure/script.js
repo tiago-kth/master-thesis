@@ -28,10 +28,10 @@ function get_colors() {
 get_colors();
 
 const ctx = cv.getContext('2d');
-const N_PARTICLES = 20;
+ctx.lineJoin = "round";
+
 const H = 1000;
 const W = 1000;
-const R = 10;
 
 const N_LEFT = new Vec(-1,0);
 const N_RIGHT = new Vec(1,0);
@@ -132,12 +132,21 @@ const center = new Vec(W/2, H/2);
 blobs.push(
     new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
     new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
-    new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"])
+    new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
+    new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
 )
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
 
+function add_blob(pos, R, fill_color) {
+
+    const new_blob = new Blob(pos, R, fill_color, colors["generic-stroke"]);
+
+    blobs.push(new_blob);
+    all_particles.push(...new_blob.particles);
+
+}
 
 // fazer uma classe pra isso;
 /*const interaction_particle = new Particle(new Vec(0,0));

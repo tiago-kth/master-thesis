@@ -136,4 +136,14 @@ DT também tem influência na vibração.
 
 Experimentando uma nova forma de interação. Criar uma partícula, uma nova classe?
 
+Juhani, no Instagram
+> the same effect could be achieved using available physics libraries. But I like to understand things and to solve puzzles. Figuring it out on my own checks both of these boxes.
+
+Próximos passos: 
+
+1. Testar colliders maiores com offset. Vai permitir controlar a separação entre os blobs e evitar interpenetração de um blob em outro.
+2. Criar uma estrutura de visualização propriamente dita... calcular escalas de áreas conforme um conjunto de dados, labels etc.
+3. Fazer um interativo para testar diferentes tipos de contorno dos blobs.
+4. 
+
 
