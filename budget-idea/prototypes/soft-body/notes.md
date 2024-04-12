@@ -131,4 +131,9 @@ Escrevi pro Juhani.
 
 Tentando evitar microvibrações. Aplicando esse conceito de "RESTING CONTACTS", do Millington (7.2.3). Calculando a velocidade da partícula devido à aplicação da aceleração em um frame, se for maior do que a velocidade atual, é por causa desse problema de resting contacts. Mas não está elegante, melhorar.
 
+A solução anterior funcionou, mas depende do coeficiente de restituição, de acordo com os tamanhos das partículas.
+DT também tem influência na vibração.
+
+Experimentando uma nova forma de interação. Criar uma partícula, uma nova classe?
+
 
