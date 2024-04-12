@@ -36,6 +36,8 @@ cv.addEventListener('mouseout', mouseout);
 const sensitivity = 10;
 let particle_being_dragged;
 
+let mode = "dragging"
+
 function mousedown(e) {
 
     //console.log(e);
@@ -211,6 +213,7 @@ class VectorMainToggle extends Toggle {
 const slider_stiffness = new Slider("STIFFNESS", 'k');
 const slider_damping = new Slider("DAMPING", 'damping');
 const slider_vel_damping = new Slider("VEL_DAMPING");
+const slider_restitution_coefficient = new Slider("RESTITUTION_COEFFICIENT");
 const slider_timestep = new Slider("TIMESTEP");
 const slider_gravity = new Slider("GRAVITY");
 const slider_mass = new Slider("MASS");
