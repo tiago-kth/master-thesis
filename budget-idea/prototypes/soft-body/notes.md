@@ -83,3 +83,50 @@ Gas constant and stiffness constant impact in the final blob size compared to it
 Building the collision system. Based on Millington, chapter 7. Thinking if I need to iterate over all particles or over all cells, and whether that makes any difference.
 
 Collisions with rods / springs? Not on this version.
+
+Smaller radius seem more unstable for lower time steps.
+
+Parametrizar particle radius.
+
+No collision detection, ignorar as partículas adjacentes. Talvez adicionar índice às partículas.
+
+Experimentar com mais springs também.
+
+Relação time_step x velocity damping. Smaller blobs seem more instable, but increasing the time step makes them stabilize, just like reducing the velocity damping factor (thus increasing the damping) would.
+
+Calcula theta de acordo com R do blob e r das partículas. E depois recalcula o theta para ficar perfeito.
+
+Time_step 70 parece funcionar bem.
+
+## 2024.04.12
+
+Ajustes na detecção de colisões, havia um erro no código que ignorava os vizinhos imediatos. Acrescentei botão para controlar o display dos colliders.
+
+Agora vamos a implementar a resolução de colisões.
+
+Funcionou!
+
+Como evitar emaranhados?
+
+Melhorar a história de colorir os colliders.
+
+Larger colliders would avoid the problem of particles traversing each other, or traversing the boundaries...
+
+"In an essence, yes. But there are some tricks that happen during the collision detection, like offsetting the colliders based on the surface normals and some other factors." (https://x.com/JuhaniHalkomaki/status/1727620541316534351)
+
+"alright, I thought it was based of a paper which I saw ages ago 🙃https://panoramx.ift.uni.wroc.pl/~maq/soft2d/howtosoftbody.pdf"
+https://x.com/banterless_ai/status/1727729376106553525
+
+Inspirations:
+First, Daniel:
+https://x.com/shiffman/status/1638561972928106498
+then:
+https://x.com/JuhaniHalkomaki/status/1629184126837305347
+and then:
+https://x.com/JuhaniHalkomaki/status/1727409502327300435
+and then:
+https://x.com/JuhaniHalkomaki/status/1624761948402319360
+
+Escrevi pro Juhani.
+
+

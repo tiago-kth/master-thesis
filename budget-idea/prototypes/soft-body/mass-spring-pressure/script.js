@@ -2,6 +2,7 @@ const cv = document.querySelector('canvas');
 
 // for every new color, just add the custom variable in :root, and a corresponding line here
 const colors = {
+    "generic-stroke": null,
     particle : null,
     spring : null,
     "blob-fill" : null,
@@ -28,8 +29,8 @@ get_colors();
 
 const ctx = cv.getContext('2d');
 const N_PARTICLES = 20;
-const H = 500;
-const W = 500;
+const H = 1000;
+const W = 1000;
 const R = 10;
 
 const N_LEFT = new Vec(-1,0);
@@ -48,8 +49,9 @@ const params = {
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 200,
+    "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.8,
+    "PARTICLE_RADIUS" : 16,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
@@ -59,6 +61,7 @@ const params = {
     "DISPLAY_BLOB": true,
     "DISPLAY_BLOB_CIRCLE": false,
     "DISPLAY_GRID": false,
+    "DISPLAY_COLLIDERS": false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
     "_x": false,
@@ -92,6 +95,10 @@ function highlight_particles_color(index) { // used for debugging
     }
 }
 
+// for the collision system
+
+const all_particles = [];
+
 
 /*const params = {
     STIFFNESS: 0.05, 
@@ -107,18 +114,29 @@ function highlight_particles_color(index) { // used for debugging
 };*/
 //{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
 
-const particles = [];
+//const particles = [];
 const springs = [];
 const blobs = [];
 
 cv.width = W;
 cv.height = H;
 
+const cssW = +getComputedStyle(cv).width.slice(0,-2);
+const cssH = +getComputedStyle(cv).height.slice(0,-2);
+
+const mouseFactorX = W / cssW;
+const mouseFactorY = H / cssH;
+
 const center = new Vec(W/2, H/2);
 
 blobs.push(
-    new Blob(new Vec(W/2, H/2), 100, 24)
+    new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
+    new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"])
 )
+
+// populate all particles array
+blobs.forEach(blob => all_particles.push(...blob.particles));
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -379,6 +397,7 @@ function loop(t) {
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
     satisfy_constraints();
+    collision_system.update_collisions(all_particles);
 
     
 

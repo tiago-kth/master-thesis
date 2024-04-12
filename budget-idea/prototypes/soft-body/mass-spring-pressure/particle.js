@@ -17,6 +17,8 @@ class Particle {
     color_stroke;
     color_particle;
 
+    immediate_neighbors;
+
     constructor(pos) {
 
         this.pos = pos;
@@ -25,9 +27,9 @@ class Particle {
         this.vel = new Vec(0,0);
         this.acc = new Vec(0,0);
         this.force_acum = new Vec(0,0);
-        this.r = 8;
+        this.r = params.PARTICLE_RADIUS;
         // commenting to let the mass be update by the global parameters
-        //this.mass = params.MASS;
+        this.mass = params.MASS;
         //this.inv_mass = 1 / params.MASS;   
 
         this.color_stroke = colors["spring"];
@@ -149,7 +151,8 @@ class Particle {
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.lineWidth = 2;
         ctx.strokeStyle = stroke ? stroke : this.color_stroke;
-        ctx.fillStyle = fill? fill : this.color_particle;
+        ctx.fillStyle = fill? fill : "transparent";//this.color_particle;
+        ctx.stroke();
         ctx.fill();
         ctx.restore();
 

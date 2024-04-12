@@ -1,7 +1,10 @@
 // interac
 
 const stopBTN = document.querySelector('[data-btn="stop"]');
-stopBTN.addEventListener('click', e => {
+
+stopBTN.addEventListener('click', stop_animation);
+
+/*e => {
     if (e.target.innerText == 'stop') {
         e.target.innerText = "resume";
         window.cancelAnimationFrame(anim);
@@ -10,7 +13,20 @@ stopBTN.addEventListener('click', e => {
         anim = window.requestAnimationFrame(loop);
     }
     
-})
+})*/
+
+function stop_animation() {
+
+    if (stopBTN.innerText == 'stop') {
+        stopBTN.innerText = "resume";
+        window.cancelAnimationFrame(anim);
+    } else {
+        stopBTN.innerText = "stop";
+        anim = window.requestAnimationFrame(loop);
+    }
+
+}
+
 let dragging = false;
 cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
@@ -32,7 +48,7 @@ function mousedown(e) {
 
         blob.particles.forEach(p => {
 
-            const mouse_pos = new Vec(e.offsetX, e.offsetY);
+            const mouse_pos = new Vec(e.offsetX * mouseFactorX, e.offsetY * mouseFactorY);
 
             const distance = Vec.sub(mouse_pos, p.pos).mod();
 
@@ -62,15 +78,15 @@ function mousemove(e) {
 
     if (params.HIGHLIGHT_CELLS) {
         params._MOUSE_MOVING = true;
-        params._x = e.offsetX;
-        params._y = e.offsetY;
+        params._x = e.offsetX * mouseFactorX;
+        params._y = e.offsetY * mouseFactorY;
     }
 
     if (!dragging) return;
 
     else {
 
-        const mouse_pos = new Vec(e.offsetX, e.offsetY);
+        const mouse_pos = new Vec(e.offsetX * mouseFactorX, e.offsetY * mouseFactorY);
         particle_being_dragged.pos = mouse_pos;
         //particle_being_dragged.render(ctx);
         //ctx.lineTo(e.offsetX, e.offsetY);
@@ -202,11 +218,6 @@ const slider_vector_size = new Slider("VECTOR_SIZE");
 const pressure_factor_size = new Slider("PRESSURE_FACTOR");
 
 const btn_display_vector = new VectorMainToggle("DISPLAY_VECTORS");
-const btn_display_mesh = new Toggle("DISPLAY_MESH");
-const btn_display_blob = new Toggle("DISPLAY_BLOB");
-const btn_display_blob_circle = new Toggle("DISPLAY_BLOB_CIRCLE");
-const btn_display_grid = new Toggle("DISPLAY_GRID");
-const btn_highlight_cells = new Toggle("HIGHLIGHT_CELLS");
 
 const toggles = [
     'DISPLAY_SPRING_VECTORS',
@@ -216,3 +227,14 @@ const toggles = [
 ];
 
 toggles.forEach(name => new Toggle(name));
+
+const btns = [
+    "DISPLAY_MESH",
+    "DISPLAY_BLOB",
+    "DISPLAY_GRID",
+    "DISPLAY_BLOB_CIRCLE",
+    "DISPLAY_COLLIDERS",
+    "HIGHLIGHT_CELLS"
+]
+
+btns.forEach(name => new Toggle(name));

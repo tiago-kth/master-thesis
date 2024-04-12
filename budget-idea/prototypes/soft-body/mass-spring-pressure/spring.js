@@ -63,7 +63,7 @@ class Spring {
         ctx.strokeStyle = colors["spring"];
         //if (l > this.len_0) ctx.strokeStyle = 'dodgerblue';
         //if (l < this.len_0) ctx.strokeStyle = 'tomato';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(this.p1.pos.x, this.p1.pos.y);
         ctx.lineTo(this.p2.pos.x, this.p2.pos.y);

@@ -6,14 +6,26 @@ class Blob {
     particles;
     springs;
 
-    constructor(center, r, n) {
+    blob_fill_color;
+    blob_stroke_color;
+
+    constructor(center, r, blob_fill_color, blob_stroke_color) {
 
         this.R = r;
         this.center = center;
         this.particles = [];
         this.springs = [];
 
-        const theta = 2*Math.PI / n;
+        this.blob_fill_color = blob_fill_color ? blob_fill_color : colors["blob-fill"];
+        this.blob_stroke_color = blob_stroke_color ? blob_stroke_color : colors["blob-stroke"];
+
+        //const theta = 2*Math.PI / n;
+        let theta = Math.atan( params.PARTICLE_RADIUS * 2 / r); // 20 = 2 * r_particles
+        console.log(theta);
+        const n = Math.round(2 * Math.PI / theta);
+        console.log(n);
+        theta = 2*Math.PI / n;
+
 
         for (let i = 0; i < n; i++) {
 
@@ -28,6 +40,13 @@ class Blob {
         for (let i = 0; i < n; i++) {
 
             const next_index = i == this.particles.length - 1 ? 0 : i + 1;
+
+            // saves neighbors, for the collision system
+            const previous_index = i == 0 ? this.particles.length - 1 : i - 1;
+            this.particles[i].immediate_neighbors = [
+                this.particles[previous_index], this.particles[next_index]
+            ];
+            //
 
             const s = new Spring(this.particles[i], this.particles[next_index]);
 
@@ -64,9 +83,9 @@ class Blob {
 
         ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = colors["blob-fill"];
-        ctx.strokeStyle = colors["blob-stroke"];
-        ctx.lineWidth = 6;
+        ctx.fillStyle = this.blob_fill_color;
+        ctx.strokeStyle = this.blob_stroke_color; 
+        ctx.lineWidth = 8;
 
         this.particles.forEach( (p,i) => {
 
