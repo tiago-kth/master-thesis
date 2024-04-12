@@ -97,3 +97,9 @@ Relação time_step x velocity damping. Smaller blobs seem more instable, but in
 Calcula theta de acordo com R do blob e r das partículas. E depois recalcula o theta para ficar perfeito.
 
 Time_step 70 parece funcionar bem.
+
+## 2024.04.12
+
+Ajustes na detecção de colisões, havia um erro no código que ignorava os vizinhos imediatos. Acrescentei botão para controlar o display dos colliders.
+
+Agora vamos a implementar a resolução de colisões.
