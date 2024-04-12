@@ -16,6 +16,7 @@ stopBTN.addEventListener('click', stop_animation);
 })*/
 
 function stop_animation() {
+
     if (stopBTN.innerText == 'stop') {
         stopBTN.innerText = "resume";
         window.cancelAnimationFrame(anim);
