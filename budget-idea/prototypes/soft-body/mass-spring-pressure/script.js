@@ -29,8 +29,8 @@ get_colors();
 
 const ctx = cv.getContext('2d');
 const N_PARTICLES = 20;
-const H = 500;
-const W = 500;
+const H = 1000;
+const W = 1000;
 const R = 10;
 
 const N_LEFT = new Vec(-1,0);
@@ -49,9 +49,9 @@ const params = {
     "MASS": 2,
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 200,
+    "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.8,
-    "PARTICLE_RADIUS" : 6,
+    "PARTICLE_RADIUS" : 16,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
@@ -120,6 +120,12 @@ const blobs = [];
 
 cv.width = W;
 cv.height = H;
+
+const cssW = +getComputedStyle(cv).width.slice(0,-2);
+const cssH = +getComputedStyle(cv).height.slice(0,-2);
+
+const mouseFactorX = W / cssW;
+const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 

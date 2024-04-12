@@ -48,7 +48,7 @@ function mousedown(e) {
 
         blob.particles.forEach(p => {
 
-            const mouse_pos = new Vec(e.offsetX, e.offsetY);
+            const mouse_pos = new Vec(e.offsetX * mouseFactorX, e.offsetY * mouseFactorY);
 
             const distance = Vec.sub(mouse_pos, p.pos).mod();
 
@@ -78,15 +78,15 @@ function mousemove(e) {
 
     if (params.HIGHLIGHT_CELLS) {
         params._MOUSE_MOVING = true;
-        params._x = e.offsetX;
-        params._y = e.offsetY;
+        params._x = e.offsetX * mouseFactorX;
+        params._y = e.offsetY * mouseFactorY;
     }
 
     if (!dragging) return;
 
     else {
 
-        const mouse_pos = new Vec(e.offsetX, e.offsetY);
+        const mouse_pos = new Vec(e.offsetX * mouseFactorX, e.offsetY * mouseFactorY);
         particle_being_dragged.pos = mouse_pos;
         //particle_being_dragged.render(ctx);
         //ctx.lineTo(e.offsetX, e.offsetY);
