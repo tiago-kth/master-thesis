@@ -1,7 +1,10 @@
 // interac
 
 const stopBTN = document.querySelector('[data-btn="stop"]');
-stopBTN.addEventListener('click', e => {
+
+stopBTN.addEventListener('click', stop_animation);
+
+/*e => {
     if (e.target.innerText == 'stop') {
         e.target.innerText = "resume";
         window.cancelAnimationFrame(anim);
@@ -10,7 +13,19 @@ stopBTN.addEventListener('click', e => {
         anim = window.requestAnimationFrame(loop);
     }
     
-})
+})*/
+
+function stop_animation() {
+    if (stopBTN.innerText == 'stop') {
+        stopBTN.innerText = "resume";
+        window.cancelAnimationFrame(anim);
+    } else {
+        stopBTN.innerText = "stop";
+        anim = window.requestAnimationFrame(loop);
+    }
+
+}
+
 let dragging = false;
 cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
