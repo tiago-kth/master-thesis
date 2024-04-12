@@ -129,4 +129,6 @@ https://x.com/JuhaniHalkomaki/status/1624761948402319360
 
 Escrevi pro Juhani.
 
+Tentando evitar microvibrações. Aplicando esse conceito de "RESTING CONTACTS", do Millington (7.2.3). Calculando a velocidade da partícula devido à aplicação da aceleração em um frame, se for maior do que a velocidade atual, é por causa desse problema de resting contacts. Mas não está elegante, melhorar.
+
 

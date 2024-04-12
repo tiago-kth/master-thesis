@@ -50,7 +50,7 @@ const params = {
     "GRAVITY": 0,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 300,
-    "RESTITUTION_COEFFICIENT" : 0.8,
+    "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 16,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
@@ -137,6 +137,13 @@ blobs.push(
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
+
+
+// fazer uma classe pra isso;
+/*const interaction_particle = new Particle(new Vec(0,0));
+interaction_particle.r = 50;
+all_particles.push(interaction_particle);
+*/
 
 function clearCanvas() {
     ctx.clearRect(0, 0, W, H);
@@ -323,10 +330,23 @@ function edges_constraints() {
 
             // vertical borders
 
-            if ( (pos.y + r) > H ) {
-                //const g_ = new Vec(0, -1 * params.GRAVITY);
-                //p.add_force(Vec.mult( N_TOP, params.MASS ));
-                p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING / 2);
+            if ( (pos.y + r) >= H ) {
+                const g_ = new Vec(0, -1 * params.GRAVITY);
+                p.add_force(Vec.mult( g_, params.MASS));
+                const v_caused_by_one_step_of_acc = Math.abs(Vec.dot( p.acc, N_BOTTOM) * 1)//20 / params.TIMESTEP);
+                //console.log(p.vel.mod(), v_caused_by_one_step_of_acc);
+                if ( p.vel.mod()  <= v_caused_by_one_step_of_acc ) {
+
+                    //console.log(p.vel.mod(), v_caused_by_one_step_of_acc);
+
+                    p.vel = NULL_VEC;
+                    
+                } else {
+
+                    p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT);
+
+                }
+                
                 p.pos.y = H - r;
             }
             else if ( (pos.y - r) < 0 ) {
@@ -396,8 +416,9 @@ function loop(t) {
 
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
-    satisfy_constraints();
     collision_system.update_collisions(all_particles);
+    satisfy_constraints();
+    
 
     
 
