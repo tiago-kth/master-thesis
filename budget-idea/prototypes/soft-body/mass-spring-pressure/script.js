@@ -425,8 +425,13 @@ function loop(t) {
 
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
-    collision_system.update_collisions(all_particles);
-    satisfy_constraints();
+    //for (let iterations = 0; iterations < 10; iterations++) {
+
+        collision_system.update_collisions(all_particles);
+        satisfy_constraints();
+
+    //}
+
     
 
     
@@ -436,7 +441,7 @@ function loop(t) {
     //console.log(blobs[0].particles[0]);
 
     //const t1 = performance.now();
-    //console.log('Rendering time ', t1 - t0);
+    //if (t1-t0 > 5) console.log('Rendering time ', t1 - t0);
 
 
 
