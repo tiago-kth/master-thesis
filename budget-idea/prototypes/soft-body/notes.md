@@ -144,6 +144,8 @@ Próximos passos:
 1. Testar colliders maiores com offset. Vai permitir controlar a separação entre os blobs e evitar interpenetração de um blob em outro.
 2. Criar uma estrutura de visualização propriamente dita... calcular escalas de áreas conforme um conjunto de dados, labels etc.
 3. Fazer um interativo para testar diferentes tipos de contorno dos blobs.
-4. 
+4. Criar uma partícula na posicão do mouse.
 
+# 2024.04.16
 
+O que é estranho é que quando o sistema comeca a demonstrar instabilidade, vc aumenta o time step, ele estabilizar, e depois vc reduz de novo e ele continua estável.
