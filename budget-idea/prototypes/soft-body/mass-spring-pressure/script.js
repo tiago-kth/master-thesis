@@ -389,6 +389,8 @@ function render() {
 
 }
 
+let count = 0;
+
 function loop(t) {
 
     //let tp0 = performance.now();
@@ -457,10 +459,31 @@ function loop(t) {
     //let tp1 = performance.now();
     //console.log( (tp1 - tp0).toFixed(2) );
 
-    anim = window.requestAnimationFrame(loop);
+    count++
+
+    if (count > 500) {
+        stop_animation();
+    } else {
+        anim = window.requestAnimationFrame(loop);
+    }
+
+
 }
 
-window.requestAnimationFrame(loop);//get_fr);
+//window.requestAnimationFrame(loop);//get_fr);
+
+function stop_animation() {
+
+    window.cancelAnimationFrame(anim);
+
+}
+
+function restart_animation() {
+
+    count = 0;
+    anim = window.requestAnimationFrame(loop);
+
+}
 
 
 
