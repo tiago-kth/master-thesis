@@ -1,4 +1,5 @@
 const cv = document.querySelector('canvas');
+let data;
 
 // for every new color, just add the custom variable in :root, and a corresponding line here
 const colors = {
@@ -129,12 +130,12 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
-blobs.push(
+/*blobs.push(
     new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
     new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
-)
+)*/
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
@@ -471,7 +472,14 @@ function loop(t) {
 
 }
 // should comment if using the limited number of iterations idea
-window.requestAnimationFrame(loop);//get_fr);
+//window.requestAnimationFrame(loop);//get_fr);
+
+fetch("data.json").then(response => response.json()).then(dados => {
+    
+    data = dados;
+    window.requestAnimationFrame(loop);//get_fr);
+
+})
 
 function stop_animation() {
 
