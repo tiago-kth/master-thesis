@@ -1,6 +1,9 @@
 library(tidyverse)
 library(readxl)
 library(extrafont)
+loadfonts()
+extrafont::font_import(paths = )
+extrafont::fonts()
 
 base_real <- read_excel("cofog.xlsx", sheet = "1.3", skip = 3)
 base_pib <- read_excel("cofog.xlsx", sheet = "1.2", skip = 3)
@@ -46,4 +49,27 @@ output <- list(
   details = desp_br %>% filter(classification_level == "Details", Year == 2022)
 )
 
+#colorspace::qualitative_hcl(n = 10, palette = "Set 3") %>% dput()
+
 jsonlite::write_json(output, "data.json")
+
+
+# plots -------------------------------------------------------------------
+
+social_protection_2022 <- desp_br %>% filter(str_sub(EXPENDITURE, 1, 2) == "71", classification_level == "Details", Year == 2022)
+
+ggplot(social_protection_2022, aes(x = Value_PIB, y = reorder(Expenditure, Value_PIB))) + 
+  geom_col(fill = "#E7B5F5") +
+  geom_text(aes(label = scales::percent_format(accuracy = 0.1)(Value_PIB)),
+            family = "Arvo", hjust = "left", nudge_x = 0.001) +
+  labs(y = NULL, x = NULL) +
+  scale_x_continuous(labels = scales::percent_format(),
+                     expand = expansion(add = c(0.001,0.009))) +
+  theme_minimal() +
+  theme(
+    text = element_text(family = "Arvo", size = 14),
+    panel.grid.major.y = element_blank()
+  )
+
+ggsave("example-plot-functions-details.png", width = 14.5/3, height = 10.5/3)
+
