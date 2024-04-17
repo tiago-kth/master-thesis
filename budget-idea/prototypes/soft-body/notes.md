@@ -151,3 +151,5 @@ Próximos passos:
 
 O que é estranho é que quando o sistema comeca a demonstrar instabilidade, vc aumenta o time step, ele estabilizar, e depois vc reduz de novo e ele continua estável.
 
+Talvez incluir um contador, e, toda vez que houver interação, zerar o contador. Depois que chegar na quantidade de iterações, parar a simulação. Fiz um exemplo num commit, pode funcionar.
+
