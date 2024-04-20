@@ -24,7 +24,11 @@ class Particle {
 
     immediate_neighbors;
 
-    constructor(pos, blob_radius, blob_center) {
+    blob;
+    blob_radius;
+    blob_center;
+
+    constructor(pos, blob) {
 
         this.pos = pos;
         this.dragging = false;
@@ -44,16 +48,17 @@ class Particle {
         this.grid_cell = index;
         grid.cells[index].particles.add(this);
 
-        this.blob_radius = blob_radius;
+        this.blob = blob;
+        this.blob_radius = blob.R;
 
-        this.update_collider_position(blob_center);
+        this.update_collider_position();
 
 
     }
 
-    update_collider_position(blob_center) {
+    update_collider_position() {
 
-        this.blob_center = blob_center;
+        this.blob_center = this.blob.center;
         this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
         //const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
         const distance_from_particle_center = this.collider_radius - this.r;
@@ -87,12 +92,12 @@ class Particle {
 
     }
 
-    time_step(dt, blob_center) {
+    time_step(dt) {
 
         //this.accumulate_forces();
         this.integrate(dt);
         //this.satisfy_constraints();
-        this.update_collider_position(blob_center);
+        this.update_collider_position();
 
     }
 

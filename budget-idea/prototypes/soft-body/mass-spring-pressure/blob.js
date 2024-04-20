@@ -31,8 +31,7 @@ class Blob {
 
             const p = new Particle(
                 Vec.fromAngle(r, theta * i, center),
-                this.R,
-                this.center
+                this
             )
 
             this.particles.push(p);

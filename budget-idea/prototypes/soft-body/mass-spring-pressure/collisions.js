@@ -32,7 +32,7 @@ class CollisionSystem {
 
                 group_of_particles.forEach(other_particle => {
 
-                    if ( other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
+                    if ( particle.blob != other_particle.blob & other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
     
                         const collision = new PottentialCollision(particle, other_particle);
     
@@ -87,12 +87,12 @@ class PottentialCollision {
 
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 
-        const distance_v = Vec.sub(p1.pos, p2.pos);
+        const distance_v = Vec.sub(p1.collider_center, p2.collider_center);//p1.pos, p2.pos);
         const distance = distance_v.mod();
 
         this.contact_normal = distance_v.getUnitDir();
 
-        const min_distance = p1.r + p2.r;
+        const min_distance = p1.collider_radius + p2.collider_radius;//p1.r + p2.r;
 
         this.penetration = min_distance - distance;
 
