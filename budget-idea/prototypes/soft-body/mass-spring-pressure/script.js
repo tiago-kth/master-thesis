@@ -100,21 +100,6 @@ function highlight_particles_color(index) { // used for debugging
 
 const all_particles = [];
 
-
-/*const params = {
-    STIFFNESS: 0.05, 
-    REST_LEN: 0, 
-    DAMPING: 0.2, 
-    TIMESTEP: 200, 
-    SPEEDLIMIT: 15, 
-    MASS: 2, 
-    GRAVITY: 0, 
-    VECTOR_SIZE: 20,
-    PRESSURE_FACTOR: 0.2,
-    DISPLAY_VECTORS: true
-};*/
-//{STIFFNESS: 0.5, REST_LEN: 60, DAMPING: 0.01, TIMESTEP: 2000};
-
 //const particles = [];
 const springs = [];
 const blobs = [];
@@ -394,13 +379,9 @@ let count = 0;
 
 function loop(t) {
 
-    //let tp0 = performance.now();
-
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
-    const dt = 20;//t - t_ant;
-    //t_ant = t;
+    const dt = 20;
 
-    //const t0 = performance.now();
     clearCanvas();
 
     highlight_particles_color(false);
@@ -424,53 +405,19 @@ function loop(t) {
     }
 
     if (params.DISPLAY_GRID) grid.render_grid(ctx, colors.grid);
+
+    // MAIN LOOP
     render();
 
     accumulate_forces();
     integrate(dt/params.TIMESTEP);
-    //for (let iterations = 0; iterations < 10; iterations++) {
+    collision_system.update_collisions(all_particles);
+    satisfy_constraints();
 
-        collision_system.update_collisions(all_particles);
-        satisfy_constraints();
-
-    //}
-
-    
-
-    
-
-
-
-    //console.log(blobs[0].particles[0]);
-
-    //const t1 = performance.now();
-    //if (t1-t0 > 5) console.log('Rendering time ', t1 - t0);
-
-
-
-    /*
-    particles.forEach( (p, i) => {
-        
-        p.time_step(dt/params.TIMESTEP);
-        p.render(ctx);
-
-    })
-    */
-
-    //let tp1 = performance.now();
-    //console.log( (tp1 - tp0).toFixed(2) );
-
-    /* TEST LIMITED NUMBER OF ITERATIONS FOR THE SIMULATION
-    count++
-
-    if (count > 500) {
-        stop_animation();
-    } else { */
-        anim = window.requestAnimationFrame(loop);
-    //}
-
+    anim = window.requestAnimationFrame(loop);
 
 }
+
 // should comment if using the limited number of iterations idea
 //window.requestAnimationFrame(loop);//get_fr);
 
