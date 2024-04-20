@@ -16,7 +16,7 @@ bola pequena às vezes orbita a grande
 
 ## COISAS A RESOLVER NA FRENTE
 
-* Usar bézier em vez de linhas? `quadraticCurveTo(cpx, cpy, x, y)`
+* Usar Bézier em vez de linhas? `quadraticCurveTo(cpx, cpy, x, y)`
 
 `(cpx, cpy)` poderiam ser encontrados usando `[ (pa - pcenter) + (pb - pcenter) ] * c`, onde `c > 1/2` (`c = 1/2` posicionaria o ponto de controle no ponto médio dos dois pontos). Fazer interativo.
 
@@ -70,7 +70,7 @@ Trying to build the grid lookup for the spatial hashing.
 
 Playing with some of the parameters, those will be fundamental to achieve the visual effect we're aiming at.
 
-For lower timesteps, we need lower (meaning, stronger) velocity damping to help stabilise the system. Time steps of 50 seem to work well.
+For lower time-steps, we need lower (meaning, stronger) velocity damping to help stabilize the system. Time steps of 50 seem to work well.
 
 ## 2024.04.10
 
@@ -129,7 +129,7 @@ https://x.com/JuhaniHalkomaki/status/1624761948402319360
 
 Escrevi pro Juhani.
 
-Tentando evitar microvibrações. Aplicando esse conceito de "RESTING CONTACTS", do Millington (7.2.3). Calculando a velocidade da partícula devido à aplicação da aceleração em um frame, se for maior do que a velocidade atual, é por causa desse problema de resting contacts. Mas não está elegante, melhorar.
+Tentando evitar micro-vibrações. Aplicando esse conceito de "RESTING CONTACTS", do Millington (7.2.3). Calculando a velocidade da partícula devido à aplicação da aceleração em um frame, se for maior do que a velocidade atual, é por causa desse problema de resting contacts. Mas não está elegante, melhorar.
 
 A solução anterior funcionou, mas depende do coeficiente de restituição, de acordo com os tamanhos das partículas.
 DT também tem influência na vibração.
@@ -144,12 +144,16 @@ Próximos passos:
 1. Testar colliders maiores com offset. Vai permitir controlar a separação entre os blobs e evitar interpenetração de um blob em outro.
 2. Criar uma estrutura de visualização propriamente dita... calcular escalas de áreas conforme um conjunto de dados, labels etc.
 3. Fazer um interativo para testar diferentes tipos de contorno dos blobs.
-4. Criar uma partícula na posicão do mouse.
+4. Criar uma partícula na posição do mouse.
 5. Remover top boundary
 
 # 2024.04.16
 
-O que é estranho é que quando o sistema comeca a demonstrar instabilidade, vc aumenta o time step, ele estabilizar, e depois vc reduz de novo e ele continua estável.
+O que é estranho é que quando o sistema começa a demonstrar instabilidade, vc aumenta o time step, ele estabilizar, e depois vc reduz de novo e ele continua estável.
 
 Talvez incluir um contador, e, toda vez que houver interação, zerar o contador. Depois que chegar na quantidade de iterações, parar a simulação. Fiz um exemplo num commit, pode funcionar.
+
+# 2024.04.20
+
+Depois da reunião com Björn: avaliação. Engagement questionnaire.
 
