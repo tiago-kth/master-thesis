@@ -157,3 +157,23 @@ Talvez incluir um contador, e, toda vez que houver interação, zerar o contador
 
 Depois da reunião com Björn: avaliação. Engagement questionnaire.
 
+Implements new colliders. 
+
+```js
+    update_collider_position() {
+
+        this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
+        const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
+        const unit_radial_vector = Vec.sub(this.pos, this.blob_center).getUnitDir();
+        this.collider_center = Vec.add(
+            this.blob_center, 
+            Vec.mult(unit_radial_vector, distance_from_blob_center + this.r)
+        );
+
+        //console.log(distance_from_blob_center, this.r, this.blob_center, this.collider_radius, this.collider_center);
+
+    }
+```
+
+When determining the collisions, we should stop in the first collision, because we'll have many simultaneous collisions with the big colliders.
+
