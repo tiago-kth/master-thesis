@@ -5,6 +5,11 @@ class Particle {
     acc;
     dragging;
 
+    collider_center;
+    collider_radius;
+    blob_radius;
+    blob_center;
+
     force_acum;
 
     r;
@@ -19,7 +24,7 @@ class Particle {
 
     immediate_neighbors;
 
-    constructor(pos) {
+    constructor(pos, blob_radius, blob_center) {
 
         this.pos = pos;
         this.dragging = false;
@@ -39,6 +44,25 @@ class Particle {
         this.grid_cell = index;
         grid.cells[index].particles.add(this);
 
+        this.blob_radius = blob_radius;
+
+        this.update_collider_position(blob_center);
+
+
+    }
+
+    update_collider_position(blob_center) {
+
+        this.blob_center = blob_center;
+        this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
+        const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
+        const unit_radial_vector = Vec.sub(this.pos, this.blob_center).getUnitDir();
+        this.collider_center = Vec.add(
+            this.blob_center, 
+            Vec.mult(unit_radial_vector, distance_from_blob_center + this.r)
+        );
+
+        //console.log(distance_from_blob_center, this.r, this.blob_center, this.collider_radius, this.collider_center);
 
     }
 
@@ -57,11 +81,12 @@ class Particle {
 
     }
 
-    time_step(dt) {
+    time_step(dt, blob_center) {
 
         //this.accumulate_forces();
         this.integrate(dt);
         //this.satisfy_constraints();
+        this.update_collider_position(blob_center);
 
     }
 
@@ -154,6 +179,18 @@ class Particle {
         ctx.fillStyle = fill? fill : "transparent";//this.color_particle;
         ctx.stroke();
         ctx.fill();
+        ctx.restore();
+
+    }
+
+    render_colliders(ctx, stroke) {
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.collider_center.x, this.collider_center.y, this.collider_radius, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = stroke ? stroke : "blue";
+        ctx.stroke();
         ctx.restore();
 
     }

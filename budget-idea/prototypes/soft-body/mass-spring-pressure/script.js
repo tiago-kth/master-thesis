@@ -53,6 +53,7 @@ const params = {
     "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 12,
+    "COLLIDERS_RADIUS" : 30,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
@@ -63,6 +64,7 @@ const params = {
     "DISPLAY_BLOB_CIRCLE": false,
     "DISPLAY_GRID": false,
     "DISPLAY_COLLIDERS": false,
+    "DISPLAY_COLLISIONS": false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
     "_x": false,
@@ -291,7 +293,8 @@ function accumulate_forces() {
 function integrate(dt) {
 
     blobs.forEach(blob => {
-        blob.particles.forEach(p => p.integrate(dt));
+        blob.particles.forEach(p => p.time_step(dt, blob.center));//p.integrate(dt));
+        blob.update_blob_center();
     })
 
 }
@@ -368,6 +371,7 @@ function render() {
         if (params.DISPLAY_BLOB) blob.display(ctx);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
+        if (params.DISPLAY_COLLIDERS) blob.display_colliders(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
 

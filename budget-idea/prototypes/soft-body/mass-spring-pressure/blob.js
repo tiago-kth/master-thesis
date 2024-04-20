@@ -30,7 +30,9 @@ class Blob {
         for (let i = 0; i < n; i++) {
 
             const p = new Particle(
-                Vec.fromAngle(r, theta * i, center)
+                Vec.fromAngle(r, theta * i, center),
+                this.R,
+                this.center
             )
 
             this.particles.push(p);
@@ -272,6 +274,12 @@ class Blob {
 
     }
 
+    display_colliders(ctx) {
+
+        this.particles.forEach(p => p.render_colliders(ctx, "red"));
+
+    }
+
     get_blob_center() {
 
         const xm = this.particles.map(p => p.pos.x).reduce( (previous, current) => previous + current) / this.particles.length;
@@ -281,9 +289,19 @@ class Blob {
 
     }
 
+    update_blob_center() {
+
+        // this will be called at all frames
+
+        const [x, y] = this.get_blob_center();
+
+        this.center = new Vec(x, y);
+
+    }
+
     display_reference_circle(ctx) {
 
-        const [xc, yc] = this.get_blob_center();
+        const [xc, yc] = this.center;//this.get_blob_center();
 
         ctx.save();
         ctx.beginPath();
