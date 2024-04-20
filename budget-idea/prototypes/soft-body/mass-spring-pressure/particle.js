@@ -55,11 +55,17 @@ class Particle {
 
         this.blob_center = blob_center;
         this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
-        const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
+        //const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
+        const distance_from_particle_center = this.collider_radius - this.r;
         const unit_radial_vector = Vec.sub(this.pos, this.blob_center).getUnitDir();
         this.collider_center = Vec.add(
-            this.blob_center, 
-            Vec.mult(unit_radial_vector, distance_from_blob_center + this.r)
+            this.pos,
+            //this.blob_center,
+            Vec.mult(
+                unit_radial_vector, 
+                //distance_from_blob_center + this.r
+                -1 * distance_from_particle_center
+            )
         );
 
         //console.log(distance_from_blob_center, this.r, this.blob_center, this.collider_radius, this.collider_center);
