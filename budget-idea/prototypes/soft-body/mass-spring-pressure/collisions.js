@@ -32,6 +32,8 @@ class CollisionSystem {
 
                 group_of_particles.forEach(other_particle => {
 
+                    // external collisions
+
                     if ( particle.blob != other_particle.blob & other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
     
                         const collision = new PottentialCollision(particle, other_particle);
@@ -84,6 +86,8 @@ class PottentialCollision {
 
         this.p1 = p1;
         this.p2 = p2;
+
+        // talvez colocar um "type" no constructor? Para saber qual collider usar?
 
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 

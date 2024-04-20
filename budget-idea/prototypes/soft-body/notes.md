@@ -179,4 +179,10 @@ When determining the collisions, we should stop in the first collision, because 
 
 In the way I am implementing it, the collider will always be positioned according to the blob center. But we want it according to the particle position instead! We must calculate it position from the particle position. It should be `p + (p_r - c_r) unit_radial_vector`.
 
+To-do:
+
+* Testar colliders internos (que na verdade vão ficar meio externos)
+* Calcular normais para cada vértice / partícula
+* Ver na Biblioteca acesso ao Dagens Nyheter.
+
 

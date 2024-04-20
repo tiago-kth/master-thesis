@@ -117,13 +117,13 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
-/*
+
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(2*W/3, H/4), 150, colors["blob-fill"], colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
-)*/
+)
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
@@ -234,7 +234,10 @@ function compute_pressure() {
 
             const current_length = spring.get_length();
 
+            //const delta_pressure = current_area - rest_area;
+
             const f = nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
+            //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
 
             spring.update_normal();
 
