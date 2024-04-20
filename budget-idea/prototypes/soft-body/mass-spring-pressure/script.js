@@ -519,15 +519,4 @@ function test_shoelace_formula() {
 
 }
 
-/*{
-    "STIFFNESS": 0.45,
-    "REST_LEN": 0,
-    "DAMPING": 0.9,
-    "TIMESTEP": 200,
-    "SPEEDLIMIT": 15,
-    "MASS": 2,
-    "GRAVITY": 0,
-    "VECTOR_SIZE": 20,
-    "PRESSURE_FACTOR": 1.36,
-    "DISPLAY_VECTORS": true
-}*/
+// place_blobs();
