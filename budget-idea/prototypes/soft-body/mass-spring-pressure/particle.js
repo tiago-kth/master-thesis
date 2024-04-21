@@ -12,6 +12,9 @@ class Particle {
 
     force_acum;
 
+    springs;
+    normal;
+
     r;
 
     mass;
@@ -51,7 +54,10 @@ class Particle {
         this.blob = blob;
         this.blob_radius = blob.R;
 
-        this.update_collider_position();
+        this.springs = [];
+
+        // this will be done in the blob creation
+        //this.update_collider_position();
 
 
     }
@@ -62,7 +68,7 @@ class Particle {
         this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
         //const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
         const distance_from_particle_center = this.collider_radius - this.r;
-        const unit_radial_vector = Vec.sub(this.pos, this.blob_center).getUnitDir();
+        const unit_radial_vector = this.get_normal();//Vec.sub(this.pos, this.blob_center).getUnitDir();
         this.collider_center = Vec.add(
             this.pos,
             //this.blob_center,
@@ -140,6 +146,7 @@ class Particle {
 
         this.clear_force_acum();
         this.update_grid(grid);
+        this.update_normal();
 
     }
 
@@ -176,6 +183,26 @@ class Particle {
         console.log(acc, this.acc);
         this.acc = acc;
         console.log(this.acc);
+    }
+
+    update_normal() {
+
+        const n_sum = Vec.add(this.springs[0].get_normal(), this.springs[1].get_normal());
+
+        this.normal = n_sum.getUnitDir();
+
+    }
+
+    render_normal(ctx) {
+
+        Vec.mult(this.normal, 100).display(ctx, this.pos, "violet");
+
+    }
+
+    get_normal() {
+
+        return this.normal;
+
     }
 
     // set all other stuff

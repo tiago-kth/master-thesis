@@ -66,6 +66,11 @@ class Blob {
 
         }
 
+        this.particles.forEach(p => {
+            p.update_normal();
+            p.update_collider_position();
+        });
+
         this.rest_area = this.get_area();
 
     }
