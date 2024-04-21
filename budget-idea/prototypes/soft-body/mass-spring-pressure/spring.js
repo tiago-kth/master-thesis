@@ -6,6 +6,8 @@ class Spring {
     rest_length;
     normal;
 
+    type;
+
     constructor(p1, p2) {
 
         this.p1 = p1;

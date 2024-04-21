@@ -50,6 +50,7 @@ class Blob {
             //
 
             const s = new Spring(this.particles[i], this.particles[next_index]);
+            s.type = "perimeter";
 
             this.springs.push(s);
 

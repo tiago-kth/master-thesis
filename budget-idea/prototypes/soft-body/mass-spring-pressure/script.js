@@ -230,7 +230,7 @@ function compute_pressure() {
         const rest_area = blob.rest_area;
         const nRT = params.PRESSURE_FACTOR;
 
-        blob.springs.forEach(spring => {
+        blob.springs.filter(s => s.type == "perimeter").forEach(spring => {
 
             const current_length = spring.get_length();
 
