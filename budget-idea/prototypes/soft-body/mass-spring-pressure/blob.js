@@ -41,11 +41,16 @@ class Blob {
         for (let i = 0; i < n; i++) {
 
             const next_index = i == this.particles.length - 1 ? 0 : i + 1;
+            const next_index_plus = next_index == this.particles.length - 1 ? 0 : next_index + 1;
 
             // saves neighbors, for the collision system
             const previous_index = i == 0 ? this.particles.length - 1 : i - 1;
+            const previous_index_minus = previous_index == 0 ? this.particles.length - 1 : previous_index - 1;
             this.particles[i].immediate_neighbors = [
-                this.particles[previous_index], this.particles[next_index]
+                this.particles[previous_index_minus], 
+                this.particles[previous_index], 
+                this.particles[next_index],
+                this.particles[next_index_plus]
             ];
             //
 
@@ -287,7 +292,10 @@ class Blob {
 
     display_colliders(ctx) {
 
-        this.particles.forEach(p => p.render_colliders(ctx, "red"));
+        this.particles.forEach(p => {
+            p.render_colliders(ctx, "internal");
+            p.render_colliders(ctx, "external");
+        });
 
     }
 

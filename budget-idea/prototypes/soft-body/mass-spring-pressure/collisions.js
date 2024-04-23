@@ -12,7 +12,7 @@ class CollisionSystem {
 
         this.current_collisions_registry.clear();
         this.detect_collisions(particles);
-        if (params.DISPLAY_COLLIDERS) this.render_colliders();
+        //if (params.DISPLAY_COLLIDERS) this.render_colliders();
         // resolve penetrations
         // resolve collisions
         this.resolve_collisions();
@@ -41,7 +41,7 @@ class CollisionSystem {
 
                     // external collisions
 
-                    if ( other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
+                    if ( other_particle != particle & particle.immediate_neighbors.indexOf(other_particle) < 0 ) {
     
                         const type = (particle.blob != other_particle.blob) ? "external" : "internal";
 
@@ -71,7 +71,7 @@ class CollisionSystem {
 
     }
 
-    render_colliders() {
+    render_collisions() {
 
         this.current_collisions_registry.forEach(collision => {
 
@@ -113,7 +113,7 @@ class PottentialCollision {
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 
         let center = type == "internal" ? "internal_collider_center" : "collider_center";
-        console.log(type);
+        //console.log(type);
         const distance_v = Vec.sub(p1[center], p2[center]);//p1.pos, p2.pos);
         const distance = distance_v.mod();
 

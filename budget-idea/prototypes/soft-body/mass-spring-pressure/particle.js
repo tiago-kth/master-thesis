@@ -97,6 +97,8 @@ class Particle {
         const index = grid.get_index_from_px(this.pos.x, this.pos.y);
         const old_index = this.grid_cell;
 
+        //console.log(index, old_index);
+
         if ( index != old_index ) {
 
             grid.cells[old_index].particles.delete(this);

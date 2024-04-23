@@ -381,11 +381,15 @@ function render() {
 
     })
 
+    if (params.DISPLAY_COLLISIONS) collision_system.render_collisions(ctx);
+
 }
 
 let count = 0;
 
 function loop(t) {
+
+    const t0 = performance.now();
 
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
     const dt = 20;
@@ -422,6 +426,8 @@ function loop(t) {
     collision_system.update_collisions(all_particles);
     satisfy_constraints();
 
+    const t1 = performance.now();
+    if ( (t1 - t0) > 5 ) console.log(t1 - t0);
     anim = window.requestAnimationFrame(loop);
 
 }
