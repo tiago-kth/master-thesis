@@ -10,6 +10,8 @@ class Particle {
     blob_radius;
     blob_center;
 
+    internal_collider_center;
+
     force_acum;
 
     springs;
@@ -76,6 +78,13 @@ class Particle {
                 unit_radial_vector, 
                 //distance_from_blob_center + this.r
                 -1 * distance_from_particle_center
+            )
+        );
+        this.internal_collider_center = Vec.add(
+            this.pos,
+            Vec.mult(
+                unit_radial_vector,
+                distance_from_particle_center - this.r
             )
         );
 
@@ -229,6 +238,16 @@ class Particle {
         ctx.lineWidth = 2;
         ctx.strokeStyle = stroke ? stroke : "blue";
         ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(this.internal_collider_center.x, this.internal_collider_center.y, this.collider_radius, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "green";
+        ctx.stroke();
+        ctx.closePath();
+
+
         ctx.restore();
 
     }
