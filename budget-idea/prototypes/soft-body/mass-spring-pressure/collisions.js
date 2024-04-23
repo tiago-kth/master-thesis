@@ -20,6 +20,13 @@ class CollisionSystem {
 
     }
 
+    detect_internal_collisions(blob) {
+        blob.particles.forEach(this_particle => {
+
+
+        })
+    }
+
     detect_collisions(particles) {
 
         particles.forEach(particle => {
@@ -34,13 +41,15 @@ class CollisionSystem {
 
                     // external collisions
 
-                    if ( particle.blob != other_particle.blob & other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
+                    if ( other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
     
-                        const collision = new PottentialCollision(particle, other_particle);
+                        const type = (particle.blob != other_particle.blob) ? "external" : "internal";
+
+                        const collision = new PottentialCollision(particle, other_particle, type);
     
                         //console.log(collision);
     
-                    }
+                    }   
     
                 })
 
@@ -65,7 +74,16 @@ class CollisionSystem {
     render_colliders() {
 
         this.current_collisions_registry.forEach(collision => {
-            collision.p1.render(ctx, "red", "transparent"); collision.p2.render(ctx, "black", "transparent")})
+
+            //collision.p1.render(ctx, "red", "transparent"); collision.p2.render(ctx, "black", "transparent")
+            const type = collision.type;
+
+            collision.p1.render_colliders(ctx, type); 
+            collision.p2.render_colliders(ctx, type);
+
+        
+        })
+
 
     }
 
@@ -76,22 +94,27 @@ class PottentialCollision {
     p1;
     p2;
 
+    type;
+
     contact_normal;
 
     penetration;
 
     restitution_coefficient;
 
-    constructor(p1, p2) {
+    constructor(p1, p2, type = "external") {
 
         this.p1 = p1;
         this.p2 = p2;
+        this.type = type;
 
         // talvez colocar um "type" no constructor? Para saber qual collider usar?
 
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 
-        const distance_v = Vec.sub(p1.collider_center, p2.collider_center);//p1.pos, p2.pos);
+        let center = type == "internal" ? "internal_collider_center" : "collider_center";
+        console.log(type);
+        const distance_v = Vec.sub(p1[center], p2[center]);//p1.pos, p2.pos);
         const distance = distance_v.mod();
 
         this.contact_normal = distance_v.getUnitDir();

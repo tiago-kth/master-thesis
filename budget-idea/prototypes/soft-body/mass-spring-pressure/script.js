@@ -73,7 +73,7 @@ const params = {
 
 // grid setup //
 
-const grid = new Grid(W, H, 50);
+const grid = new Grid(W, H, 100);
 
 let particles_highlighted = []; // used for debugging
 

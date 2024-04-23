@@ -230,9 +230,27 @@ class Particle {
 
     }
 
-    render_colliders(ctx, stroke) {
+    render_colliders(ctx, type) {
+
+        let center, color;
+        if (type == "external") {
+            center = "collider_center";
+            color = "red";
+        } else {
+            center = "internal_collider_center";
+            color = "green";
+        }
 
         ctx.save();
+
+        ctx.beginPath();
+        ctx.arc(this[center].x, this[center].y, this.collider_radius, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+        ctx.closePath();
+
+        /*
         ctx.beginPath();
         ctx.arc(this.collider_center.x, this.collider_center.y, this.collider_radius, 0, Math.PI * 2);
         ctx.lineWidth = 2;
@@ -240,12 +258,14 @@ class Particle {
         ctx.stroke();
         ctx.closePath();
 
+        
         ctx.beginPath();
         ctx.arc(this.internal_collider_center.x, this.internal_collider_center.y, this.collider_radius, 0, Math.PI * 2);
         ctx.lineWidth = 2;
         ctx.strokeStyle = "green";
         ctx.stroke();
         ctx.closePath();
+        */
 
 
         ctx.restore();
