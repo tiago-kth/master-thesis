@@ -320,11 +320,11 @@ class Blob {
 
     display_reference_circle(ctx) {
 
-        const [xc, yc] = this.center;//this.get_blob_center();
+        const {x, y} = this.center;//this.get_blob_center();
 
         ctx.save();
         ctx.beginPath();
-        ctx.arc(xc, yc, this.R, 0, Math.PI * 2);
+        ctx.arc(x, y, this.R, 0, Math.PI * 2);
         ctx.closePath();
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 2;
