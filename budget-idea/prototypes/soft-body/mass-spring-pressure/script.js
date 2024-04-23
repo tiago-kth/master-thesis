@@ -30,6 +30,8 @@ get_colors();
 
 const ctx = cv.getContext('2d');
 ctx.lineJoin = "round";
+ctx.font = "50px monospace";
+ctx.textBaseline = "top";
 
 const H = 1000;
 const W = 1000;
@@ -357,9 +359,12 @@ function edges_constraints() {
                 p.pos.y = r;
             }
 
+            // only here updates the grid, after the integration and fixing of the outbounds positions
+            p.update_grid(grid);
+
             // limit vmax?
-            //const v = p.vel.mod();
-            //if (v > 20) p.vel.selfMult( 20 / (1.1 * v) );
+            const v = p.vel.mod();
+            if (v > 15) p.vel.selfMult( 15 / v );
 
         })
 
@@ -382,6 +387,12 @@ function render() {
     })
 
     if (params.DISPLAY_COLLISIONS) collision_system.render_collisions(ctx);
+
+    //ctx.save();
+    ctx.font = "50px monospace";
+    ctx.textBaseline = "top";
+    ctx.fillText((20/params.TIMESTEP).toFixed(2), 20, 20);
+    //ctx.restore();
 
 }
 
