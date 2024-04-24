@@ -42,15 +42,20 @@ class Blob {
 
             const next_index = i == this.particles.length - 1 ? 0 : i + 1;
             const next_index_plus = next_index == this.particles.length - 1 ? 0 : next_index + 1;
+            const next_index_plus2 = next_index_plus == this.particles.length - 1 ? 0 : next_index_plus + 1;
 
             // saves neighbors, for the collision system
             const previous_index = i == 0 ? this.particles.length - 1 : i - 1;
             const previous_index_minus = previous_index == 0 ? this.particles.length - 1 : previous_index - 1;
+            const previous_index_minus2 = previous_index_minus == 0 ? this.particles.length - 1 : previous_index_minus - 1;
+
             this.particles[i].immediate_neighbors = [
+                this.particles[previous_index_minus2],
                 this.particles[previous_index_minus], 
                 this.particles[previous_index], 
                 this.particles[next_index],
-                this.particles[next_index_plus]
+                this.particles[next_index_plus],
+                this.particles[next_index_plus2]
             ];
             //
 
@@ -94,6 +99,29 @@ class Blob {
         })
 
         return Math.abs(area / 2);
+
+    }
+
+    get_length() {
+
+        /*
+        let length = 0;
+
+        this.particles.map(d => d.pos).forEach( (pos, i, a) => {
+
+            const inext = i + 1 > this.particles.length - 1 ? 0            : i + 1;
+
+            length += Vec.sub(pos, a[inext]).mod();
+
+        })*/
+
+        const length = this.springs
+            .filter(s => s.type == "perimeter")
+            .map(s => s.get_length())
+            .reduce( (accum_l, current_l) => accum_l + current_l);
+
+
+        return length;
 
     }
 
