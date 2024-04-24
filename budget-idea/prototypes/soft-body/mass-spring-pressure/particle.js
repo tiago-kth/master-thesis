@@ -151,6 +151,12 @@ class Particle {
         this.vel = new_vel;
         this.acc = new_acc;
 
+        const v = new_vel.mod();
+        if (v > 15) {
+            this.vel.selfMult( params.VEL_DAMPING * 15 / v );
+            console.log("limiting");
+        }
+
         // clear Forces
 
         if (params.DISPLAY_RESULTANT_VECTORS) Vec.mult(this.force_acum, params.VECTOR_SIZE).display(ctx, this.pos, "tomato");
