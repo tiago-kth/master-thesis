@@ -232,14 +232,20 @@ function compute_pressure() {
         const rest_area = blob.rest_area;
         const nRT = params.PRESSURE_FACTOR;
 
+        const current_perimeter = blob.get_length();
+
         blob.springs.filter(s => s.type == "perimeter").forEach(spring => {
 
             const current_length = spring.get_length();
 
+            
             //const delta_pressure = current_area - rest_area;
 
             const f = nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
             //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
+            
+            //const delta_pressure = current_area - rest_area;
+            //const f = (nRT / 100000) * delta_pressure * current_length / current_perimeter;
 
             spring.update_normal();
 
