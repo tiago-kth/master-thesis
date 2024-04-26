@@ -119,13 +119,28 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
+const p = 50;
+let gradient = ctx.createLinearGradient(p, p, W - p, H - p);
+gradient.addColorStop(0, "cyan")
+gradient.addColorStop(0.5, "magenta");
+gradient.addColorStop(1, "yellow");
+
+const gradient2 = ctx.createRadialGradient(W/2, H/2, 100, W/2, H/2, W);
+//gradient2.addColorStop(0, "cyan");
+gradient2.addColorStop(1, "black");
+
+//ctx.globalCompositeOperation = "multiply";
+//ctx.globalAlpha = 0.5;
 
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 150, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/2, H/2), 150, gradient, colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
 )
+
+
+
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
@@ -179,6 +194,8 @@ function compute_gravity() {
 
 }
 
+let cont = 0;
+
 function compute_spring_force() {
 
     blobs.forEach(b => {
@@ -206,8 +223,19 @@ function compute_spring_force() {
 
             if (params.DISPLAY_SPRING_VECTORS) {
 
-                Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, "blue" );
-                Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, "blue" );
+                //const teta = f_vector_minus.getAngle();
+
+                //const int = Math.round(255 * teta / (Math.PI * 2));
+
+                cont++;
+                if (cont > 25500) cont = 0;
+
+                const color = `rgba(${255 - cont/100}, 255, ${cont / 100}, 0.4)`;
+
+
+
+                Vec.mult(f_vector_minus, params.VECTOR_SIZE).display(ctx, s.p1.pos, color );
+                Vec.mult(f_vector, params.VECTOR_SIZE).display(ctx, s.p2.pos, color );
 
             }
 
@@ -379,11 +407,73 @@ function edges_constraints() {
 
 }
 
+let teta = 0;
+
+function move_point(i, l) {
+
+    const p = blobs[0].particles[i].pos;
+    const n = Vec.sub(p, new Vec(W/2, H/2)).getUnitDir();
+    blobs[0].particles[i].pos.selfAdd(Vec.mult(n, l));
+
+}
+
+function move_far(i, l) {
+
+    window.setTimeout( () => {
+        move_point(i, l)
+    },
+    200)
+
+    window.setTimeout( () => {
+        move_point(i, l + 100)
+    },
+    400)
+
+    window.setTimeout( () => {
+        move_point(i, l + 200)
+    },
+    600)
+
+    window.setTimeout( () => {
+        move_point(i, l + 300)
+    },
+    800)
+
+}
+
+function move_all() {
+
+    const n = blobs[0].particles.length;
+
+    let i = 0;
+
+    window.setInterval( () => {
+        if (i >= n) return;
+        move_point(i, 100);
+        i++
+    }, 1000);
+
+}
+
 function render() {
+
+    /*
+    teta = (teta + 0.1) % (Math.PI * 2);
+
+    const cx = W/2 * Math.sin(teta);
+    const cy = W/2 * Math.cos(teta);
+
+    const p1 = Vec.add( new Vec(W/2, H/2), new Vec(  cx,  cy ));
+    const p2 = Vec.add( new Vec(W/2, H/2), new Vec( -cx, -cy ));
+
+    console.log(cx, cy, p1, p2)
+
+    gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+    */
 
     blobs.forEach(blob => {
 
-        if (params.DISPLAY_BLOB) blob.display(ctx);
+        if (params.DISPLAY_BLOB) blob.display(ctx, gradient);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
         if (params.DISPLAY_COLLIDERS) blob.display_colliders(ctx);
@@ -411,7 +501,17 @@ function loop(t) {
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
     const dt = 20;
 
-    clearCanvas();
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.fillRect(0, 0, W, H);
+
+    //clearCanvas();
+    /*
+    const color = `rgba(${255 - cont/100}, 255, ${cont / 100}, 0.4)`;
+    gradient2.addColorStop(1, color);
+    gradient2.addColorStop(0.3, "black");
+    ctx.fillStyle = gradient2;
+    ctx.fillRect(0, 0, W, H); 
+    */
 
     highlight_particles_color(false);
 

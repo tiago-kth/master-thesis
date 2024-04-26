@@ -125,11 +125,11 @@ class Blob {
 
     }
 
-    display(ctx) {
+    display(ctx, color) {
 
         ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = this.blob_fill_color;
+        ctx.fillStyle = color ? color : this.blob_fill_color;
         ctx.strokeStyle = this.blob_stroke_color; 
         ctx.lineWidth = 8;
 

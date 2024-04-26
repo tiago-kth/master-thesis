@@ -3,13 +3,13 @@
 }
 
 :root {
-    --bg: #F6E2DF;
-    --txt-color: #333;
+    --bg: black;
+    --txt-color: ghostwhite;
     --generic-stroke-color: #333;
-    --particle-color: #BF2C62;
-    --spring-color: #1E5693;
-    --blob-fill-color: #F2A007;
-    --blob-stroke-color: #D95407;
+    --particle-color: cyan;
+    --spring-color: cyan;
+    --blob-fill-color: magenta;
+    --blob-stroke-color: cyan;
     --grid-color: #555;
     --cell-color: coral;
     --cell-neighbor-color: lightcoral;
@@ -68,6 +68,7 @@ canvas {
 
 button {
 
+    color: var(--txt-color);
     font-family: inherit;
     padding: .25em .5em;
     border-radius: 5px;
