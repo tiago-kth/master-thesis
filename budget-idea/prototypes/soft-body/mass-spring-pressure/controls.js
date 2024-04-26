@@ -33,6 +33,45 @@ cv.addEventListener('mousemove', mousemove);
 cv.addEventListener('mouseup', mouseup);
 cv.addEventListener('mouseout', mouseout);
 
+class Interaction {
+
+    interaction_particle;
+    last_pos_interaction_particle;
+
+    constructor(particles) {
+        
+        this.interaction_particle = new Particle(new Vec(0,0));
+        this.last_pos_interaction_particle = new Vec(0,0);
+
+        
+
+    }
+
+    mousedown(e) {
+
+        particles.push(this.interaction_particle);
+    
+    }
+
+    mousemove(e) {
+
+    }
+
+    mouseup(e) {
+
+        particles.pop();
+
+    }
+
+    mouseout(e) {
+
+        particles.pop();
+
+    }
+
+}
+
+
 const sensitivity = 10;
 let particle_being_dragged;
 
