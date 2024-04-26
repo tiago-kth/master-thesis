@@ -164,7 +164,7 @@ class Particle {
 
     limit_vel(limit) {
 
-        const v = new_vel.mod();
+        const v = this.vel.mod();
         if (v > limit) {
             this.vel.selfMult( params.VEL_DAMPING * limit / v );
         }
