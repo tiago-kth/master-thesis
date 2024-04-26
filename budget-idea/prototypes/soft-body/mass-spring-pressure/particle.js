@@ -151,11 +151,7 @@ class Particle {
         this.vel = new_vel;
         this.acc = new_acc;
 
-        const v = new_vel.mod();
-        if (v > 15) {
-            this.vel.selfMult( params.VEL_DAMPING * 15 / v );
-            console.log("limiting");
-        }
+        this.limit_vel(15);
 
         // clear Forces
 
@@ -163,6 +159,15 @@ class Particle {
 
         this.clear_force_acum();
         this.update_normal();
+
+    }
+
+    limit_vel(limit) {
+
+        const v = new_vel.mod();
+        if (v > limit) {
+            this.vel.selfMult( params.VEL_DAMPING * limit / v );
+        }
 
     }
 
