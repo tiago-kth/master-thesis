@@ -121,7 +121,7 @@ const center = new Vec(W/2, H/2);
 
 
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 70, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(2*W/3, H/4), 100, colors["blob-fill"], colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
@@ -232,6 +232,12 @@ function compute_pressure() {
         const rest_area = blob.rest_area;
         const nRT = params.PRESSURE_FACTOR;
 
+        const delta_pressure = current_area - rest_area;
+
+        const extra_factor = delta_pressure < 0 ? Math.abs(delta_pressure) : 0;
+        const m = (1 + extra_factor / rest_area);
+        //console.log(m);
+
         const current_perimeter = blob.get_length();
 
         blob.springs
@@ -240,10 +246,7 @@ function compute_pressure() {
 
             const current_length = spring.get_length();
 
-            
-            //const delta_pressure = current_area - rest_area;
-
-            const f = nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
+            const f = m * nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
             //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
             
             //const delta_pressure = current_area - rest_area;
@@ -371,8 +374,7 @@ function edges_constraints() {
             p.update_grid(grid);
 
             // limit vmax?
-            const v = p.vel.mod();
-            if (v > 15) p.vel.selfMult( 15 / v );
+            p.limit_vel(15);
 
         })
 
