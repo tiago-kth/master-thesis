@@ -285,6 +285,16 @@ class Particle {
     }
 }
 
+class InteractionParticle extends Particle {
+
+    type = "interaction";
+
+    constructor(pos) {
+        super(pos, false);
+    }
+
+}
+
 class Force {
 
     static updateForce(particle, t) {

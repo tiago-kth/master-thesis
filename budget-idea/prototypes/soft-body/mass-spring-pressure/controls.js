@@ -63,12 +63,16 @@ class Interaction {
 
         this.started = true;
 
-        self.interaction_particle = new Particle(new Vec(x,y));
+        self.interaction_particle = new InteractionParticle(new Vec(x,y));
         self.interaction_particle.r = 50;
         self.interaction_particle.collider_radius = 50;
         self.interaction_particle.collider_center = new Vec(x,y);
         self.interaction_particle.internal_collider_center = new Vec(x,y);
         self.last_pos_interaction_particle = new Vec(0,0);
+
+        // remove particle from grid. Should be a better way.
+        //const grid_cell = grid.get_index_from_px(x, y);
+        //grid.cells[grid_cell].particles.delete(self.interaction_particle);
 
         //particles.push(this.interaction_particle);
     
@@ -86,17 +90,20 @@ class Interaction {
         self.interaction_particle.collider_center = new Vec(x,y);
         self.interaction_particle.internal_collider_center = new Vec(x,y);
 
+        //const grid_cell = grid.get_index_from_px(x, y);
+
         self.interaction_particle.update_grid(grid);
         //console.log(self.interaction_particle.pos, self.interaction_particle.grid_cell);
-        const cell = this.interaction_particle.grid_cell;
-        const group_of_particles = grid.retrieve_neighboring_particles(cell);
-        console.log(cell, group_of_particles)
+        const grid_cell = this.interaction_particle.grid_cell;
+        const group_of_particles = grid.retrieve_neighboring_particles(grid_cell);
+        //console.log(grid_cell, group_of_particles)
 
         group_of_particles.forEach(p => {
 
             if (p != self.interaction_particle) {
 
                 const collision = new PottentialCollision(self.interaction_particle, p, "interaction");
+                //console.log(collision);
 
             }
         })
@@ -119,6 +126,7 @@ class Interaction {
     }
 
 }
+
 const interaction = new Interaction(cv, all_particles);
 
 const sensitivity = 10;

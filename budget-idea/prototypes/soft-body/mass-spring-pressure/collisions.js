@@ -150,8 +150,6 @@ class PottentialCollision {
 
     resolve_collision() {
 
-        //console.log("RESOLVING COLLISION");
-
         const delta_velocity = Vec.sub(
             this.p1.vel,
             this.p2.vel
@@ -176,9 +174,9 @@ class PottentialCollision {
         const v1_delta = Vec.mult(this.contact_normal,      delta_separating_velocity * m2 / m_total);
         const v2_delta = Vec.mult(this.contact_normal, -1 * delta_separating_velocity * m1 / m_total);
 
-        // assuming that, when there is an interaction, p1 is always the interaction particle.
-        if (this.type != "interaction") this.p1.vel.selfAdd(v1_delta);
-        this.p2.vel.selfAdd(v2_delta);
+        // we don't want to resolve collision for the interaction particle
+        if (this.p1.type != "interaction") this.p1.vel.selfAdd(v1_delta);
+        if (this.p2.type != "interaction") this.p2.vel.selfAdd(v2_delta);
 
         // collision debug
 
@@ -217,9 +215,9 @@ class PottentialCollision {
         const pos1_delta = Vec.mult(this.contact_normal,      this.penetration * m2 / m_total);
         const pos2_delta = Vec.mult(this.contact_normal, -1 * this.penetration * m1 / m_total);
 
-        // assuming that, when there is an interaction, p1 is always the interaction particle.
-        if (this.type != "interaction") this.p1.pos.selfAdd(pos1_delta);
-        this.p2.pos.selfAdd(pos2_delta);
+        // we don't want to resolve penetration for the interaction particle
+        if (this.p1.type != "interaction") this.p1.pos.selfAdd(pos1_delta);
+        if (this.p2.type != "interaction") this.p2.pos.selfAdd(pos2_delta);
 
     }
 
