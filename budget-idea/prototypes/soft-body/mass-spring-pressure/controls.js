@@ -64,11 +64,6 @@ class Interaction {
         this.started = true;
 
         self.interaction_particle = new InteractionParticle(new Vec(x,y));
-        self.interaction_particle.r = 50;
-        self.interaction_particle.collider_radius = 50;
-        self.interaction_particle.collider_center = new Vec(x,y);
-        self.interaction_particle.internal_collider_center = new Vec(x,y);
-        self.last_pos_interaction_particle = new Vec(0,0);
 
         // remove particle from grid. Should be a better way.
         //const grid_cell = grid.get_index_from_px(x, y);

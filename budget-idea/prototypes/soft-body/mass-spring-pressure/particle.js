@@ -291,6 +291,12 @@ class InteractionParticle extends Particle {
 
     constructor(pos) {
         super(pos, false);
+
+        this.r = 50;
+        this.collider_radius = 50;
+        this.collider_center = new Vec(pos.x, pos.y);
+        this.internal_collider_center = new Vec(pos.x, pos.y);
+        this.last_pos_interaction_particle = new Vec(0,0);
     }
 
 }
