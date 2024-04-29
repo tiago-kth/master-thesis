@@ -27,50 +27,99 @@ function stop_animation() {
 
 }
 
+/*
 let dragging = false;
 cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
 cv.addEventListener('mouseup', mouseup);
 cv.addEventListener('mouseout', mouseout);
+*/
 
 class Interaction {
 
     interaction_particle;
     last_pos_interaction_particle;
 
-    constructor(particles) {
-        
-        this.interaction_particle = new Particle(new Vec(0,0));
-        this.last_pos_interaction_particle = new Vec(0,0);
+    started;
 
-        
+    constructor(cv, particles) {
+
+        //this.particles = particles;
+        this.cv = cv;
+        this.started = false;
+
+        cv.addEventListener('mousedown', e => this.mousedown(e, this));
+        cv.addEventListener('mousemove', e => this.mousemove(e, this));
+        cv.addEventListener('mouseup', e => this.mouseup(e, this));
+        cv.addEventListener('mouseout', e => this.mouseout(e, this));
+
 
     }
 
-    mousedown(e) {
+    mousedown(e, self) {
 
-        particles.push(this.interaction_particle);
+        const x = e.offsetX * mouseFactorX;
+        const y = e.offsetY * mouseFactorY;
+
+        this.started = true;
+
+        self.interaction_particle = new Particle(new Vec(x,y));
+        self.interaction_particle.r = 50;
+        self.interaction_particle.collider_radius = 50;
+        self.interaction_particle.collider_center = new Vec(x,y);
+        self.interaction_particle.internal_collider_center = new Vec(x,y);
+        self.last_pos_interaction_particle = new Vec(0,0);
+
+        //particles.push(this.interaction_particle);
     
     }
 
-    mousemove(e) {
+    mousemove(e, self) {
+
+        if (!self.started) return;
+
+        const x = e.offsetX * mouseFactorX;
+        const y = e.offsetY * mouseFactorY;
+
+        //console.log(x, y, self.interaction_particle.pos);
+        self.interaction_particle.pos = new Vec(x, y);
+        self.interaction_particle.collider_center = new Vec(x,y);
+        self.interaction_particle.internal_collider_center = new Vec(x,y);
+
+        self.interaction_particle.update_grid(grid);
+        //console.log(self.interaction_particle.pos, self.interaction_particle.grid_cell);
+        const cell = this.interaction_particle.grid_cell;
+        const group_of_particles = grid.retrieve_neighboring_particles(cell);
+        console.log(cell, group_of_particles)
+
+        group_of_particles.forEach(p => {
+
+            if (p != self.interaction_particle) {
+
+                const collision = new PottentialCollision(self.interaction_particle, p, "interaction");
+
+            }
+        })
 
     }
 
     mouseup(e) {
 
-        particles.pop();
+        //particles.pop();
 
     }
 
-    mouseout(e) {
+    mouseout(e, self) {
 
-        particles.pop();
+        self.started = false;
+        self.interaction_particle = null;
+
+        //particles.pop();
 
     }
 
 }
-
+const interaction = new Interaction(cv, all_particles);
 
 const sensitivity = 10;
 let particle_being_dragged;

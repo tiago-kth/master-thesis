@@ -54,7 +54,7 @@ class Particle {
         grid.cells[index].particles.add(this);
 
         this.blob = blob;
-        this.blob_radius = blob.R;
+        this.blob_radius = blob ? blob.R : false;
 
         this.springs = [];
 
@@ -99,7 +99,7 @@ class Particle {
 
         //console.log(index, old_index);
 
-        if ( index != old_index ) {
+        if ( index != old_index ) { // & grid.cells[index].particles ) {
 
             grid.cells[old_index].particles.delete(this);
             grid.cells[index].particles.add(this);

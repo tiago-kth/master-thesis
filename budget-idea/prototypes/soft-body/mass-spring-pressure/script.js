@@ -404,6 +404,8 @@ function render() {
     ctx.fillText((20/params.TIMESTEP).toFixed(2), 20, 20);
     //ctx.restore();
 
+    if (interaction.started) interaction.interaction_particle.render(ctx, "gold", "gold");
+
 }
 
 let count = 0;

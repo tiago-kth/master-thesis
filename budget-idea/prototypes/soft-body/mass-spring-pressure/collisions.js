@@ -113,6 +113,7 @@ class PottentialCollision {
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 
         let center = type == "internal" ? "internal_collider_center" : "collider_center";
+        //if (type == "interaction") console.log(center, p1[center], p2[center]);
         //console.log(type);
         const distance_v = Vec.sub(p1[center], p2[center]);//p1.pos, p2.pos);
         const distance = distance_v.mod();
@@ -175,7 +176,8 @@ class PottentialCollision {
         const v1_delta = Vec.mult(this.contact_normal,      delta_separating_velocity * m2 / m_total);
         const v2_delta = Vec.mult(this.contact_normal, -1 * delta_separating_velocity * m1 / m_total);
 
-        this.p1.vel.selfAdd(v1_delta);
+        // assuming that, when there is an interaction, p1 is always the interaction particle.
+        if (this.type != "interaction") this.p1.vel.selfAdd(v1_delta);
         this.p2.vel.selfAdd(v2_delta);
 
         // collision debug
@@ -215,7 +217,8 @@ class PottentialCollision {
         const pos1_delta = Vec.mult(this.contact_normal,      this.penetration * m2 / m_total);
         const pos2_delta = Vec.mult(this.contact_normal, -1 * this.penetration * m1 / m_total);
 
-        this.p1.pos.selfAdd(pos1_delta);
+        // assuming that, when there is an interaction, p1 is always the interaction particle.
+        if (this.type != "interaction") this.p1.pos.selfAdd(pos1_delta);
         this.p2.pos.selfAdd(pos2_delta);
 
     }
