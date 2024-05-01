@@ -202,6 +202,8 @@ Agora tem um problema de mover muito rápido a partícula de interação. Mas n�
 
 Desafio agora é posicionamento inicial dos blobs.
 
+(ver print!) O que são essas possíveis colisões externas??
+
 
 
 
