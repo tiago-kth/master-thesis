@@ -80,10 +80,18 @@ class Interaction {
         const x = e.offsetX * mouseFactorX;
         const y = e.offsetY * mouseFactorY;
 
+        const new_pos = new Vec(x, y);
+
+        //self.interaction_particle.vel = Vec.mult(
+        //    Vec.sub( new_pos, self.interaction_particle.last_pos_interaction_particle),
+        //    20/params.TIMESTEP
+        //);
+
+        self.interaction_particle.last_pos_interaction_particle = new_pos;
         //console.log(x, y, self.interaction_particle.pos);
-        self.interaction_particle.pos = new Vec(x, y);
-        self.interaction_particle.collider_center = new Vec(x,y);
-        self.interaction_particle.internal_collider_center = new Vec(x,y);
+        self.interaction_particle.pos = new_pos;
+        self.interaction_particle.collider_center = new_pos;
+        self.interaction_particle.internal_collider_center = new_pos;
 
         //const grid_cell = grid.get_index_from_px(x, y);
 
