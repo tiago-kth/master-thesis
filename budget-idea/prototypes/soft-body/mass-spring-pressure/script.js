@@ -205,6 +205,7 @@ function compute_spring_force() {
 
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
+            if (isNaN(f_vector.x)) console.log(s_direction, s);
 
             if (params.DISPLAY_SPRING_VECTORS) {
 
