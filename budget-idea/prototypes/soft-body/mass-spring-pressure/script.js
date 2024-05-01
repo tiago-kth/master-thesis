@@ -260,6 +260,8 @@ function compute_pressure() {
 
             const f_vector = Vec.mult( n, f );
 
+            if (isNaN(f_vector.x)) console.log(spring, n, f);
+
             spring.p1.add_force( f_vector );
             spring.p2.add_force( f_vector );
 

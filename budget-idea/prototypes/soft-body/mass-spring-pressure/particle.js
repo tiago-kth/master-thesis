@@ -140,8 +140,6 @@ class Particle {
         // new acceleration
         const new_acc = Vec.mult(this.force_acum, 1 / params.MASS);
 
-        if ( isNaN(new_acc.x) & !isNaN(this.acc.x) ) console.log(this, this.force_acum);
-
         //console.log(this.force_acum, new_acc);
 
         // new velocity
