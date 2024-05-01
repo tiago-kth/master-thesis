@@ -186,3 +186,12 @@ To-do:
 * Ver na Biblioteca acesso ao Dagens Nyheter.
 
 
+2024-04-29
+
+A interação até que está funcionando de forma interessante, pq se vc move muito rápido a "partícula" de interação entra no blob e começa a puxá-lo.
+
+Implementar uma forma de escolher o tipo de interação?
+
+Resolver esse problema do grid. Talvez criar mais células fantasma além dos limites.
+
+
