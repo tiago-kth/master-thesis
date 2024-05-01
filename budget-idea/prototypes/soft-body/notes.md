@@ -200,9 +200,11 @@ Resolvido isso "Resolver esse problema do grid. Talvez criar mais células fanta
 
 Agora tem um problema de mover muito rápido a partícula de interação. Mas não trava a simulação.
 
-Desafio agora é posicionamento inicial dos blobs.
-
 (ver print!) O que são essas possíveis colisões externas??
+
+Situação satisfatória. Agora é fazer uma aplicação de verdade. Principalmente começando com isso:
+
+*Desafio agora é posicionamento inicial dos blobs.*
 
 
 
