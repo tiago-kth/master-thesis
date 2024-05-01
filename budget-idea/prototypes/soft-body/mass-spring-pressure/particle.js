@@ -94,18 +94,30 @@ class Particle {
 
     update_grid(grid) {
 
-        const index = grid.get_index_from_px(this.pos.x, this.pos.y);
-        const old_index = this.grid_cell;
+        try {
 
-        //console.log(index, old_index);
-
-        if ( index != old_index ) { // & grid.cells[index].particles ) {
-
-            grid.cells[old_index].particles.delete(this);
-            grid.cells[index].particles.add(this);
-            this.grid_cell = index;
+            const index = grid.get_index_from_px(this.pos.x, this.pos.y);
+            const old_index = this.grid_cell;
+    
+            //console.log(index, old_index);
+    
+            if ( index != old_index ) { // & grid.cells[index].particles ) {
+    
+                grid.cells[old_index].particles.delete(this);
+                grid.cells[index].particles.add(this);
+                this.grid_cell = index;
+    
+            }
 
         }
+
+        catch(error) {
+
+            console.log(error, this);
+            throw new Error(error);
+
+        }
+
 
     }
 
@@ -122,10 +134,13 @@ class Particle {
 
         // new position
         let new_pos = Vec.add(this.pos, Vec.mult(this.vel, dt));
+        //if (isNaN(new_pos.x)) console.log(this);
         new_pos = Vec.add(new_pos, Vec.mult(this.acc, dt * dt * 0.5));
 
         // new acceleration
         const new_acc = Vec.mult(this.force_acum, 1 / params.MASS);
+
+        if ( isNaN(new_acc.x) & !isNaN(this.acc.x) ) console.log(this, this.force_acum);
 
         //console.log(this.force_acum, new_acc);
 

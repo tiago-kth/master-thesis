@@ -33,8 +33,10 @@ ctx.lineJoin = "round";
 ctx.font = "50px monospace";
 ctx.textBaseline = "top";
 
-const H = 1000;
-const W = 1000;
+const gap = 100;
+const H = 1000 + 2 * gap;
+const W = 1000 + 2 * gap;
+
 
 const N_LEFT = new Vec(-1,0);
 const N_RIGHT = new Vec(1,0);
@@ -332,20 +334,20 @@ function edges_constraints() {
 
             // horizontal borders
 
-            if ( (pos.x + r) > W ) {
+            if ( (pos.x + r) > W - gap ) {
                 //p.add_force(Vec.mult(N_RIGHT, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.x = W - r;
+                p.pos.x = W - gap - r;
             }
-            else if ( (pos.x - r) < 0 ) {
+            else if ( (pos.x - r) < gap ) {
                 //p.add_force(Vec.mult(N_LEFT, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.x = r;
+                p.pos.x = r + gap;
             }
 
             // vertical borders
 
-            if ( (pos.y + r) >= H ) {
+            if ( (pos.y + r) > H - gap ) {
                 const g_ = new Vec(0, -1 * params.GRAVITY);
                 p.add_force(Vec.mult( g_, params.MASS));
                 const v_caused_by_one_step_of_acc = Math.abs(Vec.dot( p.acc, N_BOTTOM) * 1)//20 / params.TIMESTEP);
@@ -362,12 +364,12 @@ function edges_constraints() {
 
                 }
                 
-                p.pos.y = H - r;
+                p.pos.y = H - gap - r;
             }
-            else if ( (pos.y - r) < 0 ) {
+            else if ( (pos.y - r) < gap ) {
                 //p.add_force(Vec.mult(N_BOTTOM, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.y = r;
+                p.pos.y = r + gap;
             }
 
             // only here updates the grid, after the integration and fixing of the outbounds positions
@@ -384,6 +386,9 @@ function edges_constraints() {
 }
 
 function render() {
+
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(gap, gap, W - 2 * gap, H - 2 * gap);
 
     blobs.forEach(blob => {
 
