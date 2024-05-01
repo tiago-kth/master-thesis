@@ -55,7 +55,7 @@ function place_blobs() {
 
         window.setTimeout( () => {
 
-            const new_blob = new Blob(new Vec(W/2 + (Math.random() - 0.5) * W/3, b.r + 50), b.r, colors_blobs[i], colors["generic-stroke"]);
+            const new_blob = new Blob(new Vec(gap + W/2 + (Math.random() - 0.5) * W/3, gap + b.r + 50), b.r, colors_blobs[i], colors["generic-stroke"]);
             blobs.push(new_blob);
             all_particles.push(...new_blob.particles);
     
