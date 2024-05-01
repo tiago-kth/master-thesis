@@ -302,14 +302,42 @@ class InteractionParticle extends Particle {
 
     type = "interaction";
 
-    constructor(pos) {
+    theta;
+    render_extra;
+
+    last_pos;
+
+    constructor(pos, r) {
         super(pos, false);
 
-        this.r = 50;
-        this.collider_radius = 50;
+        this.r = r;
+        this.collider_radius = r;
         this.collider_center = new Vec(pos.x, pos.y);
         this.internal_collider_center = new Vec(pos.x, pos.y);
-        this.last_pos_interaction_particle = new Vec(0,0);
+        this.last_pos = new Vec(0,0);
+        this.theta = 0;
+        this.render_extra = false;
+    }
+
+    render(ctx, stroke, fill) {
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = stroke ? stroke : "gray"
+        ctx.fillStyle = fill? fill : "transparent";//this.color_particle;
+        ctx.stroke();
+        //ctx.fill();
+        if (this.render_extra) {
+            ctx.beginPath();
+            ctx.arc(this.pos.x, this.pos.y, this.r, this.theta - Math.PI / 3, this.theta + Math.PI / 3);
+            ctx.lineWidth = 6;
+            ctx.stroke();
+        }
+
+        ctx.restore();
+
     }
 
 }

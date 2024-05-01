@@ -38,7 +38,8 @@ cv.addEventListener('mouseout', mouseout);
 class Interaction {
 
     interaction_particle;
-    last_pos_interaction_particle;
+
+    update_last_pos;
 
     started;
 
@@ -47,6 +48,7 @@ class Interaction {
         //this.particles = particles;
         this.cv = cv;
         this.started = false;
+        this.update_last_pos = false;
 
         cv.addEventListener('mousedown', e => this.mousedown(e, this));
         cv.addEventListener('mousemove', e => this.mousemove(e, this));
@@ -63,7 +65,7 @@ class Interaction {
 
         this.started = true;
 
-        self.interaction_particle = new InteractionParticle(new Vec(x,y));
+        self.interaction_particle = new InteractionParticle(new Vec(x,y), 80);
 
         // remove particle from grid. Should be a better way.
         //const grid_cell = grid.get_index_from_px(x, y);
@@ -87,8 +89,20 @@ class Interaction {
         //    20/params.TIMESTEP
         //);
 
-        self.interaction_particle.last_pos_interaction_particle = new_pos;
-        //console.log(x, y, self.interaction_particle.pos);
+        if (this.update_last_pos) {
+            self.interaction_particle.last_pos = new_pos;
+            self.interaction_particle.render_extra = false;
+        } else {
+            const direction = Vec.sub(
+                    new_pos,
+                    self.interaction_particle.last_pos
+                ).getUnitDir();
+    
+            self.interaction_particle.theta = direction.getAngle();
+            self.interaction_particle.render_extra = true;
+        }
+        this.update_last_pos = !this.update_last_pos;
+
         self.interaction_particle.pos = new_pos;
         self.interaction_particle.collider_center = new_pos;
         self.interaction_particle.internal_collider_center = new_pos;

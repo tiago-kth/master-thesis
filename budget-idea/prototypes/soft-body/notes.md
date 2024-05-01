@@ -194,4 +194,14 @@ Implementar uma forma de escolher o tipo de interação?
 
 Resolver esse problema do grid. Talvez criar mais células fantasma além dos limites.
 
+2024-05-01
+
+Resolvido isso "Resolver esse problema do grid. Talvez criar mais células fantasma além dos limites.". O problema eram as springs que ficam com tamanho igual a zero.
+
+Agora tem um problema de mover muito rápido a partícula de interação. Mas não trava a simulação.
+
+Desafio agora é posicionamento inicial dos blobs.
+
+
+
 
