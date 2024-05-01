@@ -32,6 +32,8 @@ class Spring {
             -1 * ( this.p1.pos.x - this.p2.pos.x ) / l
         )
 
+        if (isNaN(this.normal.x)) console.log(l, this);
+
     }
 
     get_normal() {
