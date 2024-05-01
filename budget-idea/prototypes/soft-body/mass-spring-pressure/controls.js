@@ -89,6 +89,7 @@ class Interaction {
         //    20/params.TIMESTEP
         //);
 
+        /* trying to get the direction of the movement;
         if (this.update_last_pos) {
             self.interaction_particle.last_pos = new_pos;
             self.interaction_particle.render_extra = false;
@@ -102,6 +103,7 @@ class Interaction {
             self.interaction_particle.render_extra = true;
         }
         this.update_last_pos = !this.update_last_pos;
+        */
 
         self.interaction_particle.pos = new_pos;
         self.interaction_particle.collider_center = new_pos;

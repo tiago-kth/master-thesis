@@ -302,9 +302,6 @@ class InteractionParticle extends Particle {
 
     type = "interaction";
 
-    theta;
-    render_extra;
-
     last_pos;
 
     constructor(pos, r) {
@@ -315,8 +312,7 @@ class InteractionParticle extends Particle {
         this.collider_center = new Vec(pos.x, pos.y);
         this.internal_collider_center = new Vec(pos.x, pos.y);
         this.last_pos = new Vec(0,0);
-        this.theta = 0;
-        this.render_extra = false;
+
     }
 
     render(ctx, stroke, fill) {
@@ -325,16 +321,29 @@ class InteractionParticle extends Particle {
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.lineWidth = 1;
-        ctx.strokeStyle = stroke ? stroke : "gray"
+        ctx.strokeStyle = stroke ? stroke : "lightgray"
         ctx.fillStyle = fill? fill : "transparent";//this.color_particle;
         ctx.stroke();
         //ctx.fill();
-        if (this.render_extra) {
-            ctx.beginPath();
-            ctx.arc(this.pos.x, this.pos.y, this.r, this.theta - Math.PI / 3, this.theta + Math.PI / 3);
-            ctx.lineWidth = 6;
-            ctx.stroke();
-        }
+
+        collision_system.current_collisions_registry.forEach(collision => {
+
+            if (collision.type == "interaction") {
+
+                const theta = collision.contact_normal.getAngle() + Math.PI;
+
+                //console.log(theta, collision.penetration);
+
+                ctx.beginPath();
+                ctx.arc(this.pos.x, this.pos.y, this.r + Math.random() * 5 - 5, theta - Math.PI / 6, theta + Math.PI / 6);
+                ctx.lineWidth = 4;
+                const shade = Math.round(Math.random() * 100);
+                ctx.strokeStyle = `rgb(${shade}, ${shade}, ${shade})`;
+                ctx.stroke();
+
+            }
+
+        });
 
         ctx.restore();
 
