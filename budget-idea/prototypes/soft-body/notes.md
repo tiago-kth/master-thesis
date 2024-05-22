@@ -204,8 +204,15 @@ Agora tem um problema de mover muito rápido a partícula de interação. Mas n�
 
 Situação satisfatória. Agora é fazer uma aplicação de verdade. Principalmente começando com isso:
 
-*Desafio agora é posicionamento inicial dos blobs.*
+*Desafio agora é posicionamento inicial dos blobs.* >> usar um bubble chart?
 
+2024-05-22
 
+How to detect if a point is inside a shape?
+
+Check if there are other points in the grid cell, then get the closest one and select its blob.
+
+Papers:
+- AHeuristicApproachtoValue-DrivenEvaluationofVisualizations
 
 
