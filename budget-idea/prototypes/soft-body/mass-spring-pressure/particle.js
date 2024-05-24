@@ -164,7 +164,7 @@ class Particle {
         this.vel = new_vel;
         this.acc = new_acc;
 
-        this.limit_vel(15);
+        this.limit_vel();
 
         // clear Forces
 
@@ -175,11 +175,15 @@ class Particle {
 
     }
 
-    limit_vel(limit) {
+    limit_vel() {
 
         const v = this.vel.mod();
-        if (v > limit) {
-            this.vel.selfMult( params.VEL_DAMPING * limit / v );
+        if (v > limits.max) {
+            this.vel.selfMult( params.VEL_DAMPING * limits.max / v );
+        }
+
+        if (v < limits.min) {
+            this.vel.selfMult( 0 );
         }
 
     }

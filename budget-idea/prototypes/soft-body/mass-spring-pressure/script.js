@@ -37,6 +37,10 @@ const gap = 100;
 const H = 1000 + 2 * gap;
 const W = 1000 + 2 * gap;
 
+const limits = {
+    min : 0.01,
+    max : 15
+}
 
 const N_LEFT = new Vec(-1,0);
 const N_RIGHT = new Vec(1,0);
