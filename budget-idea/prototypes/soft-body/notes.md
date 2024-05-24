@@ -216,3 +216,19 @@ Papers:
 - AHeuristicApproachtoValue-DrivenEvaluationofVisualizations
 
 
+Parameters space Analysis
+
+actual size at rest vs expected size
+k x nRT vs R - r
+
+stability analysis
+after tantas interacoes
+k x kd vs vel_media apos tanto de tempo
+
+kd x sd vs vel_media
+
+kd x time_step
+
+all_particles.map(p => p.vel.mod()).reduce( (a,b) => a + b ) / all_particles.length
+
+
