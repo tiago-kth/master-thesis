@@ -12,12 +12,19 @@ class CollisionSystem {
 
         this.current_collisions_registry.clear();
         this.detect_collisions(particles);
-        if (params.DISPLAY_COLLIDERS) this.render_colliders();
+        //if (params.DISPLAY_COLLIDERS) this.render_colliders();
         // resolve penetrations
         // resolve collisions
         this.resolve_collisions();
         this.resolve_penetrations();
 
+    }
+
+    detect_internal_collisions(blob) {
+        blob.particles.forEach(this_particle => {
+
+
+        })
     }
 
     detect_collisions(particles) {
@@ -32,13 +39,17 @@ class CollisionSystem {
 
                 group_of_particles.forEach(other_particle => {
 
-                    if ( other_particle != particle & other_particle != particle.immediate_neighbors[0] & other_particle != particle.immediate_neighbors[1] ) {
+                    // external collisions
+
+                    if ( other_particle != particle & particle.immediate_neighbors.indexOf(other_particle) < 0 ) {
     
-                        const collision = new PottentialCollision(particle, other_particle);
+                        const type = (particle.blob != other_particle.blob) ? "external" : "internal";
+
+                        const collision = new PottentialCollision(particle, other_particle, type);
     
                         //console.log(collision);
     
-                    }
+                    }   
     
                 })
 
@@ -60,10 +71,19 @@ class CollisionSystem {
 
     }
 
-    render_colliders() {
+    render_collisions() {
 
         this.current_collisions_registry.forEach(collision => {
-            collision.p1.render(ctx, "red", "transparent"); collision.p2.render(ctx, "black", "transparent")})
+
+            //collision.p1.render(ctx, "red", "transparent"); collision.p2.render(ctx, "black", "transparent")
+            const type = collision.type;
+
+            collision.p1.render_colliders(ctx, type); 
+            collision.p2.render_colliders(ctx, type);
+
+        
+        })
+
 
     }
 
@@ -74,25 +94,33 @@ class PottentialCollision {
     p1;
     p2;
 
+    type;
+
     contact_normal;
 
     penetration;
 
     restitution_coefficient;
 
-    constructor(p1, p2) {
+    constructor(p1, p2, type = "external") {
 
         this.p1 = p1;
         this.p2 = p2;
+        this.type = type;
+
+        // talvez colocar um "type" no constructor? Para saber qual collider usar?
 
         this.restitution_coefficient = params.RESTITUTION_COEFFICIENT;
 
-        const distance_v = Vec.sub(p1.pos, p2.pos);
+        let center = type == "internal" ? "internal_collider_center" : "collider_center";
+        //if (type == "interaction") console.log(center, p1[center], p2[center]);
+        //console.log(type);
+        const distance_v = Vec.sub(p1[center], p2[center]);//p1.pos, p2.pos);
         const distance = distance_v.mod();
 
         this.contact_normal = distance_v.getUnitDir();
 
-        const min_distance = p1.r + p2.r;
+        const min_distance = p1.collider_radius + p2.collider_radius;//p1.r + p2.r;
 
         this.penetration = min_distance - distance;
 
@@ -122,8 +150,6 @@ class PottentialCollision {
 
     resolve_collision() {
 
-        //console.log("RESOLVING COLLISION");
-
         const delta_velocity = Vec.sub(
             this.p1.vel,
             this.p2.vel
@@ -148,8 +174,9 @@ class PottentialCollision {
         const v1_delta = Vec.mult(this.contact_normal,      delta_separating_velocity * m2 / m_total);
         const v2_delta = Vec.mult(this.contact_normal, -1 * delta_separating_velocity * m1 / m_total);
 
-        this.p1.vel.selfAdd(v1_delta);
-        this.p2.vel.selfAdd(v2_delta);
+        // we don't want to resolve collision for the interaction particle
+        if (this.p1.type != "interaction") this.p1.vel.selfAdd(v1_delta);
+        if (this.p2.type != "interaction") this.p2.vel.selfAdd(v2_delta);
 
         // collision debug
 
@@ -188,8 +215,9 @@ class PottentialCollision {
         const pos1_delta = Vec.mult(this.contact_normal,      this.penetration * m2 / m_total);
         const pos2_delta = Vec.mult(this.contact_normal, -1 * this.penetration * m1 / m_total);
 
-        this.p1.pos.selfAdd(pos1_delta);
-        this.p2.pos.selfAdd(pos2_delta);
+        // we don't want to resolve penetration for the interaction particle
+        if (this.p1.type != "interaction") this.p1.pos.selfAdd(pos1_delta);
+        if (this.p2.type != "interaction") this.p2.pos.selfAdd(pos2_delta);
 
     }
 

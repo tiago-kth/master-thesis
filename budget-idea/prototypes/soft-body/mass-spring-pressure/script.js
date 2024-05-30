@@ -30,9 +30,17 @@ get_colors();
 
 const ctx = cv.getContext('2d');
 ctx.lineJoin = "round";
+ctx.font = "50px monospace";
+ctx.textBaseline = "top";
 
-const H = 1000;
-const W = 1000;
+const gap = 100;
+const H = 1000 + 2 * gap;
+const W = 1000 + 2 * gap;
+
+const limits = {
+    min : 0.01,
+    max : 15
+}
 
 const N_LEFT = new Vec(-1,0);
 const N_RIGHT = new Vec(1,0);
@@ -53,6 +61,7 @@ const params = {
     "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 12,
+    "COLLIDERS_RADIUS" : 30,
     "DISPLAY_VECTORS": false,
     'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
@@ -63,6 +72,7 @@ const params = {
     "DISPLAY_BLOB_CIRCLE": false,
     "DISPLAY_GRID": false,
     "DISPLAY_COLLIDERS": false,
+    "DISPLAY_COLLISIONS": false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
     "_x": false,
@@ -71,7 +81,7 @@ const params = {
 
 // grid setup //
 
-const grid = new Grid(W, H, 50);
+const grid = new Grid(W, H, 100);
 
 let particles_highlighted = []; // used for debugging
 
@@ -115,12 +125,13 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
+/*
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 60, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(2*W/3, H/4), 100, colors["blob-fill"], colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
-)
+)*/
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
@@ -198,6 +209,7 @@ function compute_spring_force() {
 
             const f_vector = Vec.mult(s_direction, f);
             const f_vector_minus = Vec.mult(f_vector, -1);
+            if (isNaN(f_vector.x)) console.log(s_direction, s);
 
             if (params.DISPLAY_SPRING_VECTORS) {
 
@@ -227,17 +239,33 @@ function compute_pressure() {
         const rest_area = blob.rest_area;
         const nRT = params.PRESSURE_FACTOR;
 
-        blob.springs.forEach(spring => {
+        const delta_pressure = current_area - rest_area;
+
+        const extra_factor = delta_pressure < 0 ? Math.abs(delta_pressure) : 0;
+        const m = (1 + extra_factor / rest_area);
+        //console.log(m);
+
+        const current_perimeter = blob.get_length();
+
+        blob.springs
+          //.filter(s => s.type == "perimeter")
+          .forEach(spring => {
 
             const current_length = spring.get_length();
 
-            const f = nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
+            const f = m * nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
+            //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
+            
+            //const delta_pressure = current_area - rest_area;
+            //const f = (nRT / 100000) * delta_pressure * current_length / current_perimeter;
 
             spring.update_normal();
 
             const n = spring.get_normal();
 
             const f_vector = Vec.mult( n, f );
+
+            if (isNaN(f_vector.x)) console.log(spring, n, f);
 
             spring.p1.add_force( f_vector );
             spring.p2.add_force( f_vector );
@@ -291,7 +319,8 @@ function accumulate_forces() {
 function integrate(dt) {
 
     blobs.forEach(blob => {
-        blob.particles.forEach(p => p.integrate(dt));
+        blob.particles.forEach(p => p.time_step(dt));//p.integrate(dt));
+        blob.update_blob_center();
     })
 
 }
@@ -312,20 +341,20 @@ function edges_constraints() {
 
             // horizontal borders
 
-            if ( (pos.x + r) > W ) {
+            if ( (pos.x + r) > W - gap ) {
                 //p.add_force(Vec.mult(N_RIGHT, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.x = W - r;
+                p.pos.x = W - gap - r;
             }
-            else if ( (pos.x - r) < 0 ) {
+            else if ( (pos.x - r) < gap ) {
                 //p.add_force(Vec.mult(N_LEFT, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.x = r;
+                p.pos.x = r + gap;
             }
 
             // vertical borders
 
-            if ( (pos.y + r) >= H ) {
+            if ( (pos.y + r) > H - gap ) {
                 const g_ = new Vec(0, -1 * params.GRAVITY);
                 p.add_force(Vec.mult( g_, params.MASS));
                 const v_caused_by_one_step_of_acc = Math.abs(Vec.dot( p.acc, N_BOTTOM) * 1)//20 / params.TIMESTEP);
@@ -342,17 +371,19 @@ function edges_constraints() {
 
                 }
                 
-                p.pos.y = H - r;
+                p.pos.y = H - gap - r;
             }
-            else if ( (pos.y - r) < 0 ) {
+            else if ( (pos.y - r) < gap ) {
                 //p.add_force(Vec.mult(N_BOTTOM, params.MASS));
                 p.vel.selfMult(-1 * params.RESTITUTION_COEFFICIENT * params.VEL_DAMPING);
-                p.pos.y = r;
+                p.pos.y = r + gap;
             }
 
+            // only here updates the grid, after the integration and fixing of the outbounds positions
+            p.update_grid(grid);
+
             // limit vmax?
-            //const v = p.vel.mod();
-            //if (v > 20) p.vel.selfMult( 20 / (1.1 * v) );
+            p.limit_vel(15);
 
         })
 
@@ -363,21 +394,37 @@ function edges_constraints() {
 
 function render() {
 
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(gap, gap, W - 2 * gap, H - 2 * gap);
+
     blobs.forEach(blob => {
 
         if (params.DISPLAY_BLOB) blob.display(ctx);
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
+        if (params.DISPLAY_COLLIDERS) blob.display_colliders(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
 
     })
+
+    if (params.DISPLAY_COLLISIONS) collision_system.render_collisions(ctx);
+
+    //ctx.save();
+    ctx.font = "50px monospace";
+    ctx.textBaseline = "top";
+    ctx.fillText((20/params.TIMESTEP).toFixed(2), 20, 20);
+    //ctx.restore();
+
+    if (interaction.started) interaction.interaction_particle.render(ctx);
 
 }
 
 let count = 0;
 
 function loop(t) {
+
+    const t0 = performance.now();
 
     //the highest precision available is the duration of a single frame, 16.67ms @60hz
     const dt = 20;
@@ -414,6 +461,8 @@ function loop(t) {
     collision_system.update_collisions(all_particles);
     satisfy_constraints();
 
+    const t1 = performance.now();
+    if ( (t1 - t0) > 5 ) console.log(t1 - t0);
     anim = window.requestAnimationFrame(loop);
 
 }

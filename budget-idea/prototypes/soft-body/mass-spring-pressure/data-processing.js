@@ -27,8 +27,24 @@ function get_radius(value, type_of_value) {
 }
 
 const blobs_data = [];
-const colors_blobs = ["#FFB3B5", "#EEBD92", "#CFC982", "#A4D390", "#76D9B1", "#61D8D6", 
-"#85D0F2", "#BCC3FE", "#E7B5F5", "#FEAFDA"];
+
+// flourish colors
+const colors_blobs = [
+    "#4328e7",
+    "#9654e5",
+    "#ff6283",
+    "#ff8800",
+    "#ffc502",
+    "#007d8e",
+    "#1aa7ee",
+    "#29dae4",
+    "#88e99a",
+    "#019c00",
+    "#c11f1f",
+    "#730000"
+  ];
+  
+//["#FFB3B5", "#EEBD92", "#CFC982", "#A4D390", "#76D9B1", "#61D8D6", "#85D0F2", "#BCC3FE", "#E7B5F5", "#FEAFDA"];
 
 
 function place_blobs() {
@@ -55,7 +71,7 @@ function place_blobs() {
 
         window.setTimeout( () => {
 
-            const new_blob = new Blob(new Vec(W/2 + (Math.random() - 0.5) * W/3, b.r + 50), b.r, colors_blobs[i], colors["generic-stroke"]);
+            const new_blob = new Blob(new Vec(gap + W/2 + (Math.random() - 0.5) * W/3, gap + b.r + 50), b.r, colors_blobs[i], colors["generic-stroke"]);
             blobs.push(new_blob);
             all_particles.push(...new_blob.particles);
     

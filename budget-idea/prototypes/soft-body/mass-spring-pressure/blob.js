@@ -30,7 +30,8 @@ class Blob {
         for (let i = 0; i < n; i++) {
 
             const p = new Particle(
-                Vec.fromAngle(r, theta * i, center)
+                Vec.fromAngle(r, theta * i, center),
+                this
             )
 
             this.particles.push(p);
@@ -40,15 +41,28 @@ class Blob {
         for (let i = 0; i < n; i++) {
 
             const next_index = i == this.particles.length - 1 ? 0 : i + 1;
+            const next_index_plus = next_index == this.particles.length - 1 ? 0 : next_index + 1;
+            const next_index_plus2 = next_index_plus == this.particles.length - 1 ? 0 : next_index_plus + 1;
 
             // saves neighbors, for the collision system
             const previous_index = i == 0 ? this.particles.length - 1 : i - 1;
+            const previous_index_minus = previous_index == 0 ? this.particles.length - 1 : previous_index - 1;
+            const previous_index_minus2 = previous_index_minus == 0 ? this.particles.length - 1 : previous_index_minus - 1;
+
             this.particles[i].immediate_neighbors = [
-                this.particles[previous_index], this.particles[next_index]
+                this.particles[previous_index_minus2],
+                this.particles[previous_index_minus], 
+                this.particles[previous_index], 
+                this.particles[next_index],
+                this.particles[next_index_plus],
+                this.particles[next_index_plus2]
             ];
             //
 
             const s = new Spring(this.particles[i], this.particles[next_index]);
+            s.type = "perimeter";
+            this.particles[i].springs.push(s);
+            this.particles[next_index].springs.push(s);
 
             this.springs.push(s);
 
@@ -56,7 +70,16 @@ class Blob {
 
             this.springs.push(s2);
 
+            //const s3 = new Spring(this.particles[i], this.particles[ (i + 4) % (this.particles.length) ]);
+
+            //this.springs.push(s3);
+
         }
+
+        this.particles.forEach(p => {
+            p.update_normal();
+            p.update_collider_position();
+        });
 
         this.rest_area = this.get_area();
 
@@ -76,6 +99,29 @@ class Blob {
         })
 
         return Math.abs(area / 2);
+
+    }
+
+    get_length() {
+
+        /*
+        let length = 0;
+
+        this.particles.map(d => d.pos).forEach( (pos, i, a) => {
+
+            const inext = i + 1 > this.particles.length - 1 ? 0            : i + 1;
+
+            length += Vec.sub(pos, a[inext]).mod();
+
+        })*/
+
+        const length = this.springs
+            .filter(s => s.type == "perimeter")
+            .map(s => s.get_length())
+            .reduce( (accum_l, current_l) => accum_l + current_l);
+
+
+        return length;
 
     }
 
@@ -272,6 +318,15 @@ class Blob {
 
     }
 
+    display_colliders(ctx) {
+
+        this.particles.forEach(p => {
+            p.render_colliders(ctx, "internal");
+            p.render_colliders(ctx, "external");
+        });
+
+    }
+
     get_blob_center() {
 
         const xm = this.particles.map(p => p.pos.x).reduce( (previous, current) => previous + current) / this.particles.length;
@@ -281,13 +336,23 @@ class Blob {
 
     }
 
+    update_blob_center() {
+
+        // this will be called at all frames
+
+        const [x, y] = this.get_blob_center();
+
+        this.center = new Vec(x, y);
+
+    }
+
     display_reference_circle(ctx) {
 
-        const [xc, yc] = this.get_blob_center();
+        const {x, y} = this.center;//this.get_blob_center();
 
         ctx.save();
         ctx.beginPath();
-        ctx.arc(xc, yc, this.R, 0, Math.PI * 2);
+        ctx.arc(x, y, this.R, 0, Math.PI * 2);
         ctx.closePath();
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 2;

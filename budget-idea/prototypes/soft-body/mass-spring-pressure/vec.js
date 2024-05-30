@@ -89,6 +89,8 @@ class Vec {
 
     getUnitDir() {
 
+        if (this.mag == 0) return new Vec(0,0);
+
         return new Vec(this.x / this.mag, this.y / this.mag);
 
     }

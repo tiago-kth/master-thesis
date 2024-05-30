@@ -27,11 +27,126 @@ function stop_animation() {
 
 }
 
+/*
 let dragging = false;
 cv.addEventListener('mousedown', mousedown);
 cv.addEventListener('mousemove', mousemove);
 cv.addEventListener('mouseup', mouseup);
 cv.addEventListener('mouseout', mouseout);
+*/
+
+class Interaction {
+
+    interaction_particle;
+
+    update_last_pos;
+
+    started;
+
+    constructor(cv, particles) {
+
+        //this.particles = particles;
+        this.cv = cv;
+        this.started = false;
+        this.update_last_pos = false;
+
+        cv.addEventListener('mousedown', e => this.mousedown(e, this));
+        cv.addEventListener('mousemove', e => this.mousemove(e, this));
+        cv.addEventListener('mouseup', e => this.mouseup(e, this));
+        cv.addEventListener('mouseout', e => this.mouseout(e, this));
+
+
+    }
+
+    mousedown(e, self) {
+
+        const x = e.offsetX * mouseFactorX;
+        const y = e.offsetY * mouseFactorY;
+
+        this.started = true;
+
+        self.interaction_particle = new InteractionParticle(new Vec(x,y), 80);
+
+        // remove particle from grid. Should be a better way.
+        //const grid_cell = grid.get_index_from_px(x, y);
+        //grid.cells[grid_cell].particles.delete(self.interaction_particle);
+
+        //particles.push(this.interaction_particle);
+    
+    }
+
+    mousemove(e, self) {
+
+        if (!self.started) return;
+
+        const x = e.offsetX * mouseFactorX;
+        const y = e.offsetY * mouseFactorY;
+
+        const new_pos = new Vec(x, y);
+
+        //self.interaction_particle.vel = Vec.mult(
+        //    Vec.sub( new_pos, self.interaction_particle.last_pos_interaction_particle),
+        //    20/params.TIMESTEP
+        //);
+
+        /* trying to get the direction of the movement;
+        if (this.update_last_pos) {
+            self.interaction_particle.last_pos = new_pos;
+            self.interaction_particle.render_extra = false;
+        } else {
+            const direction = Vec.sub(
+                    new_pos,
+                    self.interaction_particle.last_pos
+                ).getUnitDir();
+    
+            self.interaction_particle.theta = direction.getAngle();
+            self.interaction_particle.render_extra = true;
+        }
+        this.update_last_pos = !this.update_last_pos;
+        */
+
+        self.interaction_particle.pos = new_pos;
+        self.interaction_particle.collider_center = new_pos;
+        self.interaction_particle.internal_collider_center = new_pos;
+
+        //const grid_cell = grid.get_index_from_px(x, y);
+
+        self.interaction_particle.update_grid(grid);
+        //console.log(self.interaction_particle.pos, self.interaction_particle.grid_cell);
+        const grid_cell = this.interaction_particle.grid_cell;
+        const group_of_particles = grid.retrieve_neighboring_particles(grid_cell);
+        //console.log(grid_cell, group_of_particles)
+
+        group_of_particles.forEach(p => {
+
+            if (p != self.interaction_particle) {
+
+                const collision = new PottentialCollision(self.interaction_particle, p, "interaction");
+                //console.log(collision);
+
+            }
+        })
+
+    }
+
+    mouseup(e) {
+
+        //particles.pop();
+
+    }
+
+    mouseout(e, self) {
+
+        self.started = false;
+        self.interaction_particle = null;
+
+        //particles.pop();
+
+    }
+
+}
+
+const interaction = new Interaction(cv, all_particles);
 
 const sensitivity = 10;
 let particle_being_dragged;
@@ -237,6 +352,7 @@ const btns = [
     "DISPLAY_GRID",
     "DISPLAY_BLOB_CIRCLE",
     "DISPLAY_COLLIDERS",
+    "DISPLAY_COLLISIONS",
     "HIGHLIGHT_CELLS"
 ]
 

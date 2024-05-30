@@ -6,6 +6,8 @@ class Spring {
     rest_length;
     normal;
 
+    type;
+
     constructor(p1, p2) {
 
         this.p1 = p1;
@@ -25,10 +27,18 @@ class Spring {
 
         const l = this.get_length();
 
-        this.normal = new Vec(
-                 ( this.p1.pos.y - this.p2.pos.y ) / l,
-            -1 * ( this.p1.pos.x - this.p2.pos.x ) / l
-        )
+        if (l == 0) {
+
+            this.normal = new Vec(0,0);
+
+        } else {
+
+            this.normal = new Vec(
+                     ( this.p1.pos.y - this.p2.pos.y ) / l,
+                -1 * ( this.p1.pos.x - this.p2.pos.x ) / l
+            )
+
+        }
 
     }
 

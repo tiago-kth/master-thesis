@@ -157,3 +157,95 @@ Talvez incluir um contador, e, toda vez que houver interação, zerar o contador
 
 Depois da reunião com Björn: avaliação. Engagement questionnaire.
 
+Implements new colliders. 
+
+```js
+    update_collider_position() {
+
+        this.collider_radius = params.COLLIDERS_RADIUS >= (this.blob_radius + this.r) ? this.blob_radius + this.r : params.COLLIDERS_RADIUS; 
+        const distance_from_blob_center = this.blob_radius + this.r  - this.collider_radius;
+        const unit_radial_vector = Vec.sub(this.pos, this.blob_center).getUnitDir();
+        this.collider_center = Vec.add(
+            this.blob_center, 
+            Vec.mult(unit_radial_vector, distance_from_blob_center + this.r)
+        );
+
+        //console.log(distance_from_blob_center, this.r, this.blob_center, this.collider_radius, this.collider_center);
+
+    }
+```
+
+When determining the collisions, we should stop in the first collision, because we'll have many simultaneous collisions with the big colliders.
+
+In the way I am implementing it, the collider will always be positioned according to the blob center. But we want it according to the particle position instead! We must calculate it position from the particle position. It should be `p + (p_r - c_r) unit_radial_vector`.
+
+To-do:
+
+* Testar colliders internos (que na verdade vão ficar meio externos)
+* Calcular normais para cada vértice / partícula
+* Ver na Biblioteca acesso ao Dagens Nyheter.
+
+
+2024-04-29
+
+A interação até que está funcionando de forma interessante, pq se vc move muito rápido a "partícula" de interação entra no blob e começa a puxá-lo.
+
+Implementar uma forma de escolher o tipo de interação?
+
+Resolver esse problema do grid. Talvez criar mais células fantasma além dos limites.
+
+2024-05-01
+
+Resolvido isso "Resolver esse problema do grid. Talvez criar mais células fantasma além dos limites.". O problema eram as springs que ficam com tamanho igual a zero.
+
+Agora tem um problema de mover muito rápido a partícula de interação. Mas não trava a simulação.
+
+(ver print!) O que são essas possíveis colisões externas??
+
+Situação satisfatória. Agora é fazer uma aplicação de verdade. Principalmente começando com isso:
+
+*Desafio agora é posicionamento inicial dos blobs.* >> usar um bubble chart?
+
+2024-05-22
+
+How to detect if a point is inside a shape?
+
+Check if there are other points in the grid cell, then get the closest one and select its blob.
+
+Papers:
+- AHeuristicApproachtoValue-DrivenEvaluationofVisualizations
+
+**ANALYSIS**
+
+* Performance analysis
+Frame duration x number of particles per blob x number of blobs
+
+* Parameters space Analysis
+
+actual size at rest vs expected size
+k x nRT vs R - r
+
+* Stability analysis
+after tantas interacoes
+k x kd vs vel_media apos tanto de tempo
+
+kd x sd vs vel_media
+
+kd x time_step
+
+all_particles.map(p => p.vel.mod()).reduce( (a,b) => a + b ) / all_particles.length
+
+Limitar quantidade de blobs, jogar demais em "outros".
+
+Escolher interação, empurrando os blobs ou selecionado.
+
+
+4 chart types, 6 pair-wise comparisons, 2 layouts
+
+24 | 4 x 6 pair-wise comparisons
+08 | 4 x 2 extra layouts for one of the pair-wise comparisons (define after pilot study)
+12 | 4 x 3 different layouts to identify max, min
+01 | rate the visualization methods for your perceived performance in accomplishing these tasks
+01 | which method(s) would you prefer
+
+Próximo passo é rodar experimentos com o protótipo.
