@@ -215,13 +215,17 @@ Check if there are other points in the grid cell, then get the closest one and s
 Papers:
 - AHeuristicApproachtoValue-DrivenEvaluationofVisualizations
 
+**ANALYSIS**
 
-Parameters space Analysis
+* Performance analysis
+Frame duration x number of particles per blob x number of blobs
+
+* Parameters space Analysis
 
 actual size at rest vs expected size
 k x nRT vs R - r
 
-stability analysis
+* Stability analysis
 after tantas interacoes
 k x kd vs vel_media apos tanto de tempo
 
@@ -231,4 +235,17 @@ kd x time_step
 
 all_particles.map(p => p.vel.mod()).reduce( (a,b) => a + b ) / all_particles.length
 
+Limitar quantidade de blobs, jogar demais em "outros".
 
+Escolher interação, empurrando os blobs ou selecionado.
+
+
+4 chart types, 6 pair-wise comparisons, 2 layouts
+
+24 | 4 x 6 pair-wise comparisons
+08 | 4 x 2 extra layouts for one of the pair-wise comparisons (define after pilot study)
+12 | 4 x 3 different layouts to identify max, min
+01 | rate the visualization methods for your perceived performance in accomplishing these tasks
+01 | which method(s) would you prefer
+
+Próximo passo é rodar experimentos com o protótipo.
