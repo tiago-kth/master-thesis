@@ -241,7 +241,7 @@ function compute_pressure() {
 
         const delta_pressure = current_area - rest_area;
 
-        const extra_factor = delta_pressure < 0 ? Math.abs(delta_pressure) : 0;
+        const extra_factor = 0; //delta_pressure < 0 ? Math.abs(delta_pressure) * 10 : 0;
         const m = (1 + extra_factor / rest_area);
         //console.log(m);
 
@@ -253,7 +253,7 @@ function compute_pressure() {
 
             const current_length = spring.get_length();
 
-            const f = m * nRT * current_length / current_area; //delta_pressure * current_length / blob.rest_area;
+            const f = (m * nRT * current_length) / current_area; //delta_pressure * current_length / blob.rest_area;
             //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
             
             //const delta_pressure = current_area - rest_area;
