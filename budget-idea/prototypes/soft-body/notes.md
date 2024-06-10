@@ -249,3 +249,31 @@ Escolher interação, empurrando os blobs ou selecionado.
 01 | which method(s) would you prefer
 
 Próximo passo é rodar experimentos com o protótipo.
+
+1. Range of k and nRT to have the blob with the right size.
+k = [0.1, ]
+
+Initial placement.
+
+24 | 4 x 6 pair-wise comparisons
+? 08 | 4 x 2 extra layouts for one of the pair-wise comparisons (define after pilot study)
+12 | 4 x 3 different layouts to identify max, min
+12 | 4 x 3 different layouts to order all areas?
+01 | rate the visualization methods for your perceived performance in accomplishing these tasks
+01 | which method(s) would you prefer
+
+Government vis
+Uncertainty visualization
+
+
+Semana 3-7/6:
+
+* análise do espaço de parâmetros
+* ler sobre incerteza em vis, começar com o survey da Jessica Hullman
+* capitulo daquele handbook da springer sobre evaluation
+* line to segment intersection
+* procurar algo do Rahul
+* paper sobre engagement
+* paper open-data
+* livro do Ben Jones
+* Paper Bostock
