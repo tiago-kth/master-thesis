@@ -2,13 +2,12 @@ const steps = 20;
 
 const k_ = {
     min: 0.2,
-    max: 1.5,
+    max: 2,
 }
 
 const nRT_ = {
     min: 50,
-    max: 1000,
-    step: 50
+    max: 1000
 }
 
 let k = k_.min;
@@ -88,16 +87,19 @@ function run_test_area_stabilizer(k) {
 
 function run_test_area(k) {
 
-    if (k % 180 != 0) return;
+    if (k % 210 != 0) return;
 
-    let index = Math.floor(k / 180) - 1;
+    let index = Math.floor(k / 210) - 1;
 
     if (index >= 0) {
 
         const current_area = blobs[0].get_area();
+        const avg_v = blobs[0].get_avg_vel();
         conditions[index].area = current_area;
+        conditions[index].vel = avg_v;
 
-        console.log(index, current_area, Math.PI * Math.pow(blobs[0].R, 2));
+
+        console.log(index, current_area);
 
     }
 

@@ -467,8 +467,9 @@ function loop(t) {
     const t1 = performance.now();
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
-    //run_test(kk);
-    run_test_area_stabilizer(kk);
+    /* TESTS */
+    run_test_area(kk);
+    //run_test_area_stabilizer(kk);
     //if (kk % 180 == 0) console.log(t - t00, kk);
     kk++;
 
