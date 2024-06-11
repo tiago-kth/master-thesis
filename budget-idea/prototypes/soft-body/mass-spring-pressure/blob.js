@@ -102,6 +102,12 @@ class Blob {
 
     }
 
+    get_avg_vel() {
+
+        return this.particles.map(p => p.vel.mod()).reduce( (pv, cv) => pv + cv ) / this.particles.length;
+
+    }
+
     get_length() {
 
         /*

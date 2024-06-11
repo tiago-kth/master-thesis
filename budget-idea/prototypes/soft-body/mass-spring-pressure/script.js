@@ -125,13 +125,13 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
-/*
+
 blobs.push(
-    new Blob(new Vec(2*W/3, H/4), 100, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/2, H/2), 150, colors["blob-fill"], colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
-)*/
+);
 
 // populate all particles array
 blobs.forEach(blob => all_particles.push(...blob.particles));
@@ -421,6 +421,9 @@ function render() {
 }
 
 let count = 0;
+let kk = 0;
+
+const t00 = performance.now();
 
 function loop(t) {
 
@@ -463,6 +466,12 @@ function loop(t) {
 
     const t1 = performance.now();
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
+
+    //run_test(kk);
+    run_test_area_stabilizer(kk);
+    //if (kk % 180 == 0) console.log(t - t00, kk);
+    kk++;
+
     anim = window.requestAnimationFrame(loop);
 
 }
