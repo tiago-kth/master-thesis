@@ -49,23 +49,23 @@ const N_BOTTOM = new Vec(0,1);
 const NULL_VEC = new Vec(0,0);
 
 const params = {
-    "STIFFNESS": 0.45,
+    "STIFFNESS": 1.2,
     "REST_LEN": 0,
     "DAMPING": 0.9,
     "VEL_DAMPING" : 0.95,
     "TIMESTEP": 50,
     "SPEEDLIMIT": 15,
     "MASS": 2,
-    "GRAVITY": 0,
+    "GRAVITY": 0.1,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 12,
     "COLLIDERS_RADIUS" : 30,
-    "DISPLAY_VECTORS": false,
-    'DISPLAY_SPRING_VECTORS': false,
+    "DISPLAY_VECTORS": true,
+    'DISPLAY_SPRING_VECTORS': true,
     'DISPLAY_GRAVITY_VECTORS': false,
-    'DISPLAY_PRESSURE_VECTORS': false,
+    'DISPLAY_PRESSURE_VECTORS': true,
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true,
@@ -127,7 +127,7 @@ const center = new Vec(W/2, H/2);
 
 
 blobs.push(
-    new Blob(new Vec(W/2, H/2), 150, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"]),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
@@ -241,8 +241,8 @@ function compute_pressure() {
 
         const delta_pressure = current_area - rest_area;
 
-        const extra_factor = 0; //delta_pressure < 0 ? Math.abs(delta_pressure) * 10 : 0;
-        const m = (1 + extra_factor / rest_area);
+        const extra_factor = delta_pressure < 0 ? Math.abs(delta_pressure) / rest_area : 0;
+        const m = 1;//(1 + extra_factor * 100);
         //console.log(m);
 
         const current_perimeter = blob.get_length();
@@ -253,7 +253,7 @@ function compute_pressure() {
 
             const current_length = spring.get_length();
 
-            const f = (m * nRT * current_length) / current_area; //delta_pressure * current_length / blob.rest_area;
+            const f = ( (m * nRT) * current_length ) / current_area; //delta_pressure * current_length / blob.rest_area;
             //const f = - delta_pressure * current_length / (1000 * nRT); //delta_pressure * current_length / blob.rest_area;
             
             //const delta_pressure = current_area - rest_area;
@@ -413,7 +413,7 @@ function render() {
     //ctx.save();
     ctx.font = "50px monospace";
     ctx.textBaseline = "top";
-    ctx.fillText((20/params.TIMESTEP).toFixed(2), 20, 20);
+    ctx.fillText("ts = " + (20/params.TIMESTEP).toFixed(2), 20, 20);
     //ctx.restore();
 
     if (interaction.started) interaction.interaction_particle.render(ctx);
@@ -468,8 +468,8 @@ function loop(t) {
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
     /* TESTS */
-    run_test_area(kk);
-    //run_test_area_stabilizer(kk);
+    //run_test_area(kk);
+    run_test_area_stabilizer(kk);
     //if (kk % 180 == 0) console.log(t - t00, kk);
     kk++;
 

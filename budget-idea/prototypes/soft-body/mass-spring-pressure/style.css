@@ -3,7 +3,8 @@
 }
 
 :root {
-    --bg: #F6E2DF;
+    --bg2:  #F6E2DF;
+    --bg: ghostwhite;
     --txt-color: #333;
     --generic-stroke-color: #333;
     --particle-color: #BF2C62;

@@ -1,8 +1,26 @@
+
+function formatNumber(num, minDigits) {
+    // Convert the number to a string
+    let numStr = num.toFixed(6);
+    
+    // Split the number into integer and fractional parts
+    let parts = numStr.split('.');
+    
+    // Pad the integer part with leading zeros if necessary
+    while (parts[0].length < minDigits) {
+        parts[0] = '0' + parts[0];
+    }
+    
+    // Join the integer and fractional parts back together
+    return parts.join('.');
+}
+
 const steps = 20;
+const ticks = 420;
 
 const k_ = {
     min: 0.2,
-    max: 2,
+    max: 1.8
 }
 
 const nRT_ = {
@@ -40,6 +58,11 @@ const results_area_stab = [];
 
 function run_test_area_stabilizer(k) {
 
+    ctx.font = "30px monospace";
+    const avg_v = blobs[0].get_avg_vel();
+    ctx.fillText("avg vel. mag.: " + formatNumber(avg_v, 2) + "   Frame " + (k - 300), 400, 20);
+
+
     if (k == 0) {
 
         console.log("initial conditions");
@@ -50,6 +73,8 @@ function run_test_area_stabilizer(k) {
         return;
 
     }
+
+    ctx.fillText("Initial condition // K = " + k_.min.toFixed(2) + " // P = " + nRT_.max, 100, 110);
 
     if (k == 300) {
 
@@ -62,9 +87,9 @@ function run_test_area_stabilizer(k) {
 
     }
 
-    if (k > 300 & k <= 600) {
+    if (k > 300 & k <= 900) {
 
-        const avg_v = blobs[0].get_avg_vel();
+        ctx.fillText("Final condition   // K = " + k_.max.toFixed(2) + " // P = " + nRT_.min, 100, 160);
 
         results_area_stab.push(
             {
@@ -72,6 +97,20 @@ function run_test_area_stabilizer(k) {
                 v : avg_v
             }
         )
+
+    }
+
+    if (k == 901) {
+
+        ctx.fillText("Final condition   // K = " + k_.max.toFixed(2) + " // P = " + nRT_.min, 100, 160);
+        ctx.fillText("End.", 100, 210);
+        console.log("End.", results_area_stab);
+    }
+
+    if (k > 901) {
+
+        ctx.fillText("Final condition   // K = " + k_.max.toFixed(2) + " // P = " + nRT_.min, 100, 160);
+        ctx.fillText("End.", 100, 210);
 
     }
 
@@ -87,9 +126,15 @@ function run_test_area_stabilizer(k) {
 
 function run_test_area(k) {
 
-    if (k % 210 != 0) return;
+    if (k % (ticks / 2) == 0) {
+        params.TIMESTEP = 60;
+    }
 
-    let index = Math.floor(k / 210) - 1;
+    if (k % ticks != 0) return;
+
+    let index = Math.floor(k / ticks) - 1;
+
+    //if ( index % 20 == 0 ) {console.log("skipping to give it more time"); return;}
 
     if (index >= 0) {
 
@@ -99,7 +144,7 @@ function run_test_area(k) {
         conditions[index].vel = avg_v;
 
 
-        console.log(index, current_area);
+        console.log(index, current_area, avg_v);
 
     }
 
@@ -107,5 +152,6 @@ function run_test_area(k) {
 
     params.STIFFNESS = conditions[index].k;
     params.PRESSURE_FACTOR = conditions[index].nRT;
+    params.TIMESTEP = 50;
 
 }

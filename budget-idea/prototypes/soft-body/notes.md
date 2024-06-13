@@ -269,7 +269,8 @@ Uncertainty visualization
 Semana 3-7/6:
 
 * análise do espaço de parâmetros
-* ler sobre incerteza em vis, começar com o survey da Jessica Hullman
+* ler sobre incerteza em vis, começar com o survey da Jessica Hullman, 
+* paper da Lace Padilla
 * capitulo daquele handbook da springer sobre evaluation
 * line to segment intersection
 * procurar algo do Rahul
@@ -277,3 +278,7 @@ Semana 3-7/6:
 * paper open-data
 * livro do Ben Jones
 * Paper Bostock
+
+# 2024.06.11 
+
+Stability analysis ok! Blob center, R = 150.
