@@ -266,6 +266,8 @@ Government vis
 Uncertainty visualization
 
 
+
+
 Semana 3-7/6:
 
 * análise do espaço de parâmetros
@@ -286,3 +288,11 @@ Stability analysis ok! Blob center, R = 150.
 ```
 prototypes % ffmpeg -i first-concept-blob-plot.mp4 -vf scale=600:-1 -pix_fmt rgb24 -r 20 -f gif - | gifsicle --optimize=3 --delay=3 > part1.gif
 ```
+
+testar estabilidade com diferentes valores de kd.
+
+gráficos de estabilidade x ts separados, com vídeos de cada um. talvez implementar um gráfico em tempo real.
+
+testar g = 0.5 e k < 1, P < 2000.
+
+refazer gráfico p x k sem excluir instáveis.

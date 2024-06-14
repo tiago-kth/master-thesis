@@ -76,9 +76,9 @@ ggplot(params_area, aes(x = k, y = nRT, fill = cat_difference)) + #color = unsta
 
 ggsave(filename = "params-area.png", width = 8, height = 6)
 
-## G: 0.1
+## G: 0.1, 0.2
 
-params_area_g01 <- jsonlite::fromJSON("parameters-area-g01.json")
+params_area_g01 <- jsonlite::fromJSON("parameters-area-g05.json") # -g01.json
 
 params_area_g01$ideal_area <- pi * 150^2
 
@@ -89,18 +89,19 @@ params_area_g01 <- params_area_g01 %>%
     cat_difference = cut(pct_difference, 
                          breaks = c(0, 1, 5, 10, 20, 50, Inf),
                          labels = c("Less than 1%", "1-5%", "5-10%", "10-20%", "20-50%", "50%+")),
-    unstable = vel > 1
+    unstable = vel > 0 #1
   )
 
 max_k_ <- params_area_g01 %>% filter(vel > 1) %>% .$k %>% min() %>% unlist()
 
-ggplot(params_area_g01, aes(x = k, y = nRT, fill = cat_difference, alpha = unstable)) + 
+ggplot(params_area_g01, aes(x = k, y = nRT, fill = cat_difference, alpha = unstable)) + #,color = vel == 0)) + 
   geom_tile(color = "white") +
+  #geom_tile(aes(color = vel == 0 & pct_difference < 1)) +
   #annotate("rect", xmin = max_k_ - 0.045, xmax = max(params_area_g01$k) + 0.045, ymin = -Inf, ymax = Inf, alpha = 0.5, fill = "ghostwhite") +
   annotate("text", x = max_k_ - 0.045 + 0.01, y = 1050, label = "Unstable \nconfigurations", hjust = "left", vjust = "top") +
   scale_fill_discrete_sequential(palette = "RdPu") +
   scale_alpha_manual(values = c("TRUE" = 0.1, "FALSE" = 1)) +
-  #scale_color_manual(values = c("TRUE" = "red", "FALSE" = "white")) +
+  #scale_color_manual(values = c("TRUE" = "black", "FALSE" = "white")) +
   scale_x_continuous(limits = c(0.2, 2.2),
     breaks = seq(min(params_area_g01$k), max(params_area_g01$k), by = (max(params_area_g01$k) - min(params_area_g01$k)) / 10)
   ) +
@@ -111,4 +112,4 @@ ggplot(params_area_g01, aes(x = k, y = nRT, fill = cat_difference, alpha = unsta
   labs(x = "Spring Stiffness", y = "Pressure Constant", fill = "Deviation from \nreference area") +
   theme_bw()
 
-ggsave(filename = "params-area-g01.png", width = 8, height = 6)
+ggsave(filename = "params-area-g05-strict-v-zero.png", width = 8, height = 6)

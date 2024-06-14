@@ -56,7 +56,7 @@ const params = {
     "TIMESTEP": 50,
     "SPEEDLIMIT": 15,
     "MASS": 2,
-    "GRAVITY": 0.2,
+    "GRAVITY": 0.5,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.6,
