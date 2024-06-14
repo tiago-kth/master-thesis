@@ -56,16 +56,16 @@ const params = {
     "TIMESTEP": 50,
     "SPEEDLIMIT": 15,
     "MASS": 2,
-    "GRAVITY": 0.1,
+    "GRAVITY": 0.2,
     "VECTOR_SIZE": 20,
     "PRESSURE_FACTOR": 300,
     "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 12,
     "COLLIDERS_RADIUS" : 30,
     "DISPLAY_VECTORS": true,
-    'DISPLAY_SPRING_VECTORS': true,
+    'DISPLAY_SPRING_VECTORS': false,
     'DISPLAY_GRAVITY_VECTORS': false,
-    'DISPLAY_PRESSURE_VECTORS': true,
+    'DISPLAY_PRESSURE_VECTORS': false,
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true,
@@ -468,8 +468,8 @@ function loop(t) {
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
     /* TESTS */
-    //run_test_area(kk);
-    run_test_area_stabilizer(kk);
+    run_test_area(kk);
+    //run_test_area_stabilizer(kk);
     //if (kk % 180 == 0) console.log(t - t00, kk);
     kk++;
 

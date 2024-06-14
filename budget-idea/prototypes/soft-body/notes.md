@@ -282,3 +282,7 @@ Semana 3-7/6:
 # 2024.06.11 
 
 Stability analysis ok! Blob center, R = 150.
+
+```
+prototypes % ffmpeg -i first-concept-blob-plot.mp4 -vf scale=600:-1 -pix_fmt rgb24 -r 20 -f gif - | gifsicle --optimize=3 --delay=3 > part1.gif
+```
