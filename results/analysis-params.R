@@ -78,7 +78,7 @@ ggsave(filename = "params-area.png", width = 8, height = 6)
 
 ## G: 0.1, 0.2
 
-params_area_g01 <- jsonlite::fromJSON("parameters-area-g05.json") # -g01.json
+params_area_g01 <- jsonlite::fromJSON("parameters-area-g05-alt.json") # -g01.json
 
 params_area_g01$ideal_area <- pi * 150^2
 
@@ -102,7 +102,7 @@ ggplot(params_area_g01, aes(x = k, y = nRT, fill = cat_difference, alpha = unsta
   scale_fill_discrete_sequential(palette = "RdPu") +
   scale_alpha_manual(values = c("TRUE" = 0.1, "FALSE" = 1)) +
   #scale_color_manual(values = c("TRUE" = "black", "FALSE" = "white")) +
-  scale_x_continuous(limits = c(0.2, 2.2),
+  scale_x_continuous(limits = c(0.2, 1.0),
     breaks = seq(min(params_area_g01$k), max(params_area_g01$k), by = (max(params_area_g01$k) - min(params_area_g01$k)) / 10)
   ) +
   scale_y_continuous(
@@ -112,4 +112,4 @@ ggplot(params_area_g01, aes(x = k, y = nRT, fill = cat_difference, alpha = unsta
   labs(x = "Spring Stiffness", y = "Pressure Constant", fill = "Deviation from \nreference area") +
   theme_bw()
 
-ggsave(filename = "params-area-g05-strict-v-zero.png", width = 8, height = 6)
+ggsave(filename = "params-area-g05-alt-interval-strict-v.png", width = 8, height = 6)

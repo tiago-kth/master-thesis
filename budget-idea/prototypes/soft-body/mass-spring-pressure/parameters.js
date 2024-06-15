@@ -20,12 +20,12 @@ const ticks = 420;
 
 const k_ = {
     min: 0.2,
-    max: 1.8
+    max: 1.0//1.8
 }
 
 const nRT_ = {
-    min: 50,
-    max: 1000
+    min: 500,//50,
+    max: 2000//1000
 }
 
 let k = k_.min;
