@@ -98,6 +98,9 @@ function run_test_area_stabilizer(k) {
             }
         )
 
+        //console.log(avg_v, k - 300, chart_aux.x())
+        chart_aux.plot(k - 300, avg_v);
+
     }
 
     if (k == 901) {
@@ -153,5 +156,118 @@ function run_test_area(k) {
     params.STIFFNESS = conditions[index].k;
     params.PRESSURE_FACTOR = conditions[index].nRT;
     params.TIMESTEP = 50;
+
+}
+
+class Chart {
+
+    ref_canvas;
+    el;
+    ctx;
+    H;
+    W;
+    gap = 50;
+    res = 2;
+
+    last_point;
+
+    axis_x;
+    axis_y;
+    origin;
+    
+
+
+    constructor(ref_canvas) {
+
+        this.ref_canvas = ref_canvas;
+        this.el = document.querySelector(ref_canvas);
+
+        this.el.style.display = "block";
+        this.ctx = this.el.getContext("2d");
+
+        this.W = 2 * +getComputedStyle(this.el).width.slice(0,-2);
+        this.H = 2 * +getComputedStyle(this.el).height.slice(0,-2);
+
+        this.el.width = this.W;
+        this.el.height = this.H;
+
+        this.w = this.W - 2 * this.gap;
+        this.h = this.H - 2 * this.gap;
+
+        this.make_axis();
+        this.make_scales();
+        this.plot_axis();
+
+    }
+
+    make_axis() {
+
+        this.axis_x = new Vec(this.w, 0);
+        this.axis_y = new Vec(0, this.h);
+
+        this.origin = new Vec(this.gap, this.gap + this.h);
+
+    }
+
+    make_scales() {
+
+        this.y_domain = [0, 15];
+        this.x_domain = [0, 600];
+
+        this.x_range = [this.gap, this.gap + this.w];
+        this.y_range = [this.gap + this.h, this.gap];
+
+        this.y = function(y) {
+            return this.y_range[0] + ( (this.y_range[1] - this.y_range[0]) / (this.y_domain[1] - this.y_domain[0]) * (y - this.y_domain[0]) )
+        }
+
+        this.x = function(x) {
+            return this.x_range[0] + ( (this.x_range[1] - this.x_range[0]) / (this.x_domain[1] - this.x_domain[0]) * (x - this.x_domain[0]) )
+        }
+
+    }
+
+    plot_axis() {
+
+        this.axis_x.display(this.ctx, this.origin, "gray");
+        this.axis_y.display(this.ctx, new Vec(this.gap, this.gap), "gray");
+
+        this.ctx.font = "30px monospace";
+        this.ctx.textBaseline = "bottom";
+        this.ctx.fillText("AVG |V|", this.gap, this.gap);
+        this.ctx.textBaseline = "top";
+        this.ctx.textAlign = "right";
+        this.ctx.fillText("Frames", this.W - this.gap, this.H - this.gap + 10);
+
+    }
+
+    plot(v1,v2) {
+
+        const x = this.x(v1);
+        const y = this.y(v2);
+
+        this.ctx.strokeStyle = "tomato";
+        this.ctx.lineWidth = 5;
+
+        if (!this.last_point) {
+            this.last_point = new Vec(x,y);
+        } else {
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.last_point.x, this.last_point.y);
+            this.ctx.lineTo(x, y);
+            this.ctx.stroke();
+            this.last_point.x = x;
+            this.last_point.y = y;
+        }
+
+
+
+    }
+
+}
+
+const chart_aux = new Chart("canvas.aux-chart");
+
+function plot_vel(ctx) {
 
 }

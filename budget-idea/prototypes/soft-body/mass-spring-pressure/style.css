@@ -39,6 +39,12 @@ canvas {
     border: 5px solid var(--txt-color);
 }
 
+canvas.aux-chart {
+    height: 300px;
+    background-color: ghostwhite;
+    display: none; /* it will show up when we call the new chart */
+}
+
 .container-buttons {
     display: block;
 }
