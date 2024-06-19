@@ -235,9 +235,42 @@ class Chart {
         this.ctx.font = "30px monospace";
         this.ctx.textBaseline = "bottom";
         this.ctx.fillText("AVG |V|", this.gap, this.gap);
-        this.ctx.textBaseline = "top";
+        //this.ctx.textBaseline = "top";
         this.ctx.textAlign = "right";
-        this.ctx.fillText("Frames", this.W - this.gap, this.H - this.gap + 10);
+        this.ctx.fillText("Frames", this.W - this.gap, this.H - this.gap - 10);
+
+        const y_breaks = [5, 10, 15];
+        const x_breaks = [200, 400, 600];
+
+        const tick_size = 10;
+
+        y_breaks.forEach(y => {
+            const pos = this.y(y);
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.gap, pos);
+            this.ctx.lineTo(this.gap - tick_size, pos);
+            this.ctx.stroke();
+
+            this.ctx.font = "15px monospace";
+            this.ctx.textAlign = "right";
+            this.ctx.textBaseline = "middle";
+            this.ctx.fillText(y, this.gap - tick_size - 5, pos);
+        })
+
+        x_breaks.forEach(x => {
+            const pos = this.x(x);
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(pos, this.H - this.gap);
+            this.ctx.lineTo(pos, this.H - this.gap + tick_size);
+            this.ctx.stroke();
+
+            this.ctx.font = "15px monospace";
+            this.ctx.textAlign = "center";
+            this.ctx.textBaseline = "top";
+            this.ctx.fillText(x, pos, this.H - this.gap + tick_size + 5);
+        })
 
     }
 
