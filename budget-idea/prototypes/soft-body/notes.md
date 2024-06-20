@@ -296,3 +296,58 @@ ok gráficos de estabilidade x ts separados, com vídeos de cada um. talvez impl
 testar g = 0.5 e k < 1, P < 2000.
 
 refazer gráfico p x k sem excluir instáveis.
+
+future work: 
+* hierarchical data
+* stability
+* placing algorithms
+
+blobs centers
+
+10,978,968
+11,223,956
+12,463,890
+15,723,907
+20,934,661
+22,608,550
+24,272,613
+30,886,292
+
+Gráfico que acompanha em tempo real a variação da área, em termos percentuais e
+
+Funcionando legal: 
+G = 0.1
+nRT = 380
+k = 0.86
+ts = 0.4
+
+com 
+G = 0
+nRT = 50
+k = 0.74
+ts = 0.4
+
+Areas
+10 33502.83614689533
+11 35425.40798325719
+12 39024.191450155166
+15 49258.61383507447
+20 64279.97996561529
+22 70125.79240202055
+24 79699.12167055799
+30 98347.92338513664
+
+Centers
+10 216 518
+11 218 1000
+12 992 980
+15 754 958
+20 489 964
+22 268 760
+24 589 662
+30 923 685
+
+Fazer um toggle g = 0, g = 0.1, ajustando nRT e k de acordo.
+
+Plotar gráfico de barras com as áreas no próprio site
+montar json com histórico das áreas para plotar no R

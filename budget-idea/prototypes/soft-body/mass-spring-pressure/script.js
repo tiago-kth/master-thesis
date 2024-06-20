@@ -128,7 +128,8 @@ const center = new Vec(W/2, H/2);
 
 
 blobs.push(
-    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
+    //new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
+    //new Blob(new Vec(W/2, gap + 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
@@ -427,6 +428,11 @@ let kk = 0;
 
 const t00 = performance.now();
 
+//
+const radix = test_data.map(d => scale_r(d));
+let blob_i = 0;
+//
+
 function loop(t) {
 
     const t0 = performance.now();
@@ -469,10 +475,14 @@ function loop(t) {
     const t1 = performance.now();
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
+    place_blobs2();
+
     /* TESTS */
     //run_test_area(kk);
     //run_test_area_stabilizer(kk);
     //if (kk % 180 == 0) console.log(t - t00, kk);
+    //const vvv = blobs[0].get_avg_vel();
+    //if (vvv == 0) console.log(kk);
     kk++;
 
     anim = window.requestAnimationFrame(loop);

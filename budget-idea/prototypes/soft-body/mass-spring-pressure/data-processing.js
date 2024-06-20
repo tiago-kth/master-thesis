@@ -49,8 +49,8 @@ const colors_blobs = [
 
 function place_blobs() {
 
-    params.GRAVITY = 0.5;
-    params.PRESSURE_FACTOR = 1000;
+    //params.GRAVITY = 0.5;
+    //params.PRESSURE_FACTOR = 1000;
 
     data["functions"].forEach(f => {
     
@@ -82,4 +82,29 @@ function place_blobs() {
 
 
 }
+
+/**** FOR THE USER STUDIES  */
+
+const test_data = [10, 11, 12, 15, 20, 22, 24, 30];
+
+const sum = test_data.reduce( (prev, curr) => prev + curr);
+
+function scale_r(value) {
+    const area = value * (W * H) /  ( 3 * sum);
+    return Math.sqrt(area / Math.PI);
+}
+
+function place_blobs2() {
+
+    if (blob_i > test_data.length - 1) return;
+
+    if (kk % 800 == 0) {
+        const new_blob = new Blob(new Vec(gap + (W/2) + ((Math.random() - 0.5) * (W - 2 * radix[blob_i])), gap + radix[blob_i]), radix[blob_i], colors_blobs[blob_i], colors["generic-stroke"], test_data[blob_i]);
+        blobs.push(new_blob);
+        all_particles.push(...new_blob.particles);
+        blob_i++
+    }
+}
+
+
 
