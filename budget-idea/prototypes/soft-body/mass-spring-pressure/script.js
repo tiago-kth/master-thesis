@@ -49,23 +49,23 @@ const N_BOTTOM = new Vec(0,1);
 const NULL_VEC = new Vec(0,0);
 
 const params = {
-    "STIFFNESS": 0.8,
+    "STIFFNESS": 0.68,
     "REST_LEN": 0,
     "DAMPING": 0.9,
     "VEL_DAMPING" : 0.95,
-    "TIMESTEP": 200/5,
+    "TIMESTEP": 200/4,
     "SPEEDLIMIT": 15,
     "MASS": 2,
     "GRAVITY": 0.5,
     "VECTOR_SIZE": 10,
-    "PRESSURE_FACTOR": 300,
+    "PRESSURE_FACTOR": 1000,
     "RESTITUTION_COEFFICIENT" : 0.6,
     "PARTICLE_RADIUS" : 12,
     "COLLIDERS_RADIUS" : 30,
-    "DISPLAY_VECTORS": true,
-    'DISPLAY_SPRING_VECTORS': true,
-    'DISPLAY_GRAVITY_VECTORS': true,
-    'DISPLAY_PRESSURE_VECTORS': true,
+    "DISPLAY_VECTORS": false,
+    'DISPLAY_SPRING_VECTORS': false,
+    'DISPLAY_GRAVITY_VECTORS': false,
+    'DISPLAY_PRESSURE_VECTORS': false,
     'DISPLAY_RESULTANT_VECTORS': false,
     "DISPLAY_MESH": true,
     "DISPLAY_BLOB": true,
@@ -469,7 +469,7 @@ function loop(t) {
 
     /* TESTS */
     //run_test_area(kk);
-    run_test_area_stabilizer(kk);
+    //run_test_area_stabilizer(kk);
     //if (kk % 180 == 0) console.log(t - t00, kk);
     kk++;
 
