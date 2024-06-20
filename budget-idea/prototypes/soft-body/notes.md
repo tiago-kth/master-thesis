@@ -291,7 +291,7 @@ prototypes % ffmpeg -i first-concept-blob-plot.mp4 -vf scale=600:-1 -pix_fmt rgb
 
 testar estabilidade com diferentes valores de kd.
 
-gráficos de estabilidade x ts separados, com vídeos de cada um. talvez implementar um gráfico em tempo real.
+ok gráficos de estabilidade x ts separados, com vídeos de cada um. talvez implementar um gráfico em tempo real.
 
 testar g = 0.5 e k < 1, P < 2000.
 
