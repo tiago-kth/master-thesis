@@ -42,6 +42,34 @@ ggplot(area_stabilization, aes(y = v, x = k, color = ts)) + geom_path(size = 0.7
 
 ggsave("area-stabilization-g01-ts.png", width = 9, height = 6)
 
+
+area_stabilization2 <- jsonlite::fromJSON("stabilization-velocity-g05-all-ts.json") 
+
+for (i in 1:4) {
+  
+  area_stabilization2[[i]]$ts <- names(area_stabilization2)[i]
+  
+}
+
+area_stabilization2 <- area_stabilization2 %>% bind_rows()
+
+ggplot(area_stabilization2, aes(y = v, x = k, color = ts)) + geom_path(size = 0.75) +
+  geom_text(aes(
+    label = ifelse(k != 600, "",  paste0(
+      "ts: ", ts)
+    ), 
+    y = ifelse(ts == "0.2", v + 0.5,
+               ifelse(ts == "0.4", v - 0.5, v)
+    )
+  ), hjust = "left", nudge_x = 10, check_overlap = F, size = 4) +
+  labs(y = "Average particle velocity magnitude", x = "Frames") +
+  scale_color_discrete_qualitative(palette = "Dark 3") +
+  scale_x_continuous(expand = expansion(add = c(20, 60))) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+ggsave("area-stabilization-g05-ts.png", width = 9, height = 6)
+
 ## Area parameters
 
 params_area <- jsonlite::fromJSON("parameters-area.json")
