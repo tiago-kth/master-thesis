@@ -73,6 +73,7 @@ const params = {
     "DISPLAY_GRID": false,
     "DISPLAY_COLLIDERS": false,
     "DISPLAY_COLLISIONS": false,
+    "DISPLAY_LABEL" : false,
     "HIGHLIGHT_CELLS": false,
     "_MOUSE_MOVING": false,
     "_x": false,
@@ -127,7 +128,7 @@ const center = new Vec(W/2, H/2);
 
 
 blobs.push(
-    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"]),
+    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
     //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
@@ -403,6 +404,7 @@ function render() {
         if (params.DISPLAY_MESH) blob.display_mesh(ctx);
         if (params.DISPLAY_BLOB_CIRCLE) blob.display_reference_circle(ctx);
         if (params.DISPLAY_COLLIDERS) blob.display_colliders(ctx);
+        if (params.DISPLAY_LABEL) blob.display_name(ctx);
         //blob.particles.forEach(p => p.render(ctx));
         //blob.springs.forEach(s => s.display_normals(ctx));
 

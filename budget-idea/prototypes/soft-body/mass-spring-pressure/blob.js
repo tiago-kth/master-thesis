@@ -9,7 +9,9 @@ class Blob {
     blob_fill_color;
     blob_stroke_color;
 
-    constructor(center, r, blob_fill_color, blob_stroke_color) {
+    name;
+
+    constructor(center, r, blob_fill_color, blob_stroke_color, name) {
 
         this.R = r;
         this.center = center;
@@ -18,6 +20,7 @@ class Blob {
 
         this.blob_fill_color = blob_fill_color ? blob_fill_color : colors["blob-fill"];
         this.blob_stroke_color = blob_stroke_color ? blob_stroke_color : colors["blob-stroke"];
+        this.name = name ? name : "NA"
 
         //const theta = 2*Math.PI / n;
         let theta = Math.atan( params.PARTICLE_RADIUS * 2 / r); // 20 = 2 * r_particles
@@ -152,6 +155,17 @@ class Blob {
                 ctx.restore();
             }
         })
+
+    }
+
+    display_name(ctx) {
+
+        ctx.save();
+        ctx.font = "20px monospace";
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        ctx.fillText(this.name, this.center.x, this.center.y);
+        ctx.restore();
 
     }
 
