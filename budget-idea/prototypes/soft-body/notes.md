@@ -301,6 +301,7 @@ future work:
 * hierarchical data
 * stability
 * placing algorithms
+* what leads people to estimate something as larger than other?
 
 blobs centers
 
