@@ -352,3 +352,5 @@ Fazer um toggle g = 0, g = 0.1, ajustando nRT e k de acordo.
 
 Plotar gráfico de barras com as áreas no próprio site
 montar json com histórico das áreas para plotar no R
+
+Incluir g = 0.5 também, para mostrar como a variação das áreas fica muito maior.
