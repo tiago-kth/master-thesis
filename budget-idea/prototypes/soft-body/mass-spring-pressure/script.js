@@ -475,7 +475,7 @@ function loop(t) {
     const t1 = performance.now();
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
-    place_blobs2();
+    place_blobs3(); // data-processing.js
 
     /* TESTS */
     //run_test_area(kk);

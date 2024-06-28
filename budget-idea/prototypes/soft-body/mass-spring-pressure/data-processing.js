@@ -106,5 +106,32 @@ function place_blobs2() {
     }
 }
 
+function place_blobs3() {
+
+    const center_data = [
+        { label: 10, x: 216, y: 518 },
+        { label: 11, x: 218, y: 1000 },
+        { label: 12, x: 992, y: 980 },
+        { label: 15, x: 754, y: 958 },
+        { label: 20, x: 489, y: 964 },
+        { label: 22, x: 268, y: 760 },
+        { label: 24, x: 589, y: 662 },
+        { label: 30, x: 923, y: 685 }
+      ];
+      
+    center_data.forEach( (d,i) => {
+
+        const new_blob = new Blob(new Vec(d.x, d.y), scale_r(d.label), colors_blobs[i], colors["generic-stroke"], d.label);
+        blobs.push(new_blob);
+        all_particles.push(...new_blob.particles);
+
+
+    })
+
+
+}
+
+
+
 
 
