@@ -1,0 +1,688 @@
+parameters.js:51 0.2
+parameters.js:51 0.24
+parameters.js:51 0.28
+parameters.js:51 0.32
+parameters.js:51 0.36
+parameters.js:51 0.4
+parameters.js:51 0.44
+parameters.js:51 0.48
+parameters.js:51 0.52
+parameters.js:51 0.56
+parameters.js:51 0.6
+parameters.js:51 0.64
+parameters.js:51 0.68
+parameters.js:51 0.72
+parameters.js:51 0.76
+parameters.js:51 0.8
+parameters.js:51 0.84
+parameters.js:51 0.88
+parameters.js:51 0.92
+parameters.js:51 0.96
+parameters.js:51 1
+blob.js:27 0.2289111490642612
+blob.js:29 27
+blob.js:27 0.21860214196157876
+blob.js:29 29
+blob.js:27 0.20957144591745624
+blob.js:29 30
+blob.js:27 0.18799329459203595
+blob.js:29 33
+blob.js:27 0.1632855928279228
+blob.js:29 38
+blob.js:27 0.15581200230451953
+blob.js:29 40
+blob.js:27 0.149278870110076
+blob.js:29 42
+blob.js:27 0.13371708234668517
+blob.js:29 47
+script.js:476 5.299999997019768
+particle.js:116 TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:107:35)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52) InteractionParticle {pos: Vec, vel: Vec, acc: Vec, dragging: false, collider_center: Vec, …}
+particle.js:117 Uncaught Error: TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:117:19)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52)
+update_grid @ particle.js:117
+mousemove @ controls.js:114
+(anonymous) @ controls.js:54
+blobs[0]
+Blob {R: 103.00645387285056, center: Vec, rest_area: 33033.290205690835, particles: Array(27), springs: Array(54), …}R: 103.00645387285056blob_fill_color: "#4328e7"blob_stroke_color: "#333"center: Vec {x: 972, y: 805, mag: 1262.0653707316433}name: 10particles: (27) [Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle, Particle]rest_area: 33033.290205690835springs: (54) [Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring, Spring][[Prototype]]: Object
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area())
+VM3226:1 Uncaught SyntaxError: missing ) after argument list
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3234:1 Original area: 33333.333333333336 | Current Area: 45178.579726361146
+VM3234:1 Original area: 36666.666666666664 | Current Area: 44439.95826796739
+VM3234:1 Original area: 40000.00000000001 | Current Area: 49439.10021847964
+VM3234:1 Original area: 49999.99999999999 | Current Area: 56545.78335475916
+VM3234:1 Original area: 66666.66666666667 | Current Area: 78977.25859807947
+VM3234:1 Original area: 73333.33333333333 | Current Area: 87196.99509993367
+VM3234:1 Original area: 80000 | Current Area: 98708.89324818885
+VM3234:1 Original area: 100000 | Current Area: 121695.6692979071
+undefined
+radix
+(8) [103.00645387285056, 108.03408024047623, 112.83791670955127, 126.156626101008, 145.67312407894389, 152.7832614745847, 159.57691216057307, 178.4124116152771]
+script.js:476 7.600000001490116
+script.js:476 5.299999997019768
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3274:1 Original area: 33333.333333333336 | Current Area: 26619.163631242
+VM3274:1 Original area: 36666.666666666664 | Current Area: 29575.004889961187
+VM3274:1 Original area: 40000.00000000001 | Current Area: 22868.983769660175
+VM3274:1 Original area: 49999.99999999999 | Current Area: 22909.256888129516
+VM3274:1 Original area: 66666.66666666667 | Current Area: 37335.64625141781
+VM3274:1 Original area: 73333.33333333333 | Current Area: 53157.445880336934
+VM3274:1 Original area: 80000 | Current Area: 79764.82015396247
+VM3274:1 Original area: 100000 | Current Area: 93173.61638568708
+undefined
+script.js:476 6.600000001490116
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3278:1 Original area: 33333.333333333336 | Current Area: 32555.188396581274
+VM3278:1 Original area: 36666.666666666664 | Current Area: 34133.83026443342
+VM3278:1 Original area: 40000.00000000001 | Current Area: 36046.41421324646
+VM3278:1 Original area: 49999.99999999999 | Current Area: 42204.93690788327
+VM3278:1 Original area: 66666.66666666667 | Current Area: 57766.38250806133
+VM3278:1 Original area: 73333.33333333333 | Current Area: 71354.01520763569
+VM3278:1 Original area: 80000 | Current Area: 80784.36178451277
+VM3278:1 Original area: 100000 | Current Area: 97721.50263597947
+undefined
+blobs.forEach( (blob,i) => console.log("Ratio: " + (blob.get_area() - Math.PI * blob.R * blob.R) / Math.PI * blob.R * blob.R ))
+VM3322:1 Ratio: -3593388.451573046
+VM3322:1 Ratio: -9535451.58837851
+VM3322:1 Ratio: -19568551.474957034
+VM3322:1 Ratio: -45635184.46283641
+VM3322:1 Ratio: -61561471.795449905
+VM3322:1 Ratio: -10699404.67927477
+VM3322:1 Ratio: 6067554.7995789815
+VM3322:1 Ratio: -42400727.56752215
+undefined
+blobs.forEach( (blob,i) => console.log("Ratio: " + (blob.get_area() / Math.PI * blob.R * blob.R ))
+VM3326:1 Uncaught SyntaxError: missing ) after argument list
+blobs.forEach( (blob,i) => console.log("Ratio: " + blob.get_area() / Math.PI * blob.R * blob.R ))
+VM3332:1 Ratio: 108804129.74118817
+VM3332:1 Ratio: 126725987.29078324
+VM3332:1 Ratio: 142732943.01441938
+VM3332:1 Ratio: 205068217.62778243
+VM3332:1 Ratio: 388655299.7820896
+VM3332:1 Ratio: 534263987.688137
+VM3332:1 Ratio: 655419853.0607435
+VM3332:1 Ratio: 972429388.5206017
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3344:1 Original area: 33333.333333333336 | Current Area: 32202.844101619034
+VM3344:1 Original area: 36666.666666666664 | Current Area: 34149.4494094113
+VM3344:1 Original area: 40000.00000000001 | Current Area: 35241.81669713691
+VM3344:1 Original area: 49999.99999999999 | Current Area: 40321.045102630334
+VM3344:1 Original area: 66666.66666666667 | Current Area: 57656.92583144107
+VM3344:1 Original area: 73333.33333333333 | Current Area: 71961.49582233885
+VM3344:1 Original area: 80000 | Current Area: 80885.06288807119
+VM3344:1 Original area: 100000 | Current Area: 95977.47624294084
+undefined
+script.js:476 5.9000000059604645
+blobs.forEach(blob => blob.fill_color = "transparent")
+undefined
+blobs.forEach(blob => blob.fill_color = "white")
+undefined
+blobs.forEach(blob => blob.blob_fill_color = "white")
+undefined
+blobs.forEach(blob => blob.blob_fill_color = "transparent")
+undefined
+script.js:476 6.899999998509884
+script.js:476 5.100000001490116
+particle.js:116 TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:107:35)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52) InteractionParticle {pos: Vec, vel: Vec, acc: Vec, dragging: false, collider_center: Vec, …}
+particle.js:117 Uncaught Error: TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:117:19)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52)
+update_grid @ particle.js:117
+mousemove @ controls.js:114
+(anonymous) @ controls.js:54
+particle.js:116 TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:107:35)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52) InteractionParticle {pos: Vec, vel: Vec, acc: Vec, dragging: false, collider_center: Vec, …}
+particle.js:117 Uncaught Error: TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:117:19)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52)
+update_grid @ particle.js:117
+mousemove @ controls.js:114
+(anonymous) @ controls.js:54
+script.js:476 7.899999998509884
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3610:1 Original area: 33333.333333333336 | Current Area: 36558.275606807525
+VM3610:1 Original area: 36666.666666666664 | Current Area: 31260.75686935862
+VM3610:1 Original area: 40000.00000000001 | Current Area: 35437.21354273707
+VM3610:1 Original area: 49999.99999999999 | Current Area: 44381.04455577425
+VM3610:1 Original area: 66666.66666666667 | Current Area: 54580.43363206214
+VM3610:1 Original area: 73333.33333333333 | Current Area: 60204.60880718213
+VM3610:1 Original area: 80000 | Current Area: 80773.62739064397
+VM3610:1 Original area: 100000 | Current Area: 93229.44521943168
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3614:1 Original area: 33333.333333333336 | Current Area: 36682.40027601681
+VM3614:1 Original area: 36666.666666666664 | Current Area: 34884.07885664939
+VM3614:1 Original area: 40000.00000000001 | Current Area: 38649.8324707718
+VM3614:1 Original area: 49999.99999999999 | Current Area: 49145.05243068724
+VM3614:1 Original area: 66666.66666666667 | Current Area: 65836.78815133721
+VM3614:1 Original area: 73333.33333333333 | Current Area: 66192.15448313474
+VM3614:1 Original area: 80000 | Current Area: 84289.46542100942
+VM3614:1 Original area: 100000 | Current Area: 101545.62520226679
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3618:1 Original area: 33333.333333333336 | Current Area: 36991.20630080364
+VM3618:1 Original area: 36666.666666666664 | Current Area: 37922.86502515184
+VM3618:1 Original area: 40000.00000000001 | Current Area: 41439.03071905568
+VM3618:1 Original area: 49999.99999999999 | Current Area: 51754.82136355637
+VM3618:1 Original area: 66666.66666666667 | Current Area: 69171.68284504363
+VM3618:1 Original area: 73333.33333333333 | Current Area: 73459.31676458342
+VM3618:1 Original area: 80000 | Current Area: 85865.35880783718
+VM3618:1 Original area: 100000 | Current Area: 106496.21838932179
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3622:1 Original area: 33333.333333333336 | Current Area: 37153.94797277276
+VM3622:1 Original area: 36666.666666666664 | Current Area: 39037.738177451
+VM3622:1 Original area: 40000.00000000001 | Current Area: 42109.252646780165
+VM3622:1 Original area: 49999.99999999999 | Current Area: 52201.09487680264
+VM3622:1 Original area: 66666.66666666667 | Current Area: 69721.26006335291
+VM3622:1 Original area: 73333.33333333333 | Current Area: 75778.90974219366
+VM3622:1 Original area: 80000 | Current Area: 86050.83152147171
+VM3622:1 Original area: 100000 | Current Area: 106795.05715159103
+undefined
+particle.js:116 TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:107:35)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52) InteractionParticle {pos: Vec, vel: Vec, acc: Vec, dragging: false, collider_center: Vec, …}
+particle.js:117 Uncaught Error: TypeError: Cannot read properties of undefined (reading 'particles')
+    at InteractionParticle.update_grid (particle.js:117:19)
+    at Interaction.mousemove (controls.js:114:35)
+    at HTMLCanvasElement.<anonymous> (controls.js:54:52)
+update_grid @ particle.js:117
+mousemove @ controls.js:114
+(anonymous) @ controls.js:54
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3626:1 Original area: 33333.333333333336 | Current Area: 37300.34417584552
+VM3626:1 Original area: 36666.666666666664 | Current Area: 39893.75524734949
+VM3626:1 Original area: 40000.00000000001 | Current Area: 43031.655268912495
+VM3626:1 Original area: 49999.99999999999 | Current Area: 52949.66707492049
+VM3626:1 Original area: 66666.66666666667 | Current Area: 69969.17805922829
+VM3626:1 Original area: 73333.33333333333 | Current Area: 77476.84517375026
+VM3626:1 Original area: 80000 | Current Area: 85441.60904785579
+VM3626:1 Original area: 100000 | Current Area: 105818.08486370524
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3630:1 Original area: 33333.333333333336 | Current Area: 33705.94434751464
+VM3630:1 Original area: 36666.666666666664 | Current Area: 37031.45616160521
+VM3630:1 Original area: 40000.00000000001 | Current Area: 39966.59892714373
+VM3630:1 Original area: 49999.99999999999 | Current Area: 49720.12148074596
+VM3630:1 Original area: 66666.66666666667 | Current Area: 66671.63632687507
+VM3630:1 Original area: 73333.33333333333 | Current Area: 73928.42249542188
+VM3630:1 Original area: 80000 | Current Area: 80562.5561145824
+VM3630:1 Original area: 100000 | Current Area: 100642.78675063819
+undefined
+blobs.forEach( (blob,i) => console.log("Original area: " + Math.PI * blob.R * blob.R + " | Current Area: " + blob.get_area()))
+VM3634:1 Original area: 33333.333333333336 | Current Area: 33700.003734568585
+VM3634:1 Original area: 36666.666666666664 | Current Area: 37039.91549794607
+VM3634:1 Original area: 40000.00000000001 | Current Area: 39958.16719790117
+VM3634:1 Original area: 49999.99999999999 | Current Area: 49735.98247107433
+VM3634:1 Original area: 66666.66666666667 | Current Area: 66667.0880450226
+VM3634:1 Original area: 73333.33333333333 | Current Area: 73914.92915520551
+VM3634:1 Original area: 80000 | Current Area: 80568.66261639503
+VM3634:1 Original area: 100000 | Current Area: 100549.56675143226
+undefined
+blobs.forEach( (blob,i) => console.log(blob.get_area() / Math.PI * blob.R * blob.R))
+VM3653:1 113817465.4836727
+VM3653:1 137614519.65965772
+VM3653:1 161949122.26520514
+VM3653:1 252095097.08379066
+VM3653:1 450288015.3769583
+VM3653:1 549173728.0666343
+VM3653:1 653184485.0732017
+VM3653:1 1018009770.867756
+undefined
+blobs.forEach( (blob,i) => console.log(blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3664:1 1.0110041624154875
+VM3664:1 1.0102214770653537
+VM3664:1 0.9990367271551323
+VM3664:1 0.995303710580735
+VM3664:1 0.9999369040086669
+VM3664:1 1.0078907955530525
+VM3664:1 1.0073321396931136
+VM3664:1 1.0047697673336693
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3676:1 -0.011009135577462859
+VM3676:1 -0.010200966314614757
+VM3676:1 0.0011391226550042655
+VM3676:1 0.004265411503072691
+VM3676:1 0.00015443428811212634
+VM3676:1 -0.007909897881130723
+VM3676:1 -0.007386367299465402
+VM3676:1 -0.004827096162911326
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3688:1 0.001614088027682481
+VM3688:1 0.13844795246135377
+VM3688:1 0.06411977176259409
+VM3688:1 0.09036861886115499
+VM3688:1 0.26430110918592475
+VM3688:1 0.17855877807079945
+VM3688:1 0.06619056298917891
+VM3688:1 0.08266354675738874
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3692:1 0.002051816103799564
+VM3692:1 0.12236925289773559
+VM3692:1 0.052725329435619805
+VM3692:1 0.06587754543608271
+VM3692:1 0.21008105849477077
+VM3692:1 0.15692145470045749
+VM3692:1 0.052315382567112434
+VM3692:1 0.07204756716068628
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3696:1 -0.0006496745286961314
+VM3696:1 0.0658660435809002
+VM3696:1 0.03691173231449518
+VM3696:1 0.04206332204789953
+VM3696:1 0.10540597266412755
+VM3696:1 0.11348043005177233
+VM3696:1 0.020306213868644063
+VM3696:1 0.049860560284731625
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3700:1 -0.0011647121774889246
+VM3700:1 0.061206689426109184
+VM3700:1 0.03506983176883094
+VM3700:1 0.03792318869640454
+VM3700:1 0.07916389015422287
+VM3700:1 0.09607051531703303
+VM3700:1 0.01756027453057374
+VM3700:1 0.04332370078763892
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3704:1 -0.0015807594960486337
+VM3704:1 0.05241030110594691
+VM3704:1 0.03427738029368643
+VM3704:1 0.03273505196491122
+VM3704:1 0.06379055305344206
+VM3704:1 0.0783951137877621
+VM3704:1 0.015492879894810518
+VM3704:1 0.03663660662462909
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3708:1 -0.001539829737340126
+VM3708:1 0.04744031870037557
+VM3708:1 0.03292581352572177
+VM3708:1 0.02596124895563101
+VM3708:1 0.05566877143838955
+VM3708:1 0.06790083735599228
+VM3708:1 0.014252594274452912
+VM3708:1 0.03311594907561399
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3712:1 -0.0017112893823130193
+VM3712:1 0.04582298140498575
+VM3712:1 0.031468956331543674
+VM3712:1 0.023170907455319356
+VM3712:1 0.05032679424546349
+VM3712:1 0.06211065146976302
+VM3712:1 0.013266710618226485
+VM3712:1 0.029213503749963676
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3716:1 -0.0021793677796175803
+VM3716:1 0.0407863773331667
+VM3716:1 0.03037953813285732
+VM3716:1 0.020707140330091245
+VM3716:1 0.04692686017495351
+VM3716:1 0.05936284407019998
+VM3716:1 0.011804980409349408
+VM3716:1 0.02480125186274318
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3720:1 -0.0047426022834831105
+VM3720:1 0.03599258124453175
+VM3720:1 0.02707399324914017
+VM3720:1 0.01700040457552754
+VM3720:1 0.03870358335145363
+VM3720:1 0.052321504968380284
+VM3720:1 0.008736005015072767
+VM3720:1 0.01777100964253453
+undefined
+blobs.forEach( (blob,i) => console.log(1 - blob.get_area() / (Math.PI * blob.R * blob.R)))
+VM3724:1 -0.004597397109742163
+VM3724:1 0.03571445524572103
+VM3724:1 0.02630238475421809
+VM3724:1 0.01629810220796246
+VM3724:1 0.03777039690633066
+VM3724:1 0.04938584160101456
+VM3724:1 0.008040717203284808
+VM3724:1 0.01728447217771467
+undefined
+blobs.forEach( (blob,i) => console.log( (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3765:1 -0.4597397109742163
+VM3765:1 3.5714455245721033
+VM3765:1 2.630238475421809
+VM3765:1 1.6298102207962462
+VM3765:1 3.777039690633066
+VM3765:1 4.938584160101456
+VM3765:1 0.8040717203284808
+VM3765:1 1.7284472177714671
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3795:1 10 -0.4597397109742163
+VM3795:1 11 3.5714455245721033
+VM3795:1 12 2.630238475421809
+VM3795:1 15 1.6298102207962462
+VM3795:1 20 3.777039690633066
+VM3795:1 22 4.938584160101456
+VM3795:1 24 0.8040717203284808
+VM3795:1 30 1.7284472177714671
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3800:1 10 -0.4169580030172426
+VM3800:1 11 3.4665023846575105
+VM3800:1 12 2.483000876164898
+VM3800:1 15 1.4946479696766324
+VM3800:1 20 3.6214843443379108
+VM3800:1 22 4.385463336515394
+VM3800:1 24 0.5197690027388902
+VM3800:1 30 1.6359097752406404
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3804:1 10 -0.508508440685973
+VM3804:1 11 3.385250954753116
+VM3804:1 12 2.439521374612108
+VM3804:1 15 1.4827723298510342
+VM3804:1 20 3.5800300515770767
+VM3804:1 22 4.373919451790142
+VM3804:1 24 0.37609791180251984
+VM3804:1 30 1.6520766148633514
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM3815:1 10 33502.83614689533
+VM3815:1 11 35425.40798325719
+VM3815:1 12 39024.191450155166
+VM3815:1 15 49258.61383507447
+VM3815:1 20 64279.97996561529
+VM3815:1 22 70125.79240202055
+VM3815:1 24 79699.12167055799
+VM3815:1 30 98347.92338513664
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.R))
+VM3828:1 10 103.00645387285056
+VM3828:1 11 108.03408024047623
+VM3828:1 12 112.83791670955127
+VM3828:1 15 126.156626101008
+VM3828:1 20 145.67312407894389
+VM3828:1 22 152.7832614745847
+VM3828:1 24 159.57691216057307
+VM3828:1 30 178.4124116152771
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.center.x + " " + blob.center.y))
+VM3937:1 10 216 518
+VM3937:1 11 218 1000
+VM3937:1 12 992 980
+VM3937:1 15 754 958
+VM3937:1 20 489 964
+VM3937:1 22 268 760
+VM3937:1 24 589 662
+VM3937:1 30 923 685
+undefined
+script.js:476 7.699999995529652
+script.js:476 6
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM3953:1 10 32238.928064118634
+VM3953:1 11 34165.93191874772
+VM3953:1 12 37275.09610711393
+VM3953:1 15 46000.05614872341
+VM3953:1 20 55197.49584974712
+VM3953:1 22 55591.29211068177
+VM3953:1 24 72098.42689075484
+VM3953:1 30 88179.78155799262
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3965:1 10 1.6668861627745835
+VM3965:1 11 4.595207640885746
+VM3965:1 12 4.376759359639704
+VM3965:1 15 5.1154880573020645
+VM3965:1 20 10.848274385247958
+VM3965:1 22 16.51127862600311
+VM3965:1 24 7.489131070659227
+VM3965:1 30 8.049262142406166
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3969:1 10 1.2229082721448292
+VM3969:1 11 4.403770968592758
+VM3969:1 12 3.812115821884088
+VM3969:1 15 3.519684167460757
+VM3969:1 20 8.707593546522164
+VM3969:1 22 12.559885292713169
+VM3969:1 24 6.104667730784074
+VM3969:1 30 6.7622966537142615
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3973:1 10 1.0038438589444088
+VM3973:1 11 4.549318667168556
+VM3973:1 12 3.3832888048175858
+VM3973:1 15 3.037351793412335
+VM3973:1 20 6.811608872905195
+VM3973:1 22 10.402030350711499
+VM3973:1 24 5.458722314908082
+VM3973:1 30 5.721420608251126
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3977:1 10 0.8813284378274222
+VM3977:1 11 4.543243776859274
+VM3977:1 12 3.241527022072277
+VM3977:1 15 2.7421304218502307
+VM3977:1 20 6.053293465013187
+VM3977:1 22 9.626183100994556
+VM3977:1 24 4.859329329984108
+VM3977:1 30 5.5054778638847335
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3981:1 10 0.7586854232335849
+VM3981:1 11 4.544867420760113
+VM3981:1 12 3.2221285039434
+VM3981:1 15 2.4690436406300753
+VM3981:1 20 5.443978048728426
+VM3981:1 22 9.038023613268287
+VM3981:1 24 4.231398951836541
+VM3981:1 30 5.321545478999756
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3985:1 10 0.5801275844050213
+VM3985:1 11 4.549013342547381
+VM3985:1 12 3.111867810638669
+VM3985:1 15 2.1844898217432074
+VM3985:1 20 4.499220592836939
+VM3985:1 22 8.139069370503304
+VM3985:1 24 3.5325899177748754
+VM3985:1 30 4.841949181824923
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3989:1 10 0.5467296611353034
+VM3989:1 11 4.503115112459854
+VM3989:1 12 3.0581974351534313
+VM3989:1 15 2.025243617387007
+VM3989:1 20 4.064244747935685
+VM3989:1 22 7.604908646050679
+VM3989:1 24 3.2194255229367474
+VM3989:1 30 4.503028068687131
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3993:1 10 0.37679234782181936
+VM3993:1 11 4.3124957147604785
+VM3993:1 12 2.87864989988289
+VM3993:1 15 1.8191151894273783
+VM3993:1 20 3.3480774429385574
+VM3993:1 22 6.338437274005216
+VM3993:1 24 2.4503541485072833
+VM3993:1 30 4.093192231620868
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM3997:1 10 0.28239280184879645
+VM3997:1 11 4.191377299779808
+VM3997:1 12 2.8319353018932625
+VM3997:1 15 1.846162708918786
+VM3997:1 20 3.1536421300096484
+VM3997:1 22 5.942329345909936
+VM3997:1 24 2.1342405312040125
+VM3997:1 30 3.922440294152474
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4001:1 10 0.0941123319536108
+VM4001:1 11 4.112475306522889
+VM4001:1 12 2.765527924494404
+VM4001:1 15 1.827543591899894
+VM4001:1 20 3.0541294070726255
+VM4001:1 22 5.678629166827154
+VM4001:1 24 2.086425360015143
+VM4001:1 30 3.7505182671598414
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4005:1 10 0.0051425115995873405
+VM4005:1 11 3.9310719478100276
+VM4005:1 12 2.710879377701658
+VM4005:1 15 1.782315817110347
+VM4005:1 20 3.0041106376153537
+VM4005:1 22 5.442619879038235
+VM4005:1 24 1.9224873878591286
+VM4005:1 30 3.567448183055011
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4009:1 10 -0.13896315328476572
+VM4009:1 11 3.7383280224282056
+VM4009:1 12 2.6387076009326993
+VM4009:1 15 1.7806163859905078
+VM4009:1 20 2.919664760147489
+VM4009:1 22 5.197922371170627
+VM4009:1 24 1.6433927247027302
+VM4009:1 30 3.3112343813333722
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4013:1 10 -0.2050409285389021
+VM4013:1 11 3.456245076205433
+VM4013:1 12 2.5493475152207457
+VM4013:1 15 1.7547601541647362
+VM4013:1 20 2.8749773888180563
+VM4013:1 22 4.976109188179567
+VM4013:1 24 1.3474847780289512
+VM4013:1 30 3.0592228526646226
+undefined
+script.js:476 5.700000002980232
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM4019:1 10 32786.35581481521
+VM4019:1 11 35069.15680147399
+VM4019:1 12 39046.86876536778
+VM4019:1 15 48527.08102437417
+VM4019:1 20 64262.03343421972
+VM4019:1 22 65165.47160336611
+VM4019:1 24 65911.51117466828
+VM4019:1 30 95259.9717094592
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM4023:1 10 32949.36715228995
+VM4023:1 11 35180.47975796183
+VM4023:1 12 39074.871930461784
+VM4023:1 15 48568.74064123165
+VM4023:1 20 64798.991883003706
+VM4023:1 22 67275.80248358047
+VM4023:1 24 77595.01581202606
+VM4023:1 30 96021.06810875967
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4029:1 10 0.9874659354861981
+VM4029:1 11 3.860800248276941
+VM4029:1 12 2.3149406965940034
+VM4029:1 15 2.841023145197763
+VM4029:1 20 2.5948210080470324
+VM4029:1 22 7.735744747930784
+VM4029:1 24 2.8831330403131683
+VM4029:1 30 3.9539482024804173
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4033:1 10 0.7764383849242051
+VM4033:1 11 3.3676894667500346
+VM4033:1 12 2.2695799241359227
+VM4033:1 15 2.7819178838636605
+VM4033:1 20 2.0994560861741673
+VM4033:1 22 6.605297580498847
+VM4033:1 24 2.821963384921655
+VM4033:1 30 3.9714941392412606
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4037:1 10 0.6926178245313719
+VM4037:1 11 3.2087335396868033
+VM4037:1 12 2.2534810148658435
+VM4037:1 15 2.6464946974851022
+VM4037:1 20 1.7781974026184977
+VM4037:1 22 5.904673660056203
+VM4037:1 24 2.7346969990341696
+VM4037:1 30 3.9635775838282705
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4041:1 10 0.6581988460799382
+VM4041:1 11 2.9830646887004653
+VM4041:1 12 2.2389063364739004
+VM4041:1 15 2.4997684053421065
+VM4041:1 20 1.520584470615427
+VM4041:1 22 5.273572525236537
+VM4041:1 24 2.300414943757656
+VM4041:1 30 3.9452723698420122
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4045:1 10 0.5402316393015028
+VM4045:1 11 2.8811658120779127
+VM4045:1 12 2.2115296485222813
+VM4045:1 15 2.413338198056314
+VM4045:1 20 1.3863232262072755
+VM4045:1 22 4.97258503237955
+VM4045:1 24 2.161975873029709
+VM4045:1 30 3.9383805328300214
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4049:1 10 0.47571919478170965
+VM4049:1 11 2.7212351128311663
+VM4049:1 12 2.187723407095632
+VM4049:1 15 2.277785579170666
+VM4049:1 20 1.2133215739909553
+VM4049:1 22 4.413357412199259
+VM4049:1 24 2.105779360459692
+VM4049:1 30 3.9145985985105547
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM4055:1 10 33185.190635544015
+VM4055:1 11 35675.709827686835
+VM4055:1 12 39126.92135483661
+VM4055:1 15 48889.89664976619
+VM4055:1 20 65867.37569140395
+VM4055:1 22 70257.22664767067
+VM4055:1 24 78380.06425167646
+VM4055:1 30 96099.86825662293
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  blob.get_area()))
+VM4059:1 10 33187.16261242484
+VM4059:1 11 35682.29602489421
+VM4059:1 12 39125.740969177976
+VM4059:1 15 48932.264993691584
+VM4059:1 20 65844.72965863757
+VM4059:1 22 70315.38614406963
+VM4059:1 24 78484.8438084358
+VM4059:1 30 96112.25597417375
+undefined
+blobs.forEach( (blob,i) => console.log(blob.name + " " +  (1 - blob.get_area() / (Math.PI * blob.R * blob.R) ) * 100))
+VM4065:1 10 0.43851216272547955
+VM4065:1 11 2.6846472048339676
+VM4065:1 12 2.185647577055083
+VM4065:1 15 2.1354700126168136
+VM4065:1 20 1.2329055120436472
+VM4065:1 22 4.115382530814127
+VM4065:1 24 1.8939452394552414
+VM4065:1 30 3.8877440258262452
+undefined
