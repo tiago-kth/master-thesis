@@ -1,5 +1,6 @@
 library(datapasta)
 library(tidyverse)
+library(extrafont)
 
 #datapasta::df_paste()
 survey_structure <- data.frame(
@@ -125,6 +126,25 @@ survey_responses_step1 <- survey_responses_named %>%
   mutate(correct = Largest == value) %>%
   rowwise() %>% mutate(difference = scales::percent(max(A,B) / min(A,B) - 1))
 
+level_of_confidence <- survey_responses_step1 %>%
+  filter(type == "confidence")
+
+ggplot(level_of_confidence, aes(x = value)) +
+  geom_bar(fill = "purple") +
+  facet_grid(cols = vars(difference), rows = vars(Chart_type)) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    text = element_text(family = "Arvo"))
+
+ggplot(level_of_confidence, aes(x = value)) +
+  geom_bar(fill = "purple") +
+  facet_grid(rows = vars(difference), cols = vars(Chart_type)) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    text = element_text(family = "Arvo"))
+
 ggplot(survey_responses_step1 %>% filter(type == "answer")) +
   geom_bar(aes(x = correct, fill = Chart_type)) +
   facet_grid(rows = vars(Chart_type), cols = vars(difference))
@@ -151,3 +171,6 @@ ggplot(survey_responses_summary) +
 ggplot(survey_responses_summary_confidence) +
   geom_col(aes(x = confidence, y = Chart_type), width = 0.5) +
   facet_wrap(~difference)
+
+demographics_raw <- read.csv("survey-demographics.csv")
+
