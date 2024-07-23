@@ -44,6 +44,8 @@ desp_br <- desp_br_reais %>% rename(Value_RS = Value) %>%
   full_join(desp_br_pib) %>% rename(Value_PIB = Value) %>%
   select(EXPENDITURE, classification_level, Expenditure, Expenditure_pt, Year, Value_RS, Value_PIB)
 
+write_rds(desp_br, "desp-cofog.rds")
+
 output <- list(
   functions = desp_br %>% filter(classification_level == "Functions", Year == 2022),
   details = desp_br %>% filter(classification_level == "Details", Year == 2022)

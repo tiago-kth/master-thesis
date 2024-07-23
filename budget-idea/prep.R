@@ -99,3 +99,66 @@ ggplot(
     panel.grid.minor = element_blank(),
     panel.grid.major.y = element_blank())
 
+
+# exemplo educacao --------------------------------------------------------
+
+pib2023 <- 10856112000000
+subfuncoes_educ <- as.character(c(361:368, 847))
+#dput(colnames(base))
+metricas <- c("DOTACAO_INICIAL", "DOTACAO_ATUALIZADA", "DESPESAS_EMPENHADAS", 
+              "DESPESAS_LIQUIDADAS", "DESPESAS_PAGAS", "RESTOS_A_PAGAR_PAGOS", 
+              "PAGAMENTOS_TOTAIS")
+
+criterio_orgao <- base %>%
+  filter(ORGAO_CODIGO == "26000", ID_ANO == 2023) %>%
+  group_by() %>%
+  summarise(across(metricas, ~sum(.)/pib2023)) %>%
+  ungroup() %>%
+  mutate(type = "Ministry of Education")
+
+criterio_fun <- base %>%
+  filter(ID_FUNCAO_PT == 12, ID_ANO == 2023) %>%
+  group_by() %>%
+  summarise(across(metricas, ~sum(.)/pib2023)) %>%
+  ungroup() %>%
+  mutate(type = "Government Function: Education")
+
+criterio_subfun <- base %>%
+  filter(ID_SUBFUNCAO_PT %in% subfuncoes_educ, ID_ANO == 2023) %>%
+  group_by() %>%
+  summarise(across(metricas, ~sum(.)/pib2023)) %>%
+  ungroup() %>%
+  mutate(type = "Finalistic expenditure in Education")
+
+
+criterios <- bind_rows(criterio_fun, criterio_orgao, criterio_subfun)
+
+ggplot(criterios %>% select(type, val = DESPESAS_EMPENHADAS),
+       aes(y = type, x = val)) + 
+  geom_col(width = .5) +
+  geom_text(aes(label = type), x = 0, hjust = "left", vjust = "bottom", nudge_y = .3) + 
+  geom_text(aes(label = scales::percent(val, accuracy = .01)), hjust = "inward", nudge_x = -.0005) +
+  theme(
+    axis.text.y = element_blank()
+  )
+
+base_cofowidth = # base_cofog <- readRDS("desp-cofog.rds")
+# 
+criterio_cofog <- base_cofog %>%
+  filter(EXPENDITURE == "709", Year == "2022") %>%
+  select()
+
+
+
+criterio_fun_Det <- base %>%
+  filter(ID_FUNCAO_PT == 12, ID_ANO == 2023) %>%
+  group_by(ID_SUBFUNCAO_PT, NO_SUBFUNCAO_PT) %>%
+  summarise(across(metricas, ~sum(.)/pib2023)) %>%
+  ungroup()
+
+criterio_sbufun_Det <- base %>%
+  filter(ID_SUBFUNCAO_PT %in% subfuncoes_educ, ID_ANO == 2023) %>%
+  group_by(ID_FUNCAO_PT, NO_FUNCAO_PT) %>%
+  summarise(across(metricas, ~sum(.)/pib2023)) %>%
+  ungroup()
+  
