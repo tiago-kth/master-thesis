@@ -174,3 +174,12 @@ ggplot(survey_responses_summary_confidence) +
 
 demographics_raw <- read.csv("survey-demographics.csv")
 
+
+# Preferences -------------------------------------------------------------
+
+preferences <- survey_responses_named %>%
+  select(contains("preference"))
+
+ggplot(preferences, aes(y = uncertainty_preference)) + geom_bar()
+
+ggplot(preferences, aes(y = aesthetic_preference)) + geom_bar()
