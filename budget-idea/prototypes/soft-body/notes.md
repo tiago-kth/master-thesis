@@ -354,3 +354,16 @@ Plotar gráfico de barras com as áreas no próprio site
 montar json com histórico das áreas para plotar no R
 
 Incluir g = 0.5 também, para mostrar como a variação das áreas fica muito maior.
+
+
+Citar Cleveland, Schneiderman
+
+Eixos 
+
+```js
+let axis_x = new Vec(1000,0)
+let axis_y = new Vec(0,1000)
+
+axis_x.display(ctx, new Vec(100,100), "black")
+axis_y.display(ctx, new Vec(100,100), "black")
+```
