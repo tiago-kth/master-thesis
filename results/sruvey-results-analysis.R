@@ -174,6 +174,10 @@ ggplot(survey_responses_summary_confidence) +
 
 demographics_raw <- read.csv("survey-demographics.csv")
 
+demographics_raw %>% count(Sex)
+demographics_raw %>% count(Country.of.birth)
+summary(demographics_raw$Age)
+
 
 # Preferences -------------------------------------------------------------
 
