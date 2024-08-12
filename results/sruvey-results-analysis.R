@@ -184,7 +184,7 @@ survey_responses_summary_confidence <- survey_responses_step1 %>%
 # Chart performance -------------------------------------------------------
 
 ggplot(survey_responses_summary, aes(x = correct, y = Chart_type)) +
-  geom_col(width = 0.5, 
+  geom_col(width = 0.4, 
            #aes(fill = factor(order))
            fill = "steelblue"
            ) +
@@ -200,14 +200,14 @@ ggplot(survey_responses_summary, aes(x = correct, y = Chart_type)) +
     panel.background = element_rect(fill = "ghostwhite")
   )
 
+ggsave(filename = "results-accuracy.png", width = 9, height = 5)
+
+
 ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type)) +
-  geom_point(
-           #aes(fill = factor(order))
-           fill = "steelblue"
-  ) +
   geom_path(aes(group = difference, color = difference), size = 1) +
   geom_label(aes(label = format(confidence, digits = 2), fill = difference), color = "white", hjust = "center", size = 3.5) +
-  geom_text(aes(label = ifelse(Chart_type == "Treemap", paste("Difference:\n",difference), NA), color = difference), hjust = "center", size = 3.5, nudge_y = .35) +
+  geom_text(aes(label = ifelse(Chart_type == "Treemap", difference, NA), color = difference), hjust = "center", size = 3.5, nudge_y = .25) +
+  annotate(geom = "text", label = "Difference ratios:", fontface = "italic", y = 4.25, x = 3.3 - .2, hjust = "right") +
   #facet_wrap(~paste("Difference ratio:", difference)) +
   scale_x_continuous(limits = c(1,5), labels = c("Not confident at all", "Not confident", "Neutral", "Confident", "Very confident")) +
   colorspace::scale_fill_discrete_qualitative(palette = "Dynamic") +
@@ -220,6 +220,9 @@ ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type))
     #panel.background = element_rect(fill = "ghostwhite"),
     legend.position = "none"
   )
+
+ggsave(filename = "results-confidence.png", width = 9, height = 5)
+
 
 ggplot(survey_responses_summary_confidence) +
   geom_col(aes(x = confidence, y = Chart_type), width = 0.5) +
@@ -240,3 +243,79 @@ preferences <- survey_responses_named %>%
 ggplot(preferences, aes(y = uncertainty_preference)) + geom_bar()
 
 ggplot(preferences, aes(y = aesthetic_preference)) + geom_bar()
+
+
+
+# Chart types previous knowledge ------------------------------------------
+
+chart_types_reconition <- survey_responses_named %>%
+  filter(consent == "I agree.") %>%
+  select(starts_with("vis_name")) %>%
+  mutate(across(.cols = everything(), .fns = ~ifelse(.x == "", "I don't know the name, and I've never seen a chart like this before.", .x)))
+
+ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1)))) +
+  geom_bar(aes(fill = vis_name1 == "Heatmap"), width = .7) +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name1 == "Heatmap"), hjust = "left", nudge_x = .2, size = 3) +
+  scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
+  scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
+  scale_y_discrete(labels = function(y) str_wrap(y, width = 25)) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
+
+  
+ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2)))) +
+  geom_bar(aes(fill = vis_name2 == "Donut chart"), width = .7) +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name2 == "Donut chart"), hjust = "left", nudge_x = .2, size = 3) +
+  scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
+  scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
+  scale_y_discrete(labels = function(y) str_wrap(y, width = 25)) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
+
+
+ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name3)))) +
+  geom_bar(aes(fill = vis_name3 == "Blob plot"), width = .7) +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name3 == "Blob plot"), hjust = "left", nudge_x = .2, size = 3) +
+  scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
+  scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
+  scale_y_discrete(labels = function(y) str_wrap(y, width = 25)) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
+
+
+ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name4)))) +
+  geom_bar(aes(fill = vis_name4 == "Bubble chart"), width = .7) +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name4 == "Bubble chart"), hjust = "left", nudge_x = .2, size = 3) +
+  scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
+  scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
+  scale_y_discrete(labels = function(y) str_wrap(y, width = 25)) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
