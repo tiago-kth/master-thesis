@@ -137,13 +137,28 @@ ggplot(level_of_confidence, aes(x = value)) +
     panel.grid.major.y = element_blank(),
     text = element_text(family = "Arvo"))
 
+level_of_confidence_plot <- level_of_confidence %>%
+  group_by(difference, Chart_type, value) %>%
+  summarise(height = n()) %>%
+  ungroup()
+
 ggplot(level_of_confidence, aes(x = value)) +
   geom_bar(fill = "purple") +
-  facet_grid(rows = vars(difference), cols = vars(Chart_type)) +
+  facet_grid(cols = vars(difference), rows = vars(Chart_type)) +
   theme_minimal() +
   theme(
     panel.grid.major.y = element_blank(),
     text = element_text(family = "Arvo"))
+
+
+ggplot(level_of_confidence_plot, aes(x = value)) +
+  geom_density_ridges(aes(y = paste(Chart_type, difference), group = paste(Chart_type, difference))) +
+  facet_grid(cols = NULL, rows = vars(paste(Chart_type, difference))) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    text = element_text(family = "Arvo"))
+
 
 ggplot(survey_responses_step1 %>% filter(type == "answer")) +
   geom_bar(aes(x = correct, fill = Chart_type)) +
@@ -153,6 +168,10 @@ survey_responses_summary <- survey_responses_step1 %>%
   filter(type == "answer") %>%
   group_by(Chart_type, difference) %>%
   summarize(correct = sum(correct)/n()) %>%
+  ungroup() %>%
+  mutate(correct_pct = scales::percent(correct)) %>%
+  group_by(difference) %>%
+  mutate(order = floor(rank(correct))) %>%
   ungroup()
 
 survey_responses_summary_confidence <- survey_responses_step1 %>%
@@ -164,9 +183,22 @@ survey_responses_summary_confidence <- survey_responses_step1 %>%
 
 # Chart performance -------------------------------------------------------
 
-ggplot(survey_responses_summary) +
-  geom_col(aes(x = correct, y = Chart_type), width = 0.5) +
-  facet_wrap(~difference)
+ggplot(survey_responses_summary, aes(x = correct, y = Chart_type)) +
+  geom_col(width = 0.5, 
+           #aes(fill = factor(order))
+           fill = "steelblue"
+           ) +
+  geom_text(aes(label = correct_pct), color = "white", hjust = "inward", nudge_x = -.01, size = 3.5) +
+  facet_wrap(~paste("Difference ratio:", difference)) +
+  scale_x_continuous(labels = scales::percent) +
+  #colorspace::scale_fill_discrete_sequential(palette = "greens", ) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.background = element_rect(fill = "ghostwhite")
+  )
 
 ggplot(survey_responses_summary_confidence) +
   geom_col(aes(x = confidence, y = Chart_type), width = 0.5) +
