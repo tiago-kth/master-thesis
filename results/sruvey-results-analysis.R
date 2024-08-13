@@ -34,6 +34,12 @@ survey_structure <- data.frame(
 
 survey_structure$Question_number <- paste0("Q", survey_structure$Question_number)
 
+survey_structure_export <- survey_structure %>%
+  rowwise() %>% mutate(difference = scales::percent(max(A,B) / min(A,B) - 1)) %>%
+  select(-Image_File)
+
+write.csv(survey_structure_export, "survey-structure.csv")
+
 survey_responses_raw <- read.csv("survey-responses.csv")
 
 #write(colnames(survey_responses_raw), "questions.txt")
@@ -202,6 +208,52 @@ ggplot(survey_responses_summary, aes(x = correct, y = Chart_type)) +
 
 ggsave(filename = "results-accuracy.png", width = 9, height = 5)
 
+ggplot(survey_responses_summary, aes(y = correct, x = difference, group = Chart_type, color = Chart_type)) +
+  geom_path(size = 1) +
+  geom_point(size = 3) + 
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_brewer(palette = "Set2") +
+  scale_fill_brewer(palette = "Set2") +
+  scale_x_discrete(expand = expansion(mult = c(.4,.1))) +
+  geom_label(aes(label = scales::percent(correct), fill = Chart_type), size = 3, color = "white") +
+  geom_text(aes(label = ifelse(difference == "10%", Chart_type, NA)), hjust = "right", nudge_x = -0.2, fontface = "bold") +
+  labs(x = "Difference ratio", y = "Accuracy") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+ggsave(filename = "results-accuracy-parallel.png", width = 9, height = 5)
+
+ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type)) +
+  geom_label(aes(label = format(confidence, digits = 2)), fill = "steelblue", color = "white", hjust = "center", size = 3.5) +
+  facet_wrap(~paste("Difference ratio:", difference)) +
+  scale_x_continuous(limits = c(1, 5)) +
+  #colorspace::scale_fill_discrete_sequential(palette = "greens", ) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal() +
+  theme(
+    #panel.grid.major.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.background = element_rect(fill = "ghostwhite")
+  )
+
+ggplot(survey_responses_summary_confidence, aes(y = confidence, x = difference, group = Chart_type, color = Chart_type)) +
+  geom_path(size = 1) +
+  geom_point(size = 3) + 
+  scale_y_continuous(limits = c(1,5), labels = c("Not confident at all", "Not confident", "Neutral", "Confident", "Very confident"), expand = expansion(mult = 0)) +
+  scale_color_brewer(palette = "Set2") +
+  scale_fill_brewer(palette = "Set2") +
+  scale_x_discrete(expand = expansion(mult = c(.4,.1))) +
+  geom_label(aes(label = format(confidence, digits = 2), fill = Chart_type), size = 3, color = "white") +
+  geom_text(aes(label = ifelse(difference == "10%", Chart_type, NA)), hjust = "right", nudge_x = -0.2, fontface = "bold") +
+  labs(x = "Difference ratio", y = NULL) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank())
+
+ggsave(filename = "results-confidence-parallel.png", width = 6, height = 9)
+
+
 
 ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type)) +
   geom_path(aes(group = difference, color = difference), size = 1) +
@@ -221,7 +273,7 @@ ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type))
     legend.position = "none"
   )
 
-ggsave(filename = "results-confidence.png", width = 9, height = 5)
+ggsave(filename = "results-confidence-rank.png", width = 6, height = 9)
 
 
 ggplot(survey_responses_summary_confidence) +
@@ -238,11 +290,48 @@ summary(demographics_raw$Age)
 # Preferences -------------------------------------------------------------
 
 preferences <- survey_responses_named %>%
-  select(contains("preference"))
+  select(contains("preference")) %>%
+  filter(uncertainty_preference != "", general_preference != "")
 
-ggplot(preferences, aes(y = uncertainty_preference)) + geom_bar()
+ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(uncertainty_preference)))) + geom_bar(width = 0.6, fill = "steelblue") +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(preferences))), hjust = "left", nudge_x = .2, size = 3) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
 
-ggplot(preferences, aes(y = aesthetic_preference)) + geom_bar()
+ggsave(filename = "results-preference-uncertainty.png", width = 9, height = 5)
+
+ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(aesthetic_preference)))) + geom_bar(width = 0.6, fill = "steelblue") +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(preferences))), hjust = "left", nudge_x = .2, size = 3) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
+
+ggsave(filename = "results-preference-aesthetics.png", width = 9, height = 5)
+
+ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(general_preference)))) + geom_bar(width = 0.6, fill = "steelblue") +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(preferences))), hjust = "left", nudge_x = .2, size = 3) +
+  scale_x_continuous(expand = expansion(mult =(c(0, .1)))) +
+  labs(y = NULL, x = "Number of users") +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line()
+  )
 
 
 
@@ -251,7 +340,11 @@ ggplot(preferences, aes(y = aesthetic_preference)) + geom_bar()
 chart_types_reconition <- survey_responses_named %>%
   filter(consent == "I agree.") %>%
   select(starts_with("vis_name")) %>%
-  mutate(across(.cols = everything(), .fns = ~ifelse(.x == "", "I don't know the name, and I've never seen a chart like this before.", .x)))
+  mutate(across(.cols = everything(), .fns = ~ifelse(.x == "", "I don't know the name, and I've never seen a chart like this before.", .x))) %>%
+  mutate(across(.cols = everything(), .fns = ~ifelse(.x == "I don't know the name, but I have seen a visualization like this before.", "I don't know the name, but I've seen a chart like this before.", .x)))
+
+chart_types_reconition %>% gather() %>% select(value) %>% unique()
+
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1)))) +
   geom_bar(aes(fill = vis_name1 == "Heatmap"), width = .7) +
@@ -268,6 +361,8 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1))))
     panel.border = element_blank(),
     axis.line = element_line()
   )
+
+ggsave(filename = "results-recognition-heatmap.png", width = 8, height = 6)
 
   
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2)))) +
@@ -286,6 +381,7 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2))))
     axis.line = element_line()
   )
 
+ggsave(filename = "results-recognition-donut.png", width = 8, height = 6)
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name3)))) +
   geom_bar(aes(fill = vis_name3 == "Blob plot"), width = .7) +
@@ -303,6 +399,7 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name3))))
     axis.line = element_line()
   )
 
+ggsave(filename = "results-recognition-blob.png", width = 8, height = 6)
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name4)))) +
   geom_bar(aes(fill = vis_name4 == "Bubble chart"), width = .7) +
@@ -319,3 +416,6 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name4))))
     panel.border = element_blank(),
     axis.line = element_line()
   )
+
+ggsave(filename = "results-recognition-bubble.png", width = 8, height = 6)
+
