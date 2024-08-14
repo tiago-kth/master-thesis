@@ -367,3 +367,190 @@ let axis_y = new Vec(0,1000)
 axis_x.display(ctx, new Vec(100,100), "black")
 axis_y.display(ctx, new Vec(100,100), "black")
 ```
+
+
+
+Stuff in the template:
+
+\section{Template Overview}
+
+This document will \emph{not} explain all the major features of the \verb|acmart| document
+class, but will focus on the features of the \verb|timtm| document
+class. The \verb|timtm| document
+class is purposely similar to the \verb|acmart| document
+class, thus facilitating your submitting your report to an ACM conference\footnote{Simply change the document class from timtm to acmart. This sample document conditionally redefines some commands and an environment - so that the features added for a degree project are not included in the resulting document.}. For further information about the details of the \verb|acmart| document
+class, see the {\itshape \LaTeX\ User's Guide} --- 
+available from \url{https://www.acm.org/publications/proceedings-template}.
+
+The primary parameter given to the document class is
+the {\itshape template style} which corresponds to the kind of publication. This parameter is enclosed in square
+brackets and is a part of the {\verb|documentclass|} command:
+\begin{verbatim}
+  \documentclass[STYLE]{timtm}
+\end{verbatim}
+
+The styles relevant for a degree project report include:
+\begin{itemize}
+\item {\verb|sigcconf|}: The majority of ACM's conference proceedings use the {\verb|sigcconf|} template style, as will a degree project report for the Interactive Media Technology (TIMTM) and Media Management (TMMTM) programmes. However, as the class file has been optimized for these two programs, you do not have to give the option: {\verb|sigcconf|}. If you are going to submit to an ACM conference, then you should remove the KTH cover, title, page, DiVA information, Swedish abstract \& keywords, etc. and change to the sigconf document class.
+\item {\verb|screen|}: Produces colored hyperlinks.
+\item {\verb|review|}: Includes line numbers.
+\item {\verb|manuscript|}: Generally used in conjunction with \verb|review| to make it easy for a copy editor to work with your document.
+\end{itemize}
+
+A good second step in using the template is to modify the contents of the \texttt{custom\_configuration.tex} file. It contains a number of commands that configure the template as sell as provide meta data that will be needed when your degree project has been successfully completed and your grades are reported in LADOK and the degree project report is archived in DiVA. If you want to understand the motivation for this information and the underlying details of the template see the Overleaf project \url{https://www.overleaf.com/read/qxvttmmqbgdt}. The meta data is collected and appears on a page or pages and the end of the document. These pages will be removed before the report is archived in DiVA.
+
+
+\section{Title Information}
+
+The title of your work should use capital letters appropriately -
+\url{https://capitalizemytitle.com/} has useful rules for
+capitalization. Use the {\verb|title|} command to define the title of
+your work. If your work has a subtitle, define it with the
+{\verb|subtitle|} command.  Do not insert line breaks in your title.
+
+If your title is lengthy, you must define a short version to be used
+in the page headers, to prevent overlapping text. The \verb|title|
+command has a ``short title'' parameter:
+\begin{verbatim}
+  \title[short title]{full title}
+\end{verbatim}
+
+There are \verb|alttitle| and \verb|altsubtitle| commands so that you can easily specify a Swedish title and optionally a Swedish subtitle for your report. Note that both the thesis title and the Swedish thesis title will subsequently be entered as meta data in DiVA and in LADOK.
+
+\section{CCS Concepts and User-Defined Keywords}
+
+Two elements of the ``acmart'' document class provide powerful
+taxonomic tools for you to help readers find your work in an online
+search.
+
+The ACM Computing Classification System  (CCS) ---
+\url{https://www.acm.org/publications/class-2012} --- is a set of
+classifiers and concepts that describe the computing
+discipline. Authors can select entries from this classification
+system, via \url{https://dl.acm.org/ccs/ccs.cfm}, and generate the
+commands to be included in the \LaTeX\ source.
+
+User-defined keywords are a comma-separated list of words and phrases
+of the authors' choosing, providing a more flexible way of describing
+the research being presented.
+
+There is a \verb|SwedishKeywords| command to make it easy to add keywords in Swedish for your report. These can help make your report visible if someone searches for one or more of these Swedish keywords. You should order them in the same order that you entered the English keywords.
+
+For ACM submissions, CCS concepts and user-defined keywords are required for for all
+articles over two pages in length, and are optional for one- and
+two-page articles (or abstracts). For degree projects is is very desirable that you provide a suitable set of keywords to help potential readers find your thesis in DiVA.
+
+
+\section{Tables}
+
+The document class includes the ``\verb|booktabs|''
+package --- \url{https://ctan.org/pkg/booktabs} --- for preparing
+high-quality tables.
+
+Table captions are placed {\itshape above} the table.
+
+Because tables cannot be split across pages, the best placement for
+them is typically the top of the page nearest their initial cite.  To
+ensure this proper ``floating'' placement of tables, use the
+environment \textbf{table} to enclose the table's contents and the
+table caption.  The contents of the table itself must go in the
+\textbf{tabular} environment, to be aligned properly in rows and
+columns, with the desired horizontal and vertical rules.  Again,
+detailed instructions on \textbf{tabular} material are found in the
+\textit{\LaTeX\ User's Guide}.
+
+Immediately following this sentence is the point at which
+Table~\ref{tab:freq} is included in the input file; compare the
+placement of the table here with the table in the printed output of
+this document.
+
+\begin{table}
+  \caption{Frequency of Special Characters}
+  \label{tab:freq}
+  \begin{tabular}{ccl}
+    \toprule
+    Non-English or Math&Frequency&Comments\\
+    \midrule
+    \O & 1 in 1,000& For Danish, Faroese, and Norwegian names\\
+    $\pi$ & 1 in 5& Common in math\\
+    \$ & 4 in 5 & Used in business\\
+    $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+To set a wider table, which takes up the whole width of the page's
+live area, use the environment \textbf{table*} to enclose the table's
+contents and the table caption.  As with a single-column table, this
+wide table will ``float'' to a location deemed more
+desirable. Immediately following this sentence is the point at which
+Table~\ref{tab:commands} is included in the input file; again, it is
+instructive to compare the placement of the table here with the table
+in the printed output of this document.
+
+\begin{table*}
+  \caption{Some Typical Commands}
+  \label{tab:commands}
+  \begin{tabular}{ccl}
+    \toprule
+    Command &A Number & Comments\\
+    \midrule
+    \texttt{{\char'134}author} & 100& Author \\
+    \texttt{{\char'134}table}& 300 & For tables\\
+    \texttt{{\char'134}table*}& 400& For wider tables\\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+Always use midrule to separate table header rows from data rows, and
+use it only for this purpose. This enables assistive technologies to
+recognise table headers and support their users in navigating tables
+more easily.
+
+
+\section{Language, Style, and Content}
+
+Spelling and
+punctuation may use any dialect of English (e.g., British, Canadian,
+US, etc.) provided this is done consistently. Hyphenation is
+optional. To ensure suitability for an international audience, please
+pay attention to the following:
+
+\begin{itemize}
+\item Write in a straightforward style.
+\item Try to avoid long or complex sentence structures.
+\item Use common and basic vocabulary (e.g., use the word ``unusual'' rather than the word ``arcane''.
+\item Briefly define or explain all technical terms that may be
+  unfamiliar to readers.
+\item Explain all acronyms the first time they are used in your
+  text---e.g., ``Digital Signal Processing (DSP)''. You might want to use the package \texttt{glossaries} to help with this.
+\item Explain local references (e.g., not everyone knows all city
+  names in a particular country).
+\item Explain ``insider'' comments. Ensure that your whole audience
+  understands any reference whose meaning you do not describe (e.g.,
+  do not assume that everyone has used a Macintosh or a particular
+  application).
+\item Explain colloquial language and puns. Understanding phrases like
+  ``red herring'' may require a local knowledge of English.  Humor and
+  irony are difficult to translate.
+\item Use unambiguous forms for culturally localized concepts, such as
+  times, dates, currencies, and numbers (e.g., ``1--5--97'' or
+  ``5/1/97'' may mean 5 January or 1 May, and ``seven o'clock'' may
+  mean 7:00 am or 19:00). For currencies, indicate equivalences:
+  ``Participants were paid {\fontfamily{txr}\selectfont \textwon}
+  25,000, or roughly US \$22.''
+\item Be careful with the use of gender-specific pronouns (he, she)
+  and other gendered words (chairman, manpower, man-months). Use
+  inclusive language that is gender-neutral (e.g., she or he, they,
+  s/he, chair, staff, staff-hours, person-years). See the
+  \textit{Guidelines for Bias-Free Writing} for further advice and
+  examples regarding gender and other personal
+  attributes~\cite{Schwartz:1995:GBF}. Be particularly aware of
+  considerations around writing about people with disabilities.  See also ACM Diversity and Inclusion Council's web page on ``Words Matter: Alternatives for Charged Terminology in the Computing Profession''~\cite{ACMdiversity}.
+\item If possible, use the full (extended) alphabetic character set
+  for names of persons, institutions, and places (e.g.,
+  Gr{\o}nb{\ae}k, Lafreni\'ere, S\'anchez, Nguy{\~{\^{e}}}n,
+  Universit{\"a}t, Wei{\ss}enbach, Z{\"u}llighoven, \r{A}rhus, etc.).
+  These characters are already included in most versions and variants
+  of Times, Helvetica, and Arial fonts.
+\end{itemize}

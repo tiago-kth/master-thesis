@@ -253,7 +253,7 @@ ggplot(survey_responses_summary_confidence, aes(y = confidence, x = difference, 
 
 ggsave(filename = "results-confidence-parallel.png", width = 6, height = 9)
 
-
+colorspace::sequential_hcl(palette = "Purple-Blue", n = 5) %>% dput()
 
 ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type)) +
   geom_path(aes(group = difference, color = difference), size = 1) +
@@ -262,8 +262,10 @@ ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type))
   annotate(geom = "text", label = "Difference ratios:", fontface = "italic", y = 4.25, x = 3.3 - .2, hjust = "right") +
   #facet_wrap(~paste("Difference ratio:", difference)) +
   scale_x_continuous(limits = c(1,5), labels = c("Not confident at all", "Not confident", "Neutral", "Confident", "Very confident")) +
-  colorspace::scale_fill_discrete_qualitative(palette = "Dynamic") +
-  colorspace::scale_color_discrete_qualitative(palette = "Dynamic") +
+  scale_fill_manual(values = rev(c("#6B0077", "#7665A4", "#8DA3CA"))) +
+  scale_color_manual(values = rev(c("#6B0077", "#7665A4", "#8DA3CA"))) +
+  #colorspace::scale_fill_discrete_qualitative(palette = "Dynamic") +
+  #colorspace::scale_color_discrete_qualitative(palette = "Dynamic") +
   labs(x = NULL, y = NULL) +
   theme_bw() +
   theme(
@@ -305,7 +307,7 @@ ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(uncertainty_preference))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-preference-uncertainty.png", width = 9, height = 5)
+ggsave(filename = "results-preference-uncertainty.png", width = 8, height = 2)
 
 ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(aesthetic_preference)))) + geom_bar(width = 0.6, fill = "steelblue") +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(preferences))), hjust = "left", nudge_x = .2, size = 3) +
@@ -319,7 +321,7 @@ ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(aesthetic_preference))))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-preference-aesthetics.png", width = 9, height = 5)
+ggsave(filename = "results-preference-aesthetics.png", width = 8, height = 2)
 
 ggplot(preferences, aes(y = forcats::fct_rev(fct_infreq(general_preference)))) + geom_bar(width = 0.6, fill = "steelblue") +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(preferences))), hjust = "left", nudge_x = .2, size = 3) +
@@ -347,8 +349,8 @@ chart_types_reconition %>% gather() %>% select(value) %>% unique()
 
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1)))) +
-  geom_bar(aes(fill = vis_name1 == "Heatmap"), width = .7) +
-  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name1 == "Heatmap"), hjust = "left", nudge_x = .2, size = 3) +
+  geom_bar(aes(fill = vis_name1 == "Treemap"), width = .5) +
+  geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name1 == "Treemap"), hjust = "left", nudge_x = .2, size = 3) +
   scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
   scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
   scale_y_discrete(labels = function(y) str_wrap(y, width = 25)) +
@@ -362,7 +364,7 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1))))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-recognition-heatmap.png", width = 8, height = 6)
+ggsave(filename = "results-recognition-treemap.png", width = 8, height = 3.5)
 
   
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2)))) +
