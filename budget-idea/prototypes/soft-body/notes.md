@@ -575,4 +575,4 @@ Falar queue esse movement towards perhaps a less rational [usar adjetivos do rah
 
 \subsection{Visualization in Government}
 
-However, just as with the “digital divide”, these divisions don’t simply stop or be resolved with the provision of digital (or data) “access”. What is necessary as well is that those for whom access is being provided are in a position to actually make use of the now available access (to the Internet or to data) in ways that are meaningful and beneficial for them. \cite{Gurstein_2011-open-data-use}
+However, just as with the “digital divide”, these divisions don’t simply stop or be resolved with the provision of digital (or data) “access”. What is necessary as well is that those for whom access is being provided are in a position to actually make use of the now available access (to the Internet or to data) in ways that are meaningful and beneficial for them. \cite{Gurstein_2011-open-data-use}  
