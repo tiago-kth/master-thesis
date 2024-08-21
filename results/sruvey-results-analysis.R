@@ -221,7 +221,7 @@ ggplot(survey_responses_summary, aes(y = correct, x = difference, group = Chart_
   theme_minimal() +
   theme(legend.position = "none")
 
-ggsave(filename = "results-accuracy-parallel.png", width = 9, height = 5)
+ggsave(filename = "results-accuracy-parallel.png", width = 7, height = 5.5)
 
 ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type)) +
   geom_label(aes(label = format(confidence, digits = 2)), fill = "steelblue", color = "white", hjust = "center", size = 3.5) +
@@ -243,7 +243,7 @@ ggplot(survey_responses_summary_confidence, aes(y = confidence, x = difference, 
   scale_color_brewer(palette = "Set2") +
   scale_fill_brewer(palette = "Set2") +
   scale_x_discrete(expand = expansion(mult = c(.4,.1))) +
-  geom_label(aes(label = format(confidence, digits = 2), fill = Chart_type), size = 3, color = "white") +
+  geom_label(aes(label = format(confidence, digits = 3), fill = Chart_type), size = 3, color = "white") +
   geom_text(aes(label = ifelse(difference == "10%", Chart_type, NA)), hjust = "right", nudge_x = -0.2, fontface = "bold") +
   labs(x = "Difference ratio", y = NULL) +
   theme_minimal() +
@@ -275,7 +275,7 @@ ggplot(survey_responses_summary_confidence, aes(x = confidence, y = Chart_type))
     legend.position = "none"
   )
 
-ggsave(filename = "results-confidence-rank.png", width = 6, height = 9)
+ggsave(filename = "results-confidence-rank.png", width = 9, height = 5)
 
 
 ggplot(survey_responses_summary_confidence) +
@@ -349,7 +349,7 @@ chart_types_reconition %>% gather() %>% select(value) %>% unique()
 
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name1)))) +
-  geom_bar(aes(fill = vis_name1 == "Treemap"), width = .5) +
+  geom_bar(aes(fill = vis_name1 == "Treemap"), width = .6) +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name1 == "Treemap"), hjust = "left", nudge_x = .2, size = 3) +
   scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
   scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
@@ -368,7 +368,7 @@ ggsave(filename = "results-recognition-treemap.png", width = 8, height = 3.5)
 
   
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2)))) +
-  geom_bar(aes(fill = vis_name2 == "Donut chart"), width = .7) +
+  geom_bar(aes(fill = vis_name2 == "Donut chart"), width = .6) +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name2 == "Donut chart"), hjust = "left", nudge_x = .2, size = 3) +
   scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
   scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
@@ -383,10 +383,10 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name2))))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-recognition-donut.png", width = 8, height = 6)
+ggsave(filename = "results-recognition-donut.png", width = 8, height = 3)
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name3)))) +
-  geom_bar(aes(fill = vis_name3 == "Blob plot"), width = .7) +
+  geom_bar(aes(fill = vis_name3 == "Blob plot"), width = .6) +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name3 == "Blob plot"), hjust = "left", nudge_x = .2, size = 3) +
   scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
   scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
@@ -401,10 +401,10 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name3))))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-recognition-blob.png", width = 8, height = 6)
+ggsave(filename = "results-recognition-blob.png", width = 8, height = 3)
 
 ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name4)))) +
-  geom_bar(aes(fill = vis_name4 == "Bubble chart"), width = .7) +
+  geom_bar(aes(fill = vis_name4 == "Bubble chart"), width = .6) +
   geom_text(stat = "count", aes(label = scales::percent(after_stat(count)/nrow(chart_types_reconition)), color = vis_name4 == "Bubble chart"), hjust = "left", nudge_x = .2, size = 3) +
   scale_fill_manual(values = c("TRUE" = "forestgreen", "FALSE" = "gray")) +
   scale_color_manual(values = c("TRUE" = "forestgreen", "FALSE" = "#333333")) +
@@ -419,5 +419,5 @@ ggplot(chart_types_reconition, aes(y = forcats::fct_rev(fct_infreq(vis_name4))))
     axis.line = element_line()
   )
 
-ggsave(filename = "results-recognition-bubble.png", width = 8, height = 6)
+ggsave(filename = "results-recognition-bubble.png", width = 6, height = 3.5)
 
