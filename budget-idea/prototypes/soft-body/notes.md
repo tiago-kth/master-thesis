@@ -554,3 +554,25 @@ pay attention to the following:
   These characters are already included in most versions and variants
   of Times, Helvetica, and Arial fonts.
 \end{itemize}
+
+
+https://dl.acm.org/ccs#
+
+
+Somewhat opposite to this view of chart design lies the work of Nigel Holmes. Holmes calls Tufte views as... concept of joyful infographics.
+
+This is a long standing clash of visions, with open criticisms exchanged between Tufte and Holmes. Tufte uses Holmes' charts as examples of how not to do to. Holmes
+
+Tufte isso, data-ink etc.
+
+lack of quantitative skills of professional artists
+
+Holmes aquilo.
+
+Falar queue esse movement towards perhaps a less rational [usar adjetivos do rahul, ele tem algo escrito?] and more emotional mirrors a similar movement... ver see ele
+
+
+
+\subsection{Visualization in Government}
+
+However, just as with the “digital divide”, these divisions don’t simply stop or be resolved with the provision of digital (or data) “access”. What is necessary as well is that those for whom access is being provided are in a position to actually make use of the now available access (to the Internet or to data) in ways that are meaningful and beneficial for them. \cite{Gurstein_2011-open-data-use}
