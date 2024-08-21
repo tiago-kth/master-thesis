@@ -126,17 +126,18 @@ const mouseFactorY = H / cssH;
 
 const center = new Vec(W/2, H/2);
 
+/* Un-comment to add blobs manually
+    blobs.push(
+        new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
+        //new Blob(new Vec(W/2, gap + 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
+        //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
+        //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
+        //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
+    );
 
-blobs.push(
-    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
-    //new Blob(new Vec(W/2, gap + 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
-    //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
-    //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
-    //new Blob(new Vec(450, 250), 90, "forestgreen", colors["generic-stroke"])
-);
-
-// populate all particles array
-blobs.forEach(blob => all_particles.push(...blob.particles));
+    // populate all particles array
+    blobs.forEach(blob => all_particles.push(...blob.particles));
+*/
 
 function add_blob(pos, R, fill_color) {
 
@@ -479,6 +480,7 @@ function loop(t) {
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
     //place_blobs3(); // data-processing.js
+    place_blobs2();
 
     /* TESTS */
     //run_test_area(kk);

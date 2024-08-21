@@ -98,8 +98,11 @@ function place_blobs2() {
 
     if (blob_i > test_data.length - 1) return;
 
+    console.log(kk);
+
     if (kk % 800 == 0) {
         const new_blob = new Blob(new Vec(gap + (W/2) + ((Math.random() - 0.5) * (W - 2 * radix[blob_i])), gap + radix[blob_i]), radix[blob_i], colors_blobs[blob_i], colors["generic-stroke"], test_data[blob_i]);
+        console.log(kk % 800, new_blob);
         blobs.push(new_blob);
         all_particles.push(...new_blob.particles);
         blob_i++
