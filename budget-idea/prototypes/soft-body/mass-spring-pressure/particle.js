@@ -152,7 +152,7 @@ class Particle {
 
             Vec.mult(
 
-                Vec.add(this.acc, new_acc), // not sure about this procedure
+                Vec.add(this.acc, new_acc), // not sure about this procedure // velocity Verlet algorithm
                 dt * 0.5
 
             )

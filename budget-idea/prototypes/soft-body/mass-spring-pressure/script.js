@@ -128,7 +128,7 @@ const center = new Vec(W/2, H/2);
 
 
 blobs.push(
-    //new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
+    new Blob(new Vec(W/2, H - 100 - 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
     //new Blob(new Vec(W/2, gap + 75), 150, colors["blob-fill"], colors["generic-stroke"], "Test"),
     //new Blob(new Vec(W/3, H/2), 50, colors["blob-stroke"], colors["generic-stroke"]),
     //new Blob(new Vec(150, 75), 75, "dodgerblue", colors["generic-stroke"]),
@@ -414,10 +414,13 @@ function render() {
     if (params.DISPLAY_COLLISIONS) collision_system.render_collisions(ctx);
 
     //ctx.save();
+    /*
     ctx.font = "50px monospace";
     ctx.textBaseline = "top";
+    // to display the time
     ctx.fillText("ts = " + (20/params.TIMESTEP).toFixed(2), 20, 20);
-    //ctx.restore();
+    ctx.restore();
+    */
 
     if (interaction.started) interaction.interaction_particle.render(ctx);
 
@@ -475,7 +478,7 @@ function loop(t) {
     const t1 = performance.now();
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
-    place_blobs2();
+    //place_blobs3(); // data-processing.js
 
     /* TESTS */
     //run_test_area(kk);
