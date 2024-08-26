@@ -3,7 +3,7 @@ library(readxl)
 library(extrafont)
 
 #readxl::excel_sheets('base-teto-2023.xlsx')
-base <- read_excel("base-teto-2023.xlsx", sheet = "2023")
+base <- read_excel("../budget-idea/base-teto-2023.xlsx", sheet = "2023")
 
 base %>% group_by(ID_GRUPO_DESPESA_NADE) %>% summarise(pago = sum(PAGAMENTOS_TOTAIS)/1e6)
 
@@ -137,8 +137,13 @@ ggplot(criterios %>% select(type, val = DESPESAS_EMPENHADAS),
        aes(y = type, x = val)) + 
   geom_col(width = .5) +
   geom_text(aes(label = type), x = 0, hjust = "left", vjust = "bottom", nudge_y = .3) + 
-  geom_text(aes(label = scales::percent(val, accuracy = .01)), hjust = "inward", nudge_x = -.0005) +
+  geom_text(aes(label = scales::percent(val, accuracy = .01)), hjust = "inward", nudge_x = -.0005, fontface = "bold", color = "white") +
+  scale_x_continuous(labels = scales::percent) +
+  theme_minimal() +
   theme(
+    text = element_text(family = "Fira Code"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank(),
     axis.text.y = element_blank()
   )
 
