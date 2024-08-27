@@ -1,6 +1,7 @@
 library(tidyverse)
 library(readxl)
 library(extrafont)
+library(colorspace)
 
 #readxl::excel_sheets('base-teto-2023.xlsx')
 base <- read_excel("../budget-idea/base-teto-2023.xlsx", sheet = "2023")
@@ -128,24 +129,71 @@ criterio_subfun <- base %>%
   group_by() %>%
   summarise(across(metricas, ~sum(.)/pib2023)) %>%
   ungroup() %>%
-  mutate(type = "Finalistic expenditure in Education")
+  mutate(type = "Expenditure in Educational activities")
 
 
 criterios <- bind_rows(criterio_fun, criterio_orgao, criterio_subfun)
 
 ggplot(criterios %>% select(type, val = DESPESAS_EMPENHADAS),
        aes(y = type, x = val)) + 
-  geom_col(width = .5) +
+  geom_col(width = .5, aes(fill = type)) +
   geom_text(aes(label = type), x = 0, hjust = "left", vjust = "bottom", nudge_y = .3) + 
   geom_text(aes(label = scales::percent(val, accuracy = .01)), hjust = "inward", nudge_x = -.0005, fontface = "bold", color = "white") +
   scale_x_continuous(labels = scales::percent) +
+  scale_fill_discrete_qualitative("Dark 3") +
+  labs(x = NULL, #"Expenditure in % of GDP", 
+       y = NULL) +
   theme_minimal() +
   theme(
-    text = element_text(family = "Fira Code"),
+    #text = element_text(family = "Fira Code"),
     panel.grid.minor = element_blank(),
     panel.grid.major.y = element_blank(),
-    axis.text.y = element_blank()
+    axis.text.y = element_blank(),
+    legend.position = "none",
+    axis.title.x.bottom = element_text(hjust = 1)
   )
+
+
+ggsave("expenditure-3.png", width = 8, height = 3)
+
+dput(colnames(criterios))
+
+translate_metrics <- data.frame(
+  name = c("DOTACAO_INICIAL", "DOTACAO_ATUALIZADA", "DESPESAS_EMPENHADAS", 
+          "DESPESAS_LIQUIDADAS", "DESPESAS_PAGAS", "PAGAMENTOS_TOTAIS"),
+  eng = c("Budget Authorization", "Budget Authorization plus Additional Credits", "Committed Expenditure", "Verified Expenditure", "Paid Expenditure", "Paid Expenditure including Carried-Over Expenditure")
+)
+
+criterios_long <- criterios %>% 
+  select(-RESTOS_A_PAGAR_PAGOS) %>%
+  pivot_longer(cols = -type) %>%
+  left_join(translate_metrics)
+
+
+ggplot(criterios_long,
+       aes(y = paste(type, eng), x = value)) + 
+  geom_col(width = .5, aes(fill = type, alpha = eng)) +
+  geom_text(aes(label = paste(type, eng, sep = ", ")), x = 0, hjust = "left", vjust = "bottom", nudge_y = .3) +
+  geom_text(aes(label = scales::percent(value, accuracy = .01)), hjust = "inward", nudge_x = -.0005, fontface = "bold", color = "white") +
+  scale_x_continuous(labels = scales::percent) +
+  scale_fill_discrete_qualitative("Dark 3") +
+  scale_alpha_manual(values = 1:6 * 0.7 * (1/6) + 0.3) + 
+  labs(x = NULL, #"Expenditure in % of GDP", 
+       y = NULL) +
+  theme_minimal() +
+  theme(
+    #text = element_text(family = "Fira Code"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text.y = element_blank(),
+    legend.position = "none",
+    axis.title.x.bottom = element_text(hjust = 1)
+  )
+
+ggsave("expenditure-18.png", width = 8, height = 12)
+
+
+
 
 base_cofowidth = # base_cofog <- readRDS("desp-cofog.rds")
 # 
