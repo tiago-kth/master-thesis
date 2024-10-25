@@ -480,7 +480,7 @@ function loop(t) {
     if ( (t1 - t0) > 5 ) console.log(t1 - t0);
 
     //place_blobs3(); // data-processing.js
-    place_blobs2();
+    //place_blobs2();
 
     /* TESTS */
     //run_test_area(kk);
